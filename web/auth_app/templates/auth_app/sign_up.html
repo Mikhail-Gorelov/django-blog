@@ -1,0 +1,45 @@
+{% extends 'auth_app/base.html'%}
+{% load static i18n %}
+
+{% block head %}
+<link href="{% static 'auth_app/css/sign_up.css' %}" rel="stylesheet">
+{% endblock head %}
+
+{% block container %}
+{% include 'auth_app/includes/prevent_access.html' %}
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <form id="signUpForm" action="{% url 'auth_app:api_sign_up' %}" method="post" accept-charset="utf-8" class="form" role="form">
+      <legend>Sign Up</legend>
+      <h4>It's free and always will be.</h4>
+      <div class="row">
+        <div class="col-xs-6 col-md-6" id="firstNameGroup">
+          <input type="text" name="first_name" value="" class="form-control input-lg" placeholder="First Name"/></div>
+        <div class="col-xs-6 col-md-6" id="lastNameGroup">
+          <input type="text" name="last_name" value="" class="form-control input-lg" placeholder="Last Name"/></div>
+      </div>
+      <div id="emailGroup">
+        <input type="text" name="email" value="" class="form-control input-lg" placeholder="Your Email"/>
+      </div>
+      <div id="passwordGroup">
+        <input type="password" name="password1" value="" class="form-control input-lg" placeholder="Password"/>
+        <input type="password" name="password2" value="" class="form-control input-lg" placeholder="Confirm Password"/>
+      </div>
+      <div id="birthdayGroup">
+      {% include 'auth_app/includes/birthday.html' %}
+      </div>
+      <div id="genderGroup">
+      {% include 'auth_app/includes/gender.html' %}
+      </div>
+      <br/>
+      <span class="help-block">By clicking Create my account, you agree to our Terms and that you have read our Data Use Policy, including our Cookie Use.</span>
+      <button class="btn btn-lg btn-primary btn-block signup-btn" type="submit">Create my account </button>
+    </form>
+  </div>
+</div>
+{% endblock container %}
+
+{% block jquery %}
+$.getScript('{% static 'auth_app/js/sign-up.js' %}');
+{% endblock %}
