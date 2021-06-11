@@ -52,7 +52,7 @@ class UserSignUpSerializer(serializers.Serializer):
             del self.validated_data['captcha']
         user = User.objects.create(**self.validated_data, is_active=False)
         setup_user_email(request=request, user=user, addresses=[])
-        CeleryService.send_email_confirm(user)
+        # CeleryService.send_email_confirm(user)
         return user
 
 

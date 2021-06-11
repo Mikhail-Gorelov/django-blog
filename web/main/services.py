@@ -3,7 +3,6 @@ from django.contrib.auth import get_user_model
 from auth_app.utils import get_activate_key
 from main.decorators import except_shell
 from src.celery import app
-from django.utils.translation import gettext_lazy as _
 
 User = get_user_model()
 
@@ -19,8 +18,6 @@ class CeleryService:
         key = get_activate_key(user)
         kwargs = {
             'to_email': user.email,
-            'subject': _("Congrats! This is your activation url!"),
-            'template_name': "emails/verification_email.html",
             'content': {
                 'user': user.get_full_name(),
                 'activate_url': key,
