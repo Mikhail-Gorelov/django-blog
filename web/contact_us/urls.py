@@ -10,7 +10,7 @@ app_name = 'contact_us'
 router = DefaultRouter()
 
 urlpatterns = [
-    path('feedback/', views.FeedbackView.as_view(), name='feedback')
+    path('feedback/', views.FeedbackView.as_view(), name='api_feedback')
 ]
 
 urlpatterns += router.urls

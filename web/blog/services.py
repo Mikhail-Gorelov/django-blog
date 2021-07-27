@@ -12,5 +12,9 @@ class BlogService:
         return Category.objects.all()
 
     @staticmethod
+    def comment_queryset(article_id):
+        return Comment.objects.filter(article_id=article_id)
+
+    @staticmethod
     def get_active_articles():
         return Article.objects.filter(status=ArticleStatus.ACTIVE).annotate(comments_count=Count('comment_set'))

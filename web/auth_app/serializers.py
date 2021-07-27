@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
-
+from user_profile import choices
 from main.services import CeleryService
 from .forms import PassResetForm
 from .services import AuthAppService
@@ -27,6 +27,8 @@ class UserSignUpSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
     password1 = serializers.CharField(write_only=True, min_length=8)
     password2 = serializers.CharField(write_only=True, min_length=8)
+    birthday = serializers.DateField(required=True, source='profile.birthdate')
+    gender = serializers.ChoiceField(required=True, choices=choices.GenderChoice.choices, source='profile.gender')
 
     def validate_password1(self, password):
         return get_adapter().clean_password(password)
@@ -42,9 +44,17 @@ class UserSignUpSerializer(serializers.Serializer):
     def validate(self, data):
         if data['password1'] != data['password2']:
             raise serializers.ValidationError({'password2': _("The two password fields didn't match.")})
+        # if not data.get("birthdate"):
+        #     raise serializers.ValidationError({"birthdate": "Birthdate is required"})
+        # if not data.get("gender"):
+        #     raise serializers.ValidationError({"gender": "Gender is required"})
         return data
 
     def save(self, **kwargs):
+        print(self.validated_data)
+        profile = self.validated_data.pop('profile')
+        # print(self.validated_data.pop('birthday'))
+        # print(self.validated_data.pop('gender')
         request = self.context.get('request')
         self.validated_data['password'] = make_password(self.validated_data.pop('password1'))
         del self.validated_data['password2']
@@ -52,8 +62,15 @@ class UserSignUpSerializer(serializers.Serializer):
             del self.validated_data['captcha']
         user = User.objects.create(**self.validated_data, is_active=False)
         setup_user_email(request=request, user=user, addresses=[])
-        # CeleryService.send_email_confirm(user)
+        for key, value in profile.items():
+            setattr(user.profile, key, value)
+        user.profile.save()
+        CeleryService.send_email_confirm(user)
         return user
+
+    @property
+    def data(self):
+        return self.validated_data
 
 
 class LoginSerializer(auth_serializers.LoginSerializer):

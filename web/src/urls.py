@@ -17,6 +17,8 @@ urlpatterns = [
     path('api/', include('rest_framework.urls')),
     path('rosetta/', include('rosetta.urls')),
     path('summernote/', include('django_summernote.urls')),
+    path('about/', include('about.urls')),
+    path('user-profile/', include('user_profile.urls')),
 ]
 
 urlpatterns += swagger_url

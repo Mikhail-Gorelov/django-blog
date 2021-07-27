@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block active_contact %}class="active"{% endblock active_contact %}
-
+{% load static i18n %}
 {% block header %}
 {% include 'includes/header.html'  with selected='contact_us' %}
 {% endblock header %}
@@ -11,14 +11,19 @@
 
 <div class="row">
   <div class="col-md-8">
-    <form action="{% url 'contact_us:feedback' %}" method="post">
+    <form id="contactUsForm" action="{% url 'contact_us:api_feedback' %}" method="post">
       {% csrf_token %}
       {% if not user.is_authenticated %}
-      <input class="form-control" name="name" placeholder="Name..."/><br/>
-      <input class="form-control" name="email" placeholder="E-mail..."/><br/>
+      <div class="" id="nameGroup">
+        <input class="form-control" name="name" placeholder="Name..."/><br/></div>
+      <div class="" id="emailGroup">
+        <input class="form-control" name="email" placeholder="E-mail..."/><br/></div>
       {% endif %}
+      <div class="" id="contentGroup">
       <textarea class="form-control" name="content" placeholder="How can we help you?"
-                style="height:150px;"></textarea><br/>
+                style="height:150px;"></textarea><br/></div>
+      <! -- enter button here -->
+      <p><input type="file" name="file"></p>
       <input class="btn btn-primary" type="submit" value="Send"/><br/><br/>
     </form>
   </div>
@@ -47,3 +52,7 @@
   </div>
 </div>
 {% endblock container %}
+
+{% block jquery %}
+$.getScript('{% static 'contact_us.js' %}');
+{% endblock %}

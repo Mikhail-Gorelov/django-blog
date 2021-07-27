@@ -1,17 +1,2 @@
 {% extends "base.html" %}
-{% block content %}
-    <h1>About</h1>
-
-    {% if about_list %}
-    <ul>
-
-      {% for about in about_list %}
-        <p> {{ about.name }}</p>
-        <p> {{ about.description }}</p>
-      {% endfor %}
-
-    </ul>
-    {% else %}
-      <p>There are no about here.</p>
-    {% endif %}
-{% endblock %}
+<! -- можно переопределять блоки, такие как контент и менять base в сторону какой-то ссылки -->

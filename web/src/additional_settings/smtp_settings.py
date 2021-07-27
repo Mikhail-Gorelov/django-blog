@@ -1,6 +1,6 @@
 from os import environ
 
-EMAIL_HOST = environ.get("EMAIL_HOST")
+EMAIL_HOST = environ.get("EMAIL_HOST", "host.docker.internal")
 EMAIL_PORT = int(environ.get("EMAIL_PORT", 465))
 EMAIL_HOST_USER = environ.get("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = environ.get("EMAIL_HOST_PASSWORD")

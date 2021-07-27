@@ -1,4 +1,10 @@
+{% extends "blog/base.html" %}
+{% load static main %}
 <!-- the comment box -->
+{% block head %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+{% endblock head %}
+{% block container %}
 <div class="well">
   <h4><i class="fa fa-paper-plane-o"></i> Leave a Comment:</h4>
   <form role="form">
@@ -10,13 +16,25 @@
 </div>
 <hr>
 
-<!-- the comments -->
-<h3><i class="fa fa-comment"></i> User One says:
-  <small> 9:41 PM on August 24, 2014</small>
-</h3>
-<p>Excellent post! Thank You the great article, it was useful!</p>
+<!-- make loop through all the comments -->
 
-<h3><i class="fa fa-comment"></i> User Two says:
-  <small> 9:47 PM on August 24, 2014</small>
-</h3>
-<p>Excellent post! Thank You the great article, it was useful!</p>
+<!-- if there is a main page -->
+{% for comment in comments|slice:":5" %}
+    <h3><i class="fa fa-comment"></i> {{ comment.author }} says:
+    <small> {{ comment.updated }}</small>
+  </h3>
+  <p>{{ comment.content |safe }}</p>
+{% endfor %}
+
+<!-- if there is no main page -->
+{% for comment in results %}
+  <h3><i class="fa fa-comment"></i> {{ comment.author }} says:
+    <small> {{ comment.updated }}</small>
+  </h3>
+  <p>{{ comment.content |safe }}</p>
+{% endfor %}
+{% include 'blog/includes/previous_and_next.html' %}
+{% endblock %}
+{% block jquery %}
+$.getScript('{% static 'blog/js/comments.js' %}');
+{% endblock %}

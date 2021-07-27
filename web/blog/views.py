@@ -1,10 +1,17 @@
 import logging
+from rest_framework.response import Response
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.shortcuts import render
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from main.pagination import BasePageNumberPagination
-
+from blog.pagination import StandardResultsSetPagination
+from blog.serializers import CommentSerializer
+from . import pagination
 from .services import BlogService
 from .filters import ArticleFilter
+from rest_framework.mixins import ListModelMixin
 
 from . import serializers
 
@@ -27,6 +34,7 @@ class CategoryViewSet(ViewSet):
 
 class ArticleViewSet(ViewSet):
     filterset_class = ArticleFilter
+    pagination_class = StandardResultsSetPagination
 
     def get_template_name(self):
         if self.action == 'list':
@@ -49,5 +57,26 @@ class ArticleViewSet(ViewSet):
 
     def retrieve(self, request, **kwargs):
         response = super().retrieve(request, **kwargs)
+        response.template_name = self.get_template_name()
+        return response
+
+
+class CommentViewSet(ListModelMixin, GenericViewSet):
+    pagination_class = StandardResultsSetPagination
+    permission_classes = (AllowAny,)
+    # article_id = serializers.ArticleSerializer.id
+
+    def get_template_name(self):
+        return 'blog/includes/comments.html'
+
+    def get_serializer_class(self):
+        return CommentSerializer
+
+    def get_queryset(self):
+        print(self.kwargs)
+        return BlogService.comment_queryset(article_id=self.kwargs.get("article_id"))
+
+    def list(self, request, article_id, *args, **kwargs):
+        response = super().list(request, **kwargs)
         response.template_name = self.get_template_name()
         return response

@@ -5,6 +5,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
+from rest_framework_simplejwt.token_blacklist.models import OutstandingToken
 
 User = get_user_model()
 
@@ -44,6 +45,18 @@ class CustomUserAdmin(UserAdmin):
         }),
     )
     readonly_fields = ('id',)
+    actions = ('delete_selected_users',)
+
+    def get_actions(self, request):
+        actions = super().get_actions(request)
+        if 'delete_selected' in actions:
+            del actions['delete_selected']
+        return actions
+
+    def delete_selected_users(self, request, queryset):
+        users_ids = queryset.values_list("id", flat=True)
+        OutstandingToken.objects.filter(user_id__in=users_ids).delete()
+        queryset.delete()
 
 
 title = settings.MICROSERVICE_TITLE

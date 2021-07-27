@@ -1,0 +1,27 @@
+<!--modal-->
+<div id="pwdModalSignUp" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+
+      <div class="modal-body">
+        <div class="col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <div class="text-center">
+
+                <p>Congratulation the registration was made without mistakes!</p>
+                <div class="panel-body">
+                  <form id="buttonForm" action="{% url 'auth_app:login' %}" class="form" role="form" >
+                  <fieldset>
+                      <button class="btn btn-lg btn-primary btn-block signup-btn" type="submit" id = "clickMe">
+                          Click this button to finish your registration!
+                      </button>
+                  </fieldset>
+                  </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

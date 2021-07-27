@@ -31,7 +31,8 @@ class Category(models.Model):
 class Article(models.Model):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='article_set')
     title = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=200, allow_unicode=True, unique=True)
+    # comment = models.ForeignKey('Comment', on_delete=models.SET_NULL, null=True, related_name='article_set')
+    slug = models.SlugField(max_length=200, allow_unicode=True, unique=True)  # makes url more readable
     content = models.TextField()
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='article_set')
     created = models.DateTimeField(auto_now_add=True)
@@ -61,7 +62,11 @@ class Article(models.Model):
         ordering = ('-updated', '-created', 'id')
 
 
+DEFAULT_PARENT_COMMENT_ID = 1
+
+
 class Comment(models.Model):
+    # parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, default=DEFAULT_PARENT_COMMENT_ID)
     author = models.EmailField()
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='comment_set', blank=True)
     content = models.TextField(max_length=200)

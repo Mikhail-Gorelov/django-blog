@@ -4,15 +4,7 @@ from main.serializers import UserSerializer
 from .models import Category, Article, Comment
 
 
-class CommentSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Comment
-        fields = ('id', 'user', 'author', 'content', 'updated')
-
-
 class CategorySerializer(serializers.ModelSerializer):
-
     slug = serializers.SlugField(read_only=True, allow_unicode=True)
 
     class Meta:
@@ -25,14 +17,27 @@ class ArticleSerializer(serializers.ModelSerializer):
     author = UserSerializer()
     category = CategorySerializer()
     comments_count = serializers.IntegerField()
+    id = serializers.IntegerField()
 
     class Meta:
         model = Article
-        fields = ('title', 'url', 'author', 'category', 'created', 'updated', 'comments_count')
+        fields = ('title', 'url', 'author', 'category', 'created', 'updated', 'comments_count', 'id')
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    # article = ArticleSerializer()
+
+    # def to_representation(self, instance):
+    #     rep = super().to_representation(instance)
+    #     rep.update(rep.pop("article", {}))
+    #     return rep
+
+    class Meta:
+        model = Comment
+        fields = ('id', 'user', 'author', 'content', 'updated', 'article', 'user')
 
 
 class FullArticleSerializer(ArticleSerializer):
-
     comments = CommentSerializer(source='comment_set', many=True)
 
     class Meta(ArticleSerializer.Meta):

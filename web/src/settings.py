@@ -1,7 +1,6 @@
 import os
 
 from django.utils.translation import gettext_lazy as _
-
 from .additional_settings.defender_settings import *
 from .additional_settings.swagger_settings import *
 from .additional_settings.cacheops_settings import *
@@ -12,6 +11,7 @@ from .additional_settings.jwt_settings import *
 from .additional_settings.summernote_settings import *
 from .additional_settings.smtp_settings import *
 
+FRONTEND_SITE = "http://localhost:8008"
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -25,6 +25,7 @@ AUTH_USER_MODEL = 'main.User'
 
 SUPERUSER_EMAIL = os.environ.get('SUPERUSER_EMAIL', 'test@test.com')
 SUPERUSER_PASSWORD = os.environ.get('SUPERUSER_PASSWORD', 'tester26')
+ADMIN_EMAIL = ['misha_gorelov@mail.ru', 'gorielov.misha@gmail.com']
 
 MICROSERVICE_TITLE = os.environ.get('MICROSERVICE_TITLE', 'Template')
 GITHUB_URL = os.environ.get('GITHUB_URL', 'https://github.com')
@@ -59,7 +60,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-
 ]
 
 THIRD_PARTY_APPS = [
@@ -83,6 +83,8 @@ LOCAL_APPS = [
     'auth_app.apps.AuthAppConfig',
     'blog.apps.BlogConfig',
     'contact_us.apps.ContactUsConfig',
+    'about.apps.AboutConfig',
+    'user_profile.apps.UserProfileConfig',
 
 ]
 
@@ -116,6 +118,8 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
+    'DEFAULT_PAGINATION_CLASS': 'blog.pagination.StandardResultsSetPagination',
+    'PAGE_SIZE': 5,
 }
 
 if ENABLE_RENDERING:
@@ -250,3 +254,5 @@ if (SENTRY_DSN := os.environ.get('SENTRY_DSN')) and ENABLE_SENTRY:
         # django.contrib.auth) you may enable sending PII data.
         send_default_pii=True
     )
+
+print(EMAIL_HOST,  EMAIL_PORT, EMAIL_HOST_USER)
