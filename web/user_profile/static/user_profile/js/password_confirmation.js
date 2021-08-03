@@ -1,12 +1,13 @@
 $(function () {
   $('#passwordForm').submit(successFunc);
 });
+
 $("input[type=password]").keyup(function(){
     var ucase = new RegExp("[A-Z]+");
 	var lcase = new RegExp("[a-z]+");
 	var num = new RegExp("[0-9]+");
 
-	if($("#password1").val().length >= 8){
+	if($("#new_password1").val().length >= 8){
 		$("#8char").removeClass("glyphicon-remove");
 		$("#8char").addClass("glyphicon-ok");
 		$("#8char").css("color","#00A41E");
@@ -16,7 +17,7 @@ $("input[type=password]").keyup(function(){
 		$("#8char").css("color","#FF0004");
 	}
 
-	if(ucase.test($("#password1").val())){
+	if(ucase.test($("#new_password1").val())){
 		$("#ucase").removeClass("glyphicon-remove");
 		$("#ucase").addClass("glyphicon-ok");
 		$("#ucase").css("color","#00A41E");
@@ -26,7 +27,7 @@ $("input[type=password]").keyup(function(){
 		$("#ucase").css("color","#FF0004");
 	}
 
-	if(lcase.test($("#password1").val())){
+	if(lcase.test($("#new_password1").val())){
 		$("#lcase").removeClass("glyphicon-remove");
 		$("#lcase").addClass("glyphicon-ok");
 		$("#lcase").css("color","#00A41E");
@@ -36,7 +37,7 @@ $("input[type=password]").keyup(function(){
 		$("#lcase").css("color","#FF0004");
 	}
 
-	if(num.test($("#password1").val())){
+	if(num.test($("#new_password1").val())){
 		$("#num").removeClass("glyphicon-remove");
 		$("#num").addClass("glyphicon-ok");
 		$("#num").css("color","#00A41E");
@@ -46,7 +47,7 @@ $("input[type=password]").keyup(function(){
 		$("#num").css("color","#FF0004");
 	}
 
-	if($("#password1").val() == $("#password2").val()){
+	if($("#password1").val() == $("#new_password2").val()){
 		$("#pwmatch").removeClass("glyphicon-remove");
 		$("#pwmatch").addClass("glyphicon-ok");
 		$("#pwmatch").css("color","#00A41E");
@@ -59,15 +60,12 @@ $("input[type=password]").keyup(function(){
 
 function successFunc(e) {
   let form = $(this);
+  console.log("Here");
   e.preventDefault();
   $.ajax({
     url: form.attr("action"),
     type: "POST",
-    dataType: 'json',
-    data: {
-      "old_password": $("#password0").val(),
-      "new_password1": $("#password1").val(),
-      "new_password2": $("#password2").val()},
+    data:  form.serialize(),
     success: function (e) {
       url = "/auth/login/";
       window.location.href = url;
@@ -77,7 +75,8 @@ function successFunc(e) {
     },
   })
 }
-
+// нужно выяснить, какой тип данных нужен, не очевидно, как узнать, также пробовал через formdata,
+// но никаких успехов это не принесло, formData пустая
 function error_process(data) {
   console.log(data.responseText)
 // console.log($("#password1").val());

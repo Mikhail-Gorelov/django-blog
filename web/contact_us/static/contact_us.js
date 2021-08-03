@@ -6,7 +6,10 @@ function contactUs(e) {
   let form = $(this)
   console.log(form.serialize())
   e.preventDefault();
-  let formData = new FormData(form[0])
+  let formData = new FormData(form[0]);
+  // console.log(form.serialize());
+  // console.log(formData);
+  // console.log(form);
   $.ajax({
     url: form.attr("action"),
     type: "POST",
@@ -16,6 +19,7 @@ function contactUs(e) {
     success: function (data) {
       url = '/';
       window.location.href = url;
+      // console.log("success");
     },
     error: function (data) {
       error_process(data);

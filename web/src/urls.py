@@ -8,6 +8,8 @@ from .yasg import urlpatterns as swagger_url
 admin_url = settings.ADMIN_URL
 
 urlpatterns = [
+    path('actions/', include('actions.urls')),
+    path('user-profile/', include('user_profile.urls')),
     path('', include('main.urls')),
     path('auth/', include('auth_app.urls')),
     path('', include('blog.urls')),
@@ -18,7 +20,6 @@ urlpatterns = [
     path('rosetta/', include('rosetta.urls')),
     path('summernote/', include('django_summernote.urls')),
     path('about/', include('about.urls')),
-    path('user-profile/', include('user_profile.urls')),
 ]
 
 urlpatterns += swagger_url

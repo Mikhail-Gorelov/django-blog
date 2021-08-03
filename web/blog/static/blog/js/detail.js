@@ -1,12 +1,28 @@
 $(function () {
     get_comments();
+    $('#previousHref').click(getCommentsButton);
+    $('#nextHref').click(getCommentsButton);
 });
 
-
+function getCommentsButton(e) {
+  let button = $(this);
+  let href = button.data("href");
+  console.log(href);
+  $.ajax({
+    url: href,
+    type: "GET",
+    success: function (data) {
+      buttons(data);
+      result(data);
+    },
+})
+  //button.html(href);
+  e.preventDefault();
+}
 
 function get_comments() {
-  let article_id = $("#articleId").data("id")
-  url_web = "/comments/" + article_id + "/"
+  let article_id = $("#articleId").data("id");
+  let url_web = "/comments/" + article_id + "/";
   $.ajax({
     url: url_web,
     type: "GET",
@@ -16,45 +32,45 @@ function get_comments() {
     },
 })
 }
-// function successFunc(data) {
-//   console.log(data)
-//   console.log(data.next_url)
-//   console.log(data.previous_url)
-//
-//   // let a = document.getElementById('previousHref');
-//   // if (data.previous_url == null) {
-//   //   a.href = "#";
-//   // } else {
-//   //   a.href = data.previous_url;
-//   // }
-//   //
-//   // let b = document.getElementById('nextHref');
-//   //
-//   // if (data.next_url == null) {
-//   //   b.href = "#";
-//   // } else {
-//   //   b.href = data.next_url;
-//   // }
-//
-// }
 
 function buttons(data) {
-   let a = document.getElementById('previousHref');
-  if (data.previous_url == null) {
-    a.href = "#";
+   let a = $("#previousHref");
+   let li = $("#prev");
+  if (data.previous == null) {
+    //a.prop("disabled", true);
+    a.attr("href", "#");
+    li.attr("class", "previous disabled");
   } else {
-    a.href = data.previous_url;
+    li.removeClass("previous disabled");
+    // li.attr("class", "previous disabled");
+    a.attr("data-href", data.previous);
   }
 
-  let b = document.getElementById('nextHref');
+  let b = $("#nextHref");
 
-  if (data.next_url == null) {
-    b.href = "#";
+  if (data.next == null) {
+    //b.prop("disabled", true);
+    b.attr("href", "#");
+    let li = $("#nex");
+    li.attr("class", "next disabled");
   } else {
-    b.href = data.next_url;
+    li.removeClass("next disabled");
+    b.attr("data-href", data.next);
   }
 }
 
 function result(data) {
-  console.log(data)
+  let concat = "";
+  console.log(data);
+
+  for (let i = 0; i < data.results.length; ++i) {
+    // здесь отображаются все комментарии
+    concat += " <h3><i class=\"fa fa-comment\"></i> "
+      + data.results[i].author   +  "<small>" + data.results[i].updated +
+      "</small>" + "</h3>" + "<p>" + data.results[i].content + "</p>";
+    // $('#articleId').html();
+    // $('#articleId').html();
+  }
+  $('#articleId').html(concat);
+
 }

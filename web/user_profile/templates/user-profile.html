@@ -1,3 +1,6 @@
+{% load static %}
+{% load i18n main %}
+{% microservice_title as site_name %}
 {% block content %}
 <title>User profile</title>
 {% block head %}
@@ -6,7 +9,12 @@
 <script src="https://bootstraptema.ru/plugins/jquery/jquery-1.11.3.min.js"></script>
 <script src="https://bootstraptema.ru/plugins/2015/b-v3-3-6/bootstrap.min.js"></script>
 {% endblock head %}
-
+<script>
+  $(document).ready(function(){
+    $.getScript('{% static 'user_profile/js/user-profile.js' %}');
+    {% block jquery %} {% endblock jquery %}
+})
+</script>
 <br><br><br>
 
 <style>
@@ -63,7 +71,8 @@ body{background:url(https://bootstraptema.ru/images/bg/bg-1.png)}
  </div>
  <div class="panel-body">
  <div class="text-center" id="author">
- <img src="{{ image }}">
+ <img src="{{ image }}" width="240" height="240">
+<input id="updataImageInput" type="file" name="image" value="Обзор...">
  </div>
  </div>
  </div>
@@ -73,6 +82,7 @@ body{background:url(https://bootstraptema.ru/images/bg/bg-1.png)}
  <div class="panel-body">
  <ul id="myTab" class="nav nav-pills">
  <li class="active"><a href="#detail" data-toggle="tab">О пользователе</a></li>
+ <li class=""><a href="#changepswd" class="btn btn-link pull-right" data-toggle="modal" data-target="#pwdModalChange"> Смена пароля </a></li>
  <li class=""><a href="{% url 'user_profile:api_list_true_users' %}">Посмотреть список пользователей</a></li>
  </ul>
  <div id="myTabContent" class="tab-content">

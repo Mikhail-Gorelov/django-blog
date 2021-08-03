@@ -19,6 +19,8 @@ urlpatterns = [
 urlpatterns += [
     path('true-users/', views.TrueUserViewSet.as_view({'get': 'user_list'}), name='api_list_true_users'),
     path('password-change/', views.UserViewSet.as_view({"post": 'password_change'}), name='password_change'),
+    path('update-image/', views.UserViewSet.as_view({"post": 'update_image'}), name='update_image'),
+    path('<user_id>/', views.ProfileViewSet.as_view({"get": "list"}), name='user_profile'),
 ]
 
 urlpatterns += router.urls

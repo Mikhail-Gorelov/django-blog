@@ -1,7 +1,9 @@
 {% extends "blog/base.html" %}
 {% load static main %}
 
-{% block head %}{% endblock head %}
+{% block head %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+{% endblock head %}
 
 {% block container %}
 <div class="row">
@@ -27,10 +29,21 @@
     <br/>
     <hr>
     <!-- the comment box -->
+    <div class="well">
+  <h4><i class="fa fa-paper-plane-o"></i> Leave a Comment:</h4>
+  <form role="form">
+    <div class="form-group">
+      <textarea class="form-control" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary"><i class="fa fa-reply"></i> Submit</button>
+  </form>
+</div>
+<hr>
 
-    <div id="articleId" data-id="{{ id }}">
-  {% include 'blog/includes/comments.html' %}
-  </div>
+
+    <div id="articleId" data-id="{{ id }}"></div>
+    {% include 'blog/includes/previous_and_next.html' %}
+
 
 
   </div>

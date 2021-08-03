@@ -85,6 +85,7 @@ LOCAL_APPS = [
     'contact_us.apps.ContactUsConfig',
     'about.apps.AboutConfig',
     'user_profile.apps.UserProfileConfig',
+    'actions.apps.ActionsConfig',
 
 ]
 

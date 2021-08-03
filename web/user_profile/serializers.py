@@ -45,3 +45,10 @@ class ChangePasswordSerializer(PasswordChangeSerializer):
     old_password = serializers.CharField()
     new_password1 = serializers.CharField(min_length=8)
     new_password2 = serializers.CharField(min_length=8)
+
+
+class ChangeImageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Profile
+        fields = ['image']

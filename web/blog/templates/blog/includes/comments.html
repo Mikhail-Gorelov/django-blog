@@ -18,14 +18,6 @@
 
 <!-- make loop through all the comments -->
 
-<!-- if there is a main page -->
-{% for comment in comments|slice:":5" %}
-    <h3><i class="fa fa-comment"></i> {{ comment.author }} says:
-    <small> {{ comment.updated }}</small>
-  </h3>
-  <p>{{ comment.content |safe }}</p>
-{% endfor %}
-
 <!-- if there is no main page -->
 {% for comment in results %}
   <h3><i class="fa fa-comment"></i> {{ comment.author }} says:
@@ -34,7 +26,4 @@
   <p>{{ comment.content |safe }}</p>
 {% endfor %}
 {% include 'blog/includes/previous_and_next.html' %}
-{% endblock %}
-{% block jquery %}
-$.getScript('{% static 'blog/js/comments.js' %}');
 {% endblock %}
