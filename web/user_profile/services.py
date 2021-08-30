@@ -11,5 +11,5 @@ class UserProfileService:
         # return User.objects.all()
 
     @staticmethod
-    def get_user_profile_queryset(id):
-        return User.objects.filter(id=id, )
+    def get_user_profile_queryset(user_id):
+        return User.objects.filter(id=user_id, )

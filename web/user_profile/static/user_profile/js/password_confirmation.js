@@ -67,7 +67,11 @@ function successFunc(e) {
     type: "POST",
     data:  form.serialize(),
     success: function (e) {
-      url = "/auth/login/";
+      $.ajax({
+        url: '/auth/logout/',
+        type: "POST",
+      });
+      let url = "/auth/login/";
       window.location.href = url;
     },
     error: function (data) {
@@ -82,3 +86,11 @@ function error_process(data) {
 // console.log($("#password1").val());
 // console.log($("#password2").val());
 }
+
+
+// $('#submitPasswdInput').click(urlFunc);
+//       function urlFunc(e) {
+//           e.preventDefault();
+//           let href = $(this);
+//           return href.data("href");
+//         }

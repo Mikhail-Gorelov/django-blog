@@ -3,12 +3,12 @@ from rest_framework.routers import DefaultRouter
 
 from . import views
 
-app_name = 'actions'
+app_name = 'api_test_case'
 
 router = DefaultRouter()
 
 urlpatterns = [
-    path('follow/', views.FollowerView.as_view(), name="follow"),
+
 ]
 
 urlpatterns += router.urls

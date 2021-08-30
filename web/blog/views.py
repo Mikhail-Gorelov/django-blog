@@ -51,8 +51,11 @@ class ArticleViewSet(ViewSet):
         return BlogService.get_active_articles()
 
     def list(self, request, **kwargs):
+        queryset = self.get_queryset()
         response = super().list(request, **kwargs)
         response.template_name = self.get_template_name()
+
+        print(queryset)
         return response
 
     def retrieve(self, request, **kwargs):

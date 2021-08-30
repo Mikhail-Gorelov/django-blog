@@ -3,10 +3,15 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.generics import GenericAPIView
-from rest_framework.mixins import ListModelMixin
+from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
+from rest_framework.permissions import AllowAny
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework import status, viewsets
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.decorators import action
+from rest_framework.permissions import BasePermission, IsAdminUser, IsAuthenticatedOrReadOnly
+
 from .models import Profile
 from . import services
 from . import serializers
@@ -19,9 +24,22 @@ User = get_user_model()
 logger = logging.getLogger(__name__)
 
 
+class ViewSet(ModelViewSet):
+    # http_method_names = ('get', 'put')
+    # permission_classes = (AllowAny,)
+
+    def get_permissions(self):
+        if self.action == 'retrieve':
+            permission_classes = (IsAuthenticatedOrReadOnly,)
+        else:
+            permission_classes = (AllowAny,)
+        return [permission() for permission in permission_classes]
+
+
 class UserViewSet(viewsets.GenericViewSet):
     # template_name = "user-profile.html"
     queryset = User.objects.all()
+
     # parser_classes = [MultiPartParser]
 
     def get_template_name(self):
@@ -58,9 +76,10 @@ class UserViewSet(viewsets.GenericViewSet):
         return Response(serializer.data, template_name=self.template_name)
 
 
-class ProfileViewSet(ListModelMixin, UserViewSet, viewsets.GenericViewSet):
+class ProfileViewSet(ViewSet, RetrieveModelMixin, UserViewSet):
     template_name = "user-profile.html"
     serializer_class = serializers.UserProfileSerializer
+    lookup_field = "id"
 
     def profile(self, request):
         serializer = self.get_serializer(request.user)
@@ -69,14 +88,16 @@ class ProfileViewSet(ListModelMixin, UserViewSet, viewsets.GenericViewSet):
     def perform_create(self, serializer):
         serializer.save()
 
-    def get_queryset(self):
-        print(self.kwargs)
-        return UserProfileService.get_user_profile_queryset(id=self.kwargs.get("id"))
-
-    def list(self, request, user_id, *args, **kwargs):
-        response = super().list(request, **kwargs)
-        response.template_name = self.template_name
-        return response
+    # def get_queryset(self):
+    #     print(self.kwargs)
+    #     return UserProfileService.get_user_profile_queryset(user_id=self.kwargs.get("id"))
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
+        # response = super().list(request, **kwargs)
+        # response.template_name = self.template_name
+        # return response
 
 
 class TrueUserViewSet(viewsets.GenericViewSet):

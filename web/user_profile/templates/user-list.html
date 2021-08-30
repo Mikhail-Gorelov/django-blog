@@ -17,7 +17,7 @@
             </div>
             <div class="span10">
                 <strong>{{ user.birthdate }}</strong><br>
-                <strong>{{ user.full_name }}</strong><br>
+                <a href="{% url 'user_profile:user_profile_id'  user.id %}"><strong>{{ user.full_name }}</strong></a><br>
             </div>
             <div class="span1 dropdown-user" data-for=".cyruxx">
                 <i class="icon-chevron-down text-muted"></i>
@@ -60,6 +60,7 @@
                                         <td>Website:</td>
                                         <td> {{ user.website }}</td>
                                     </tr>
+
                                     </tbody>
                                 </table>
                             </div>

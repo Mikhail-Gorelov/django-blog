@@ -48,7 +48,12 @@ class ChangePasswordSerializer(PasswordChangeSerializer):
 
 
 class ChangeImageSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Profile
         fields = ['image']
+
+    def validate(self, attrs):
+        limit = 4 * 1024 * 1024  # 4 mb
+        if attrs.get('image').size > limit:
+            raise serializers.ValidationError('File too large. Size should not exceed 4 MiB.')
+        return attrs

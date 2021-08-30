@@ -11,19 +11,17 @@ class FollowerSerializer(serializers.ModelSerializer):
         model = Follower
         fields = ('to_user', )
 
-    def create(self, validated_data, to_user):
-        instance = Follower(**validated_data)
-        instance.save()
-        return instance
-
-    def save(self, **kwargs):
+    def save(self):
+        if self.validated_data["to_user"] is None:
+            self.to_user = 296
+        else:
+            self.validated_data["to_user"] = None
+        # 1) проверка на существование записи
+        # 2) если записи нет
+        # 3) создаём подписку
+        # 4) иначе удаляем подписку
         print(self.validated_data)
-        to_user_instance = Follower.objects.create(**self.validated_data)
-        request = self.context.get('request')
-        if request == 'delete':
-            del self.validated_data['another thing']
-            del to_user_instance
-        return to_user_instance
+        # return to_user_instance
 
     @property
     def data(self):

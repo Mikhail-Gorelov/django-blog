@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  web:
+  blog:
     build:
       context: .
       dockerfile: docker/dev/web/Dockerfile
@@ -95,5 +95,6 @@ volumes:
 networks:
   microservice_network:
     driver: bridge
+    name: local_microservice_network
   separated_network:
     driver: bridge

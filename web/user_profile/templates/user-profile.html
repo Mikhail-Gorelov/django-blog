@@ -65,14 +65,14 @@ body{background:url(https://bootstraptema.ru/images/bg/bg-1.png)}
  <div class="panel-heading">
  <header class="panel-title">
  <div class="text-center">
- <strong>Пользователь сайта {{ full_name }} </strong>
+ <strong>Пользователь сайта <input type="text" data-href="{% url 'user_profile:user_profile' %}" name="full_name" id="full_name" value={{ full_name }}> </strong>
  </div>
  </header>
  </div>
  <div class="panel-body">
  <div class="text-center" id="author">
- <img src="{{ image }}" width="240" height="240">
-<input id="updataImageInput" type="file" name="image" value="Обзор...">
+ <img src="{{ image }}" width="240" height="240" id="userAvatar">
+<input id="updateImageInput" data-href="{% url 'user_profile:update_image' %}" type="file" name="image" value="Обзор...">
  </div>
  </div>
  </div>
@@ -91,15 +91,20 @@ body{background:url(https://bootstraptema.ru/images/bg/bg-1.png)}
  <h4>История профиля</h4>
  <table class="table table-th-block">
  <tbody>
- <tr><td class="active">Дата рождения:</td><td>{{ birthdate }}</td></tr>
+  <tr><td class="active">Дата рождения:</td><td> <input type="text" data-href="{% url 'user_profile:user_profile' %}" name="birthdate" id="birthdate" value={{ birthdate }}>
+</td></tr>
  {% if gender == 0 %}
-    <tr><td class="active">Пол:</td><td> Male </td></tr>
+    <tr><td class="active">Пол:</td><td>  <input type="text" data-href="{% url 'user_profile:user_profile' %}" name="gender" id="gender" value="Male">
+ </td></tr>
  {% endif %}
  {% if gender == 1 %}
-    <tr><td class="active">Пол:</td><td> Female </td></tr>
+    <tr><td class="active">Пол:</td><td>  <input type="text" data-href="{% url 'user_profile:user_profile' %}" name="gender" id="gender" value="Female">
+ </td></tr>
  {% endif %}
- <tr><td class="active">Веб-сайт:</td><td>{{ website }}</td></tr>
- <tr><td class="active">Биография:</td><td>{{ bio }}</td></tr>
+ <tr><td class="active">Веб-сайт:</td><td> <input type="text" data-href="{% url 'user_profile:user_profile' %}" name="website" id="website" value={{ website }}>
+</td></tr>
+ <tr><td class="active">Биография:</td><td> <input type="text" data-href="{% url 'user_profile:user_profile' %}" name="bio" id="bio" value={{ bio }}>
+</td></tr>
 </tbody>
  </table>
  </div>
