@@ -4,6 +4,10 @@ from django.urls import path, include
 from django.conf.urls.static import static
 
 from .yasg import urlpatterns as swagger_url
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 admin_url = settings.ADMIN_URL
 
@@ -20,6 +24,8 @@ urlpatterns = [
     path('rosetta/', include('rosetta.urls')),
     path('summernote/', include('django_summernote.urls')),
     path('about/', include('about.urls')),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
 
 urlpatterns += swagger_url
@@ -31,4 +37,5 @@ if settings.DEBUG:
         urlpatterns += [path('silk/', include('silk.urls', namespace='silk'))]
     if settings.ENABLE_DEBUG_TOOLBAR:
         from debug_toolbar import urls
+
         urlpatterns += [path('__debug__/', include(urls))]

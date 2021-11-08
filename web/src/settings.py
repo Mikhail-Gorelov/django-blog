@@ -10,6 +10,29 @@ from .additional_settings.allauth_settings import *
 from .additional_settings.jwt_settings import *
 from .additional_settings.summernote_settings import *
 from .additional_settings.smtp_settings import *
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
+
+sentry_sdk.init(
+    dsn="https://examplePublicKey@o0.ingest.sentry.io/0",
+    integrations=[DjangoIntegration()],
+
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production,
+    traces_sample_rate=1.0,
+
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True,
+
+    # By default the SDK will try to use the SENTRY_RELEASE
+    # environment variable, or infer a git commit
+    # SHA as release, however you may want to set
+    # something more human-readable.
+    # release="myapp@1.0.0",
+)
 
 FRONTEND_SITE = "http://localhost:8008"
 
@@ -37,6 +60,14 @@ ENABLE_SENTRY = int(os.environ.get('ENABLE_SENTRY', 0))
 ENABLE_SILK = int(os.environ.get('ENABLE_SILK', 0))
 ENABLE_DEBUG_TOOLBAR = int(os.environ.get('ENABLE_DEBUG_TOOLBAR', 0))
 ENABLE_RENDERING = int(os.environ.get('ENABLE_RENDERING', 0))
+
+SESSION_COOKIE_NAME = 'sessionid_blog'
+CSRF_COOKIE_NAME = 'csrftoken_blog'
+
+CHAT_API_URL = os.environ.get('CHAT_API_URL')
+CHAT_API_KEY = os.environ.get('CHAT_API_KEY')
+
+BACKEND_SITE = os.environ.get('BACKEND_SITE')
 
 INTERNAL_IPS = []
 
@@ -71,6 +102,7 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount',
     'defender',
     'rest_framework',
+    'rest_framework_simplejwt',
     'drf_yasg',
     'corsheaders',
     'rosetta',
@@ -106,6 +138,16 @@ MIDDLEWARE = [
     'django.middleware.locale.LocaleMiddleware',
 
 ]
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": REDIS_URL + '/2',
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        },
+    }
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (

@@ -4,7 +4,9 @@ from auth_app.utils import get_activate_key
 from main.decorators import except_shell
 from src.celery import app
 from auth_app.tasks import send_information_email
-
+from django.conf import settings
+from microservice_request.services import MicroServiceConnect, ConnectionService
+from . import models
 User = get_user_model()
 
 
@@ -38,3 +40,7 @@ class UserService:
     @except_shell((User.DoesNotExist,))
     def get_user(email):
         return User.objects.get(email=email)
+
+
+class MainService(MicroServiceConnect):
+    service = settings.CHAT_API_URL

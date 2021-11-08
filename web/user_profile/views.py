@@ -11,7 +11,7 @@ from rest_framework import status, viewsets
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 from rest_framework.permissions import BasePermission, IsAdminUser, IsAuthenticatedOrReadOnly
-
+from django.core.cache import cache
 from .models import Profile
 from . import services
 from . import serializers
@@ -105,7 +105,11 @@ class TrueUserViewSet(viewsets.GenericViewSet):
     serializer_class = serializers.TrueUserSerializer
 
     def get_queryset(self):
-        return UserProfileService.get_user_queryset()
+        true_users = cache.get('true_users')
+        if true_users is None:
+            true_users = UserProfileService.get_user_queryset()
+            cache.set('true_users', true_users, timeout=120)
+        return true_users
 
     def user_list(self, request):
         serializer = self.get_serializer(self.get_queryset(), many=True)

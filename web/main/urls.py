@@ -3,12 +3,12 @@ from django.urls import path
 from django.views.generic import RedirectView
 from django.conf import settings
 
-from .views import UserView, SetUserTimeZone, TemplateAPIView
-
+from .views import UserView, SetUserTimeZone, TemplateAPIView, ValidateJWTView
 
 urlpatterns = [
     path('user/', UserView.as_view()),
     path('timezone/set/', SetUserTimeZone.as_view(), name='set_user_timezone'),
+    path('jwt/callback/', ValidateJWTView.as_view(), name='validate-jwt'),
 
 ]
 

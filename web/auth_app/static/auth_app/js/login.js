@@ -21,6 +21,7 @@ function login(e) {
     data: form.serialize(),
     success: function (data) {
       url = '/';
+      localStorage.setItem('access_token' ,data.access_token);
       window.location.href = url;
     },
     error: function (data) {

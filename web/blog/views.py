@@ -9,6 +9,7 @@ from main.pagination import BasePageNumberPagination
 from blog.pagination import StandardResultsSetPagination
 from blog.serializers import CommentSerializer
 from . import pagination
+from django.core.cache import cache
 from .services import BlogService
 from .filters import ArticleFilter
 from rest_framework.mixins import ListModelMixin
@@ -29,7 +30,11 @@ class CategoryViewSet(ViewSet):
     serializer_class = serializers.CategorySerializer
 
     def get_queryset(self):
-        return BlogService.category_queryset()
+        categories = cache.get('categories')
+        if categories is None:
+            categories = BlogService.category_queryset()
+            cache.set('categories', categories)
+        return categories
 
 
 class ArticleViewSet(ViewSet):
@@ -48,7 +53,11 @@ class ArticleViewSet(ViewSet):
         return serializers.FullArticleSerializer
 
     def get_queryset(self):
-        return BlogService.get_active_articles()
+        posts = cache.get('posts')
+        if posts is None:
+            posts = BlogService.get_active_articles()
+            cache.set('posts', posts)
+        return posts
 
     def list(self, request, **kwargs):
         queryset = self.get_queryset()

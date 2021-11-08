@@ -1,8 +1,15 @@
 from rest_framework import serializers
+from rest_framework.request import Request
+from rest_framework.status import HTTP_400_BAD_REQUEST
+
+from main.services import MainService
+from src import settings
 from .models import Profile
 from django.contrib.auth import get_user_model
 from .choices import GenderChoice
 from dj_rest_auth.serializers import PasswordChangeSerializer
+
+from .services import UserProfileService
 
 User = get_user_model()
 
@@ -57,3 +64,12 @@ class ChangeImageSerializer(serializers.ModelSerializer):
         if attrs.get('image').size > limit:
             raise serializers.ValidationError('File too large. Size should not exceed 4 MiB.')
         return attrs
+
+
+class UserShortInfoSerializer(serializers.ModelSerializer):
+    image = serializers.URLField(source='avatar_url')
+    profile = serializers.URLField(source='get_absolute_url')
+
+    class Meta:
+        model = User
+        fields = ('id', 'full_name', 'image', 'profile')

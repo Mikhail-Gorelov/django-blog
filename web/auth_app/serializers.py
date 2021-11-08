@@ -125,3 +125,7 @@ class PasswordResetConfirmSerializer(auth_serializers.PasswordResetConfirmSerial
 
 class VerifyEmailSerializer(serializers.Serializer):
     key = serializers.CharField()
+
+
+class UserDataByCookieSerializer():
+    pass

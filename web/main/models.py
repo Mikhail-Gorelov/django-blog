@@ -1,5 +1,9 @@
+from urllib.parse import urljoin
+
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 from .managers import UserManager
@@ -24,6 +28,16 @@ class User(AbstractUser):
 
     def full_name(self):
         return super().get_full_name()
+
+    def avatar_url(self):
+        return urljoin(settings.BACKEND_SITE, self.profile.image.url)
+
+    def profile_url(self):
+        return self.profile.website
+
+    def get_absolute_url(self):
+        url = 'user_profile:user_profile_id'
+        return urljoin(settings.BACKEND_SITE, str(reverse_lazy(url, kwargs={'id': self.id})))
 
     # def get_short_name(self):
     #     return super().get_short_name()
