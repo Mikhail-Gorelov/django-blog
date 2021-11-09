@@ -9,6 +9,7 @@ urlpatterns = [
     path('user/', UserView.as_view()),
     path('timezone/set/', SetUserTimeZone.as_view(), name='set_user_timezone'),
     path('jwt/callback/', ValidateJWTView.as_view(), name='validate-jwt'),
+    # path('user-information/', )
 
 ]
 

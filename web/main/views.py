@@ -8,7 +8,7 @@ from rest_framework.parsers import FormParser
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 
-from .serializers import UserSerializer, SetTimeZoneSerializer, ValidateJWTSerializer
+from .serializers import UserSerializer, SetTimeZoneSerializer, ValidateJWTSerializer, ReturnUsersSerializer
 
 User = get_user_model()
 
@@ -70,4 +70,14 @@ class ValidateJWTView(GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         # return Response({"detail": "hello from blog"})
+        return Response(serializer.response_data)
+
+
+class ReturnUserInfoView(GenericAPIView):
+    serializer_class = ReturnUsersSerializer
+    permission_classes = ()
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         return Response(serializer.response_data)

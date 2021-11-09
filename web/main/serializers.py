@@ -35,3 +35,10 @@ class ValidateJWTSerializer(serializers.Serializer):
     def response_data(self) -> dict:
         print(self.context)
         return UserShortInfoSerializer(self.user, context=self.context).data
+
+
+class ReturnUsersSerializer(serializers.Serializer):
+    @property
+    def response_data(self) -> dict:
+        print(self.context)
+        return UserShortInfoSerializer(self.user, context=self.context).data
