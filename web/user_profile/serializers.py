@@ -8,6 +8,7 @@ from .models import Profile
 from django.contrib.auth import get_user_model
 from .choices import GenderChoice
 from dj_rest_auth.serializers import PasswordChangeSerializer
+from allauth.account.utils import setup_user_email
 
 from .services import UserProfileService
 
@@ -73,3 +74,10 @@ class UserShortInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'full_name', 'image', 'profile')
+
+
+class GetUsersIdSerializer(serializers.Serializer):
+    user_id = serializers.ListField(child=serializers.IntegerField())
+
+    def validate(self, attrs):
+        return attrs

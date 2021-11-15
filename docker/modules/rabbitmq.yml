@@ -1,0 +1,32 @@
+# Message Broker RabbitMQ for Celery queues
+
+version: '3.7'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: root
+      RABBITMQ_DEFAULT_PASS: StayavayfrommyW977
+      RABBITMQ_DEFAULT_VHOST: blog
+    restart: always
+    healthcheck:
+      test: rabbitmq-diagnostics -q status
+      interval: 10s
+      timeout: 30s
+      retries: 3
+    networks:
+      - queue_network
+
+volumes:
+  rabbitmq:
+
+networks:
+  queue_network:
+    driver: bridge
+    name: rabbitmq_queue_network

@@ -25,13 +25,6 @@ class ArticleSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    # article = ArticleSerializer()
-
-    # def to_representation(self, instance):
-    #     rep = super().to_representation(instance)
-    #     rep.update(rep.pop("article", {}))
-    #     return rep
-
     class Meta:
         model = Comment
         fields = ('id', 'user', 'author', 'content', 'updated', 'article', 'user')

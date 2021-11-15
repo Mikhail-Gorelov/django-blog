@@ -7,6 +7,11 @@ from rest_framework.response import Response
 from rest_framework.parsers import FormParser
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
+from user_profile import serializers as user_profile_serializer
+from user_profile import models as user_profile_models
+from . import models
+from allauth.account.models import EmailAddress
+
 
 from .serializers import UserSerializer, SetTimeZoneSerializer, ValidateJWTSerializer, ReturnUsersSerializer
 
@@ -74,10 +79,12 @@ class ValidateJWTView(GenericAPIView):
 
 
 class ReturnUserInfoView(GenericAPIView):
-    serializer_class = ReturnUsersSerializer
-    permission_classes = ()
+    serializer_class = user_profile_serializer.GetUsersIdSerializer
+    permission_classes = (AllowAny,)
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        return Response(serializer.response_data)
+        user_list = User.objects.filter(pk__in=serializer.data['user_id'])
+        users_info = user_profile_serializer.UserShortInfoSerializer(user_list, many=True)
+        return Response(users_info.data)
