@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:3.9.1-alpine as builder
+FROM python:3.10.0-alpine as builder
 MAINTAINER bandirom@ukr.net
 
 RUN apk update \
@@ -18,7 +18,7 @@ RUN pip install --upgrade pip \
 
 
 # pull official base image
-FROM python:3.9.1-alpine
+FROM python:3.10.0-alpine
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -45,9 +45,9 @@ COPY --from=builder /install /usr/local
 COPY --chown=$USER:$USER ./docker/prod/web/entrypoints /
 COPY --chown=$USER:$USER ./web $APP_HOME
 
-RUN chmod +x /entrypoint.sh /tests.sh \
-    && mkdir -p static \
-    && chown -R $USER:$USER static \
-    && flake8 .
+RUN chmod +x /*.sh && \
+    mkdir -p static logs  && \
+    chown -R $USER:$USER static logs  && \
+    flake8 .
 
 USER $USER

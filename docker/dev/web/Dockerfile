@@ -1,14 +1,14 @@
 # pull official base image
-FROM python:3.9.1-alpine
+FROM python:3.10.0-alpine
 MAINTAINER bandirom@ukr.net
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
 	PYTHONUNBUFFERED=1 \
 	TZ=Europe/Kiev \
 	LANG=C.UTF-8 \
-	HOME=/usr/src/web
+	APP_HOME=/usr/src/web
 
-WORKDIR $HOME
+WORKDIR $APP_HOME
 
 ARG GID=1000
 ARG UID=1000
@@ -26,12 +26,12 @@ RUN apk update \
 COPY ./web/src/requirements  ./requirements
 RUN pip install -r ./requirements/local.txt
 
-COPY --chown=$USER:$USER ./docker/dev/web/entrypoint.sh /
-COPY --chown=$USER:$USER ./web $HOME
+COPY --chown=$USER:$USER ./docker/dev/web/entrypoints /
+COPY --chown=$USER:$USER ./web $APP_HOME
 
-RUN chmod +x /entrypoint.sh \
-    && mkdir -p $HOME/static /redis_socket \
-    && chown -R $USER:$USER $HOME/static \
+RUN chmod +x /*.sh \
+    && mkdir -p $APP_HOME/static /redis_socket \
+    && chown -R $USER:$USER $APP_HOME/static \
     && chmod -R 777 /redis_socket \
     && flake8 .
 
