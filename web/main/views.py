@@ -11,7 +11,7 @@ from user_profile import serializers as user_profile_serializer
 from user_profile import models as user_profile_models
 from . import models
 from allauth.account.models import EmailAddress
-
+from src.celery import app
 
 from .serializers import UserSerializer, SetTimeZoneSerializer, ValidateJWTSerializer, ReturnUsersSerializer
 
@@ -58,6 +58,11 @@ class SetUserTimeZone(GenericAPIView):
     def post(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+        result = app.send_task(
+            name='main.tasks.add',
+            kwargs={'x': 2, 'y': 2},
+        )
+        print(result)
         response = Response()
         response.set_cookie(
             key=getattr(settings, 'TIMEZONE_COOKIE_NAME', 'timezone'),

@@ -1,7 +1,8 @@
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 from rest_framework.request import Request
 from rest_framework.status import HTTP_400_BAD_REQUEST
-
+from . import models
 from main.services import MainService
 from src import settings
 from .models import Profile
@@ -80,4 +81,9 @@ class GetUsersIdSerializer(serializers.Serializer):
     user_id = serializers.ListField(child=serializers.IntegerField())
 
     def validate(self, attrs):
+        users = set(models.User.objects.filter(pk__in=attrs['user_id']).values_list('id', flat=True))
+        not_existed_users = set(attrs['user_id']).difference(users)
+        errors = {user: "Not found" for user in not_existed_users}
+        if errors:
+            raise serializers.ValidationError(errors)
         return attrs

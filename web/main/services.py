@@ -20,6 +20,7 @@ class CeleryService:
     @staticmethod
     def send_email_confirm(user):
         key = get_activate_key(user)
+        print(key)
         kwargs = {
             'template_name': "auth_app/success_registration.html",
             'subject': "Congrats!Here is your confirmation url!",

@@ -1,4 +1,5 @@
 from os import environ
+from kombu import Queue
 
 CELERY_BROKER_URL = environ.get('CELERY_BROKER_URL')
 CELERY_RESULT_BACKEND = environ.get('CELERY_RESULT_BACKEND')
@@ -22,6 +23,19 @@ CELERY_BROKER_TRANSPORT_OPTIONS = {
     'interval_max': 3,
 }
 
+# CELERY_TASK_QUEUES = (
+#     Queue('blog', exchange='blog'),
+# )
+
+CELERY_TASK_DEFAULT_EXCHANGE = "celery"
+
+CELERY_TASK_QUEUES = {
+    "blog": {
+        "binding_key": "blog",
+    }
+}
+
 CELERY_TASK_ROUTES = {
-    '*': {'queue': 'celery'},
+    '*': {'queue': 'blog'},
+    'main.tasks.*': {'queue': 'blog'}
 }
