@@ -1,18 +1,9 @@
 import pytz
-from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import AccessToken
 
 from user_profile.serializers import UserShortInfoSerializer
-
-User = get_user_model()
-
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('id', 'full_name', 'email')
 
 
 class SetTimeZoneSerializer(serializers.Serializer):

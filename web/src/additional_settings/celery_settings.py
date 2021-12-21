@@ -1,11 +1,12 @@
 from os import environ
-from kombu import Queue
+from kombu import Queue, Exchange
 
 CELERY_BROKER_URL = environ.get('CELERY_BROKER_URL')
 CELERY_RESULT_BACKEND = environ.get('CELERY_RESULT_BACKEND')
 
 CELERY_TIMEZONE = "Europe/Kiev"
 
+CELERY_RESULT_PERSISTENT = True
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 CELERY_ACCEPT_CONTENT = ['json']

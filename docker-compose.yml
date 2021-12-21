@@ -72,7 +72,7 @@ services:
     build:
       context: .
       dockerfile: docker/dev/web/Dockerfile
-    command: celery -A src worker -l info
+    command: celery -A src worker -l info -Q celery
     volumes:
       - ./web/:/usr/src/web/
       - redis_socket:/redis_socket
@@ -87,7 +87,8 @@ services:
     restart: always
     networks:
       - separated_network
-
+    extra_hosts:
+      - "docker-gateway-host:172.17.0.1"
 
 volumes:
   postgres_data:

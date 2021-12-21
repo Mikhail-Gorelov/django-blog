@@ -1,4 +1,3 @@
-
 def parse_str_with_space(var: str) -> str:
     """ return string without multiply whitespaces
     Example: var = "My name  is   John    "
@@ -19,3 +18,12 @@ def find_by_key(data: dict, target):
             for i in v:
                 if isinstance(i, dict):
                     return find_by_key(i, target)
+
+
+def find_dict_in_list(target: list[dict], dict_key, lookup_value) -> dict:
+    """Find a dict in a list of dict by dict key"""
+    return next(iter(x for x in target if x.get(dict_key) == lookup_value), {})
+
+
+def get_user_language(request) -> str:
+    return request.headers.get('Accept-Language', 'en').split(',')[0]

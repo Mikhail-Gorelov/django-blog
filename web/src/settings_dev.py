@@ -13,6 +13,7 @@ if ENABLE_SILK:
 
 if ENABLE_DEBUG_TOOLBAR:
     from socket import gethostbyname_ex, gethostname
+
     INSTALLED_APPS += ['debug_toolbar']
     MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
     hostname, d, ips = gethostbyname_ex(gethostname())
