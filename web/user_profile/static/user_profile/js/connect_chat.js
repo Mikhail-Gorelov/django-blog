@@ -8,7 +8,7 @@ function ChatConnect(e) {
   let jwt = localStorage.getItem('access_token');
   let user_id = $('#chat-connect').data("id");
   // TODO: починить user_id, отправка письма с фронтом
-  let url = href + "?auth=" + jwt + "&user_id=" + "3";
+  let url = href + "?auth=" + jwt + "&user_id=" + user_id;
 
   window.open(url,"_blank").focus();
 }

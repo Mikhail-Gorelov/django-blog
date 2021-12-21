@@ -2,6 +2,10 @@ version: '3.7'
 
 services:
   nginx:
+    build:
+      context: .
+      dockerfile: docker/prod/nginx/Dockerfile
+    image: bandirom/django-template-nginx:${DOCKER_TAG:-latest}
     volumes:
       - static_volume:/home/ubuntu/web/static
       - media_volume:/home/ubuntu/web/media
@@ -17,10 +21,13 @@ services:
       retries: 3
     networks:
       - microservice_network
+    extra_hosts:
+      - "docker-gateway-host:172.17.0.1"
   web:
     build:
       context: .
       dockerfile: docker/prod/web/Dockerfile
+    image: bandirom/django-template:${DOCKER_TAG:-latest}
     entrypoint: /entrypoint.sh
     volumes:
       - static_volume:/home/ubuntu/web/static
@@ -48,10 +55,13 @@ services:
       interval: 1m30s
       timeout: 3s
       retries: 3
+    extra_hosts:
+      - "docker-gateway-host:172.17.0.1"
   celery:
     build:
       context: .
       dockerfile: docker/prod/web/Dockerfile
+    image: bandirom/django-template:${DOCKER_TAG:-latest}
     command: celery -A src worker -l info -Q celery
     env_file:
       - docker/prod/env/.env
@@ -65,8 +75,13 @@ services:
       - redis_socket:/redis_socket
     networks:
       - separated_network
+    extra_hosts:
+      - "docker-gateway-host:172.17.0.1"
   db:
-    image: postgres:12.6-alpine
+    build:
+      context: .
+      dockerfile: docker/prod/db/Dockerfile
+    image: bandirom/django-template-db:${DOCKER_TAG:-latest}
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:

@@ -1,3 +1,15 @@
+$(function () {
+  $('.send-message').click(sendMessage);
+});
+function sendMessage() {
+  let user_id = $('.send-message').data("id");
+  let href = $('.send-message').data("href");
+  let jwt = localStorage.getItem('access_token');
+
+  let url = href + "?auth=" + jwt + "&user_id=" + user_id;
+
+  window.open(url,"_blank").focus();
+}
 $(document).ready(function() {
     var panels = $('.user-infos');
     var panelsButton = $('.dropdown-user');
