@@ -17,6 +17,8 @@ User = get_user_model()
 
 
 class ProfileSerializer(serializers.ModelSerializer):
+    image = serializers.URLField(source='avatar_url')
+
     class Meta:
         model = Profile
         fields = ['gender', 'image', 'birthdate', 'bio', 'website']
@@ -24,6 +26,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     #    gender = serializers.ChoiceField(choices=GenderChoice.choices, source="profile.gender")
+    # profile = UserShortInfoSerializer()
     profile = ProfileSerializer()
 
     def to_representation(self, instance):

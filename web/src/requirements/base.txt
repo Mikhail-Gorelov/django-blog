@@ -11,7 +11,7 @@ django-defender==0.9.1
 redis==3.5.3
 
 # for RestAPI
-djangorestframework==3.12.4
+djangorestframework==3.13.1
 drf-yasg==1.20.0 # Swagger
 
 # for auth system
@@ -19,8 +19,6 @@ django-allauth==0.42.0
 dj-rest-auth==2.1.11
 djangorestframework-simplejwt==5.0.0
 PyJWT==2.1.0
-# MicroService Requests
-django-microservice-request==0.1.4.5
 
 # For backend working
 celery==5.1.2
@@ -40,7 +38,7 @@ django-cacheops==6.0
 django-redis==5.0.0
 
 # ImageField
-pillow==8.1.1
+Pillow==8.4.0
 
 # Translation
 django-rosetta==0.9.7

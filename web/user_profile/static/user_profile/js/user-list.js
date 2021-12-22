@@ -2,7 +2,7 @@ $(function () {
   $('.send-message').click(sendMessage);
 });
 function sendMessage() {
-  let user_id = $('.send-message').data("id");
+  let user_id = $(this).data("id");
   let href = $('.send-message').data("href");
   let jwt = localStorage.getItem('access_token');
 
