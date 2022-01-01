@@ -56,11 +56,11 @@ class UserSignUpSerializer(serializers.Serializer):
         # print(self.validated_data.pop('birthday'))
         # print(self.validated_data.pop('gender')
         request = self.context.get('request')
-        self.validated_data['password'] = make_password(self.validated_data.pop('password1'))
+        self.validated_data['password'] = self.validated_data.pop('password1')
         del self.validated_data['password2']
         if self.validated_data.get('captcha'):
             del self.validated_data['captcha']
-        user = User.objects.create(**self.validated_data, is_active=False)
+        user = User.objects.create_user(**self.validated_data, is_active=False)
         setup_user_email(request=request, user=user, addresses=[])
         for key, value in profile.items():
             setattr(user.profile, key, value)

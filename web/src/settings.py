@@ -13,7 +13,6 @@ from .additional_settings.smtp_settings import *
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
-
 sentry_sdk.init(
     dsn="https://examplePublicKey@o0.ingest.sentry.io/0",
     integrations=[DjangoIntegration()],
@@ -129,7 +128,6 @@ LOCAL_APPS = [
 
 INSTALLED_APPS += THIRD_PARTY_APPS + LOCAL_APPS
 
-
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'main.middleware.HealthCheckMiddleware',
@@ -177,7 +175,6 @@ if ENABLE_RENDERING:
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.TemplateHTMLRenderer',
     )
-
 
 ROOT_URLCONF = 'src.urls'
 
@@ -325,5 +322,4 @@ if (SENTRY_DSN := os.environ.get('SENTRY_DSN')) and ENABLE_SENTRY:
         # django.contrib.auth) you may enable sending PII data.
         send_default_pii=True
     )
-
-print(EMAIL_HOST,  EMAIL_PORT, EMAIL_HOST_USER)
+print(CELERY_BROKER_URL, CELERY_RESULT_BACKEND)

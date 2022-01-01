@@ -6,7 +6,7 @@ services:
   celery:
     env_file:
       - docker/dev/env/.mailhog.env
-  web:
+  blog:
     env_file:
       - docker/dev/env/.mailhog.env
   mailhog:
@@ -21,6 +21,8 @@ services:
       - separated_network
     env_file:
       - docker/dev/env/.email.env
+    logging:
+      driver: none
 
 
 volumes:
