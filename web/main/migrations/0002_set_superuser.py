@@ -18,12 +18,14 @@ def set_superuser(apps, schema_editor):
     )
     user.save()
     user.emailaddress_set.create(email=user.email, verified=True, primary=True)
+    # user.profile
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
         ('main', '0001_initial'),
+        # ('user_profile', '0001_initial'),
     ]
 
     operations = [
