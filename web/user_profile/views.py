@@ -1,4 +1,5 @@
 import logging
+import os
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from drf_yasg.utils import swagger_auto_schema
@@ -83,7 +84,8 @@ class ProfileViewSet(ViewSet, RetrieveModelMixin, UserViewSet):
 
     def profile(self, request):
         serializer = self.get_serializer(request.user)
-        return Response(serializer.data, template_name=self.template_name)
+        return Response({"user": serializer.data, "CHAT_SITE_INIT": os.environ.get("CHAT_SITE_INIT")},
+                        template_name=self.template_name)
 
     def perform_create(self, serializer):
         serializer.save()
@@ -113,7 +115,8 @@ class TrueUserViewSet(viewsets.GenericViewSet):
 
     def user_list(self, request):
         serializer = self.get_serializer(self.get_queryset(), many=True)
-        return Response({"users": serializer.data}, template_name=self.template_name)
+        return Response({"users": serializer.data, "CHAT_SITE_INIT": os.environ.get("CHAT_SITE_INIT")},
+                        template_name=self.template_name)
 
     def perform_create(self, serializer):
         serializer.save()

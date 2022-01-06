@@ -33,7 +33,7 @@ sentry_sdk.init(
     # release="myapp@1.0.0",
 )
 
-FRONTEND_SITE = "http://localhost:8008"
+FRONTEND_SITE = "https://blog.mikhail.jollymanager.com"
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
