@@ -25,3 +25,8 @@ def date(value: str):
 @register.simple_tag
 def timezone_cookie_name():
     return getattr(settings, 'TIMEZONE_COOKIE_NAME', 'timezone')
+
+
+@register.simple_tag
+def chat_site_init():
+    return 'https://chat.mikhail.jollymanager.com/init/'

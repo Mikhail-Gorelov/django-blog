@@ -1,5 +1,6 @@
 {% load static %}
-
+{% load main %}
+{% chat_site_init as site_init %}
 <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -67,7 +68,7 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <div class="send-message" data-id="{{ user.id }}" data-href="{{ CHAT_SITE_INIT }}">
+                        <div class="send-message" data-id="{{ user.id }}" data-href="{{ site_init }}">
                         <button class="btn  btn-primary" type="button"
                                 data-toggle="tooltip"
                                 data-original-title="Send message to user"><i class="icon-envelope icon-white"></i></button>
