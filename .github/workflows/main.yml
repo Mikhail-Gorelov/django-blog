@@ -24,13 +24,13 @@ jobs:
       - name: Build project
         run: docker-compose build
       - name: flake8
-        run: docker-compose run --entrypoint="" web flake8 .
+        run: docker-compose run --entrypoint="" blog flake8 .
       - name: black test
-        run: docker-compose run --entrypoint="" web black . --check
+        run: docker-compose run --entrypoint="" blog black . --check
       - name: Migration check
-        run: docker-compose run --entrypoint="" web python manage.py makemigrations --check
+        run: docker-compose run --entrypoint="" blog python manage.py makemigrations --check
       - name: Tests
-        run: docker-compose run --entrypoint="" web python manage.py test
+        run: docker-compose run --entrypoint="" blog python manage.py test
     services:
       postgres:
         image: bandirom/django-template-db:latest
