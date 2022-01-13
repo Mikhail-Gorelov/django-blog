@@ -1,4 +1,5 @@
-**django-template** is a project template based on |django_link| and |drf_link| with |docker_link|.
+**django-blog**
+It is a project based on |django_link| and |drf_link| with |docker_link|.
 Everything what you will need for develop included here.
 
 5 minutes and you will be ready for develop new projects!
@@ -9,7 +10,7 @@ Everything what you will need for develop included here.
 #. Docker-compose environment
 #. |celery_link| integration
 #. |postgres_link| and |redis_link| integrations
-#. Nginx and support SSL (TLS) certificates for https connections (Support http2 protocol)
+#. Nginx and support SSL (TLS) certificates
 #. CI/CD integrations for Github and Gitlab repositories.
 #. Swagger "out-of-box" for OpenApi
 

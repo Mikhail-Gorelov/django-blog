@@ -19,7 +19,8 @@ Usage
 
 Before start let's set up superuser email and password (not username)
 
-Open the project in your favorite IDE and edit :command:`docker/prod/env/.data.env` file.
+Open the project in your favorite IDE and edit
+:command:`docker/prod/env/.data.env` file.
 
 Set up variables for superuser::
 
