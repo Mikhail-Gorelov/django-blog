@@ -21,11 +21,11 @@ jobs:
       - name: Build project
         run: docker-compose build
       - name: Migration check
-        run: docker-compose run --entrypoint="" --no-deps web python manage.py makemigrations --check
+        run: docker-compose run --entrypoint="" --no-deps blog python manage.py makemigrations --check
       - name: Tests
-        run: docker-compose run --entrypoint="" -u root web coverage run manage.py test
+        run: docker-compose run --entrypoint="" -u root blog coverage run manage.py test
       - name: Coverage check
-        run: docker-compose run --entrypoint="" -u root web coverage report --fail-under=$COVERAGE_THRESHOLD
+        run: docker-compose run --entrypoint="" -u root blog coverage report --fail-under=$COVERAGE_THRESHOLD
 
     services:
       postgres:
