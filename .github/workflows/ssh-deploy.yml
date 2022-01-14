@@ -1,8 +1,8 @@
 name: Main
 
 env:
-  APP_NAME: "Template"
-  PROJECT_PATH: "/home/ubuntu/template/"
+  APP_NAME: "Blog"
+  PROJECT_PATH: "/home/ubuntu/blog/"
 
 on:
   # Allows you to run this workflow manually from the Actions tab
