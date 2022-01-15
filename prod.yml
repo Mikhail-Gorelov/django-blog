@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: docker/prod/nginx/Dockerfile
-    image: bandirom/django-template-nginx:${DOCKER_TAG:-latest}
+    image: mushroom3/django-blog-nginx:${DOCKER_TAG:-latest}
     volumes:
       - static_volume:/home/ubuntu/web/static
       - media_volume:/home/ubuntu/web/media
@@ -25,7 +25,7 @@ services:
     build:
       context: .
       dockerfile: docker/prod/web/Dockerfile
-    image: bandirom/django-template:${DOCKER_TAG:-latest}
+    image: mushroom3/django-blog:${DOCKER_TAG:-latest}
     entrypoint: /entrypoint.sh
     volumes:
       - static_volume:/home/ubuntu/web/static
@@ -60,7 +60,7 @@ services:
     build:
       context: .
       dockerfile: docker/prod/web/Dockerfile
-    image: bandirom/django-template:${DOCKER_TAG:-latest}
+    image: mushroom3/django-blog:${DOCKER_TAG:-latest}
     command: celery -A src worker -l info
     env_file:
       - docker/prod/env/.env
@@ -79,7 +79,7 @@ services:
     build:
       context: .
       dockerfile: docker/prod/db/Dockerfile
-    image: bandirom/django-template-db:${DOCKER_TAG:-latest}
+    image: mushroom3/django-blog-db:${DOCKER_TAG:-latest}
     volumes:
       - postgres_data:/var/lib/postgresql/data/
       - postgres_socket:/postgres_socket
@@ -99,7 +99,7 @@ services:
     build:
       context: .
       dockerfile: docker/prod/redis/Dockerfile
-    image: bandirom/django-template-redis:${DOCKER_TAG:-latest}
+    image: mushroom3/django-blog-redis:${DOCKER_TAG:-latest}
     restart: always
     volumes:
       - redis_data:/data

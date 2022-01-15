@@ -8,6 +8,7 @@ from rest_framework.parsers import FormParser
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 from user_profile import serializers as user_profile_serializer
+from rest_framework.authentication import SessionAuthentication
 from user_profile import models as user_profile_models
 from . import models
 from allauth.account.models import EmailAddress
@@ -52,6 +53,7 @@ class UserView(GenericAPIView):
 
 
 class SetUserTimeZone(GenericAPIView):
+    authentication_classes = (SessionAuthentication,)
     serializer_class = SetTimeZoneSerializer
     parser_classes = (FormParser,)
 
