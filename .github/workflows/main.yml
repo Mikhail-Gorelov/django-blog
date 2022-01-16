@@ -74,9 +74,8 @@ jobs:
 
       - name: Build the Docker image in the aws server
         run: |
-          ssh ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }}
+          ssh ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }}:${{ env.PROJECT_PATH }}
           docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-          cd ${{ env.PROJECT_PATH }}
           export DOCKER_REGISTRY=$DOCKER_REGISTRY
           export DOCKER_TAG=$DOCKER_RELEASE_IMAGE
           docker-compose -f prod.yml stop web celery nginx
