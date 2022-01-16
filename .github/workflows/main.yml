@@ -34,7 +34,7 @@ jobs:
 #        run: docker-compose run --entrypoint="" blog python manage.py test
     services:
       postgres:
-        image: bandirom/django-template-db:latest
+        image: mushroom3/django-blog-db:latest
         ports:
           - 5432:5432
         options: >-
@@ -50,19 +50,31 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
+
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2.3.1
+        with:
+          key: ${{ secrets.AWS_PEM }}
+          known_hosts: 'empty'
+
+      - name: Adding Known Hosts
+        run: ssh-keyscan -H ${{ secrets.AWS_HOST }} >> ~/.ssh/known_hosts
+
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
       - name: Build the Docker image
         id: docker_build
         run: |
           docker-compose -f prod.yml build --pull
           docker-compose -f prod.yml push
-      - name: Build the Docker image in aws server
+
+      - name: Build the Docker image in the aws server
         run: |
-          ssh -o StrictHostKeyChecking=no  -i ${{ secrets.AWS_PEM}} "${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }}"
+          ssh ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }}
           docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
           cd ${{ env.PROJECT_PATH }}
           export DOCKER_REGISTRY=$DOCKER_REGISTRY
