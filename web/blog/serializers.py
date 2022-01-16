@@ -34,4 +34,7 @@ class FullArticleSerializer(ArticleSerializer):
     comments = CommentSerializer(source='comment_set', many=True)
 
     class Meta(ArticleSerializer.Meta):
-        fields = ArticleSerializer.Meta.fields + ('content', 'comments',)
+        fields = ArticleSerializer.Meta.fields + (
+            'content',
+            'comments',
+        )

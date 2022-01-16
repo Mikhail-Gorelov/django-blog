@@ -36,7 +36,4 @@ CELERY_TASK_QUEUES = {
     }
 }
 
-CELERY_TASK_ROUTES = {
-    '*': {'queue': 'blog'},
-    'main.tasks.*': {'queue': 'blog'}
-}
+CELERY_TASK_ROUTES = {'*': {'queue': 'blog'}, 'main.tasks.*': {'queue': 'blog'}}

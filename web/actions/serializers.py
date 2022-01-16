@@ -4,12 +4,13 @@ from .models import Follower
 
 # Create your serializers here.
 
+
 class FollowerSerializer(serializers.ModelSerializer):
     to_user = serializers.IntegerField(min_value=1)
 
     class Meta:
         model = Follower
-        fields = ('to_user', )
+        fields = ('to_user',)
 
     def save(self):
         if self.validated_data["to_user"] is None:

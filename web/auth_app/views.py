@@ -35,7 +35,6 @@ class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
 
 
 class VerifyEmailView(_VerifyEmailView):
-
     def get_serializer(self, *args, **kwargs):
         return serializers.VerifyEmailSerializer(*args, **kwargs)
 

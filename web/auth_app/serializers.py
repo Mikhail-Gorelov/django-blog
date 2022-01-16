@@ -28,7 +28,9 @@ class UserSignUpSerializer(serializers.Serializer):
     password1 = serializers.CharField(write_only=True, min_length=8)
     password2 = serializers.CharField(write_only=True, min_length=8)
     birthday = serializers.DateField(required=True, source='profile.birthdate')
-    gender = serializers.ChoiceField(required=True, choices=choices.GenderChoice.choices, source='profile.gender')
+    gender = serializers.ChoiceField(
+        required=True, choices=choices.GenderChoice.choices, source='profile.gender'
+    )
 
     def validate_password1(self, password):
         return get_adapter().clean_password(password)
@@ -127,5 +129,5 @@ class VerifyEmailSerializer(serializers.Serializer):
     key = serializers.CharField()
 
 
-class UserDataByCookieSerializer():
+class UserDataByCookieSerializer:
     pass

@@ -44,4 +44,5 @@ class User(AbstractUser):
 
     def email_verified(self):
         return self.emailaddress_set.get(primary=True).verified
+
     email_verified.boolean = True

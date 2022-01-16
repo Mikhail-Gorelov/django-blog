@@ -1,5 +1,5 @@
 def parse_str_with_space(var: str) -> str:
-    """ return string without multiply whitespaces
+    """return string without multiply whitespaces
     Example: var = "My name  is   John    "
     Return var = "My name is John"
     """

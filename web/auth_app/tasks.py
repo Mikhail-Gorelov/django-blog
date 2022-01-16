@@ -11,8 +11,11 @@ from src.celery import app
 
 @app.task
 def send_information_email(
-    subject: str, html_email_template_name: str,
-    context: dict, to_email: Union[List[str], str], letter_language: str = 'en'
+    subject: str,
+    html_email_template_name: str,
+    context: dict,
+    to_email: Union[List[str], str],
+    letter_language: str = 'en',
 ):
     activate(letter_language)
     to_email = [to_email] if isinstance(to_email, str) else to_email

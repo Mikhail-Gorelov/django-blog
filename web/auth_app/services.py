@@ -15,7 +15,6 @@ User = get_user_model()
 
 
 class AuthAppService:
-
     @staticmethod
     def validate_email(email):
         re_email = r'^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,30})+$'
@@ -29,7 +28,7 @@ class AuthAppService:
         params = {
             'secret': settings.GOOGLE_CAPTCHA_SECRET_KEY,
             'response': captcha,
-            'remoteip': get_client_ip(request)
+            'remoteip': get_client_ip(request),
         }
         response = captcha_request(url=url, params=params)
         data = response.json()

@@ -4,7 +4,6 @@ from src.settings import ADMIN_EMAIL
 
 
 class ContactUsService:
-
     @staticmethod
     def send_contact_us_email(feedback):
         user_data = ContactUsService.send_contact_us_email_user(feedback)

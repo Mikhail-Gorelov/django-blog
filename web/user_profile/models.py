@@ -16,7 +16,8 @@ class Profile(models.Model):
     gender = models.IntegerField(choices=choices.GenderChoice.choices, null=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     image = models.ImageField(
-        upload_to="profile/", default="default_avatar.jpg")  # height_field=100, width_field=100)
+        upload_to="profile/", default="default_avatar.jpg"
+    )  # height_field=100, width_field=100)
     birthdate = models.DateField(null=True, blank=True)
     bio = models.TextField(max_length=2000, help_text="Bio", default='')
     website = models.URLField(max_length=300, default='', blank=True)

@@ -7,15 +7,19 @@ from auth_app.tasks import send_information_email
 from django.conf import settings
 from microservice_request.services import MicroServiceConnect, ConnectionService
 from . import models
+
 User = get_user_model()
 
 
 class CeleryService:
-
     @staticmethod
     def send_password_reset(data: dict):
-        send_information_email.delay("Your reset e-mail", "auth_app/reset_password_sent.html",
-                                     data.get("content"), data.get("to_email"))
+        send_information_email.delay(
+            "Your reset e-mail",
+            "auth_app/reset_password_sent.html",
+            data.get("content"),
+            data.get("to_email"),
+        )
 
     @staticmethod
     def send_email_confirm(user):
@@ -28,14 +32,13 @@ class CeleryService:
             'context': {
                 'user': user.get_full_name(),
                 'activate_url': key,
-            }
+            },
         }
         print(kwargs)
         send_information_email.delay(**kwargs)
 
 
 class UserService:
-
     @staticmethod
     @except_shell((User.DoesNotExist,))
     def get_user(email):

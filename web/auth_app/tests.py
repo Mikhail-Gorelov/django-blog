@@ -26,7 +26,7 @@ class AuthTestCase(APITestCase):
             "password1": "stringstring",
             "password2": "stringstring",
             "birthday": "2021-11-23",
-            "gender": 0
+            "gender": 0,
         }
         sign_in_data = {
             "email": "user@example.com",
@@ -44,9 +44,7 @@ class AuthTestCase(APITestCase):
         final_pattern = result[0][0].rstrip() + result[0][1]
         if not final_pattern:
             self.assertTrue(final_pattern, 'wrong url pattern')
-        data = {
-            "key": str(final_pattern.split('/')[5]).replace('=', '')
-        }
+        data = {"key": str(final_pattern.split('/')[5]).replace('=', '')}
         response_verify = self.client.post(reverse('auth_app:api_sign_up_verify'), data, format='json')
         self.assertNotEqual(response_verify.status_code, status.HTTP_404_NOT_FOUND)
         user.refresh_from_db()
@@ -82,10 +80,11 @@ class AuthTestCase(APITestCase):
             "new_password1": "stringstring",
             "new_password2": "stringstring",
             "uid": uid,
-            "token": token
+            "token": token,
         }
         password_reset_confirm = self.client.post(
-            reverse('auth_app:password_reset_confirm_email'), change_password_using_credentials)
+            reverse('auth_app:password_reset_confirm_email'), change_password_using_credentials
+        )
         self.assertEqual(password_reset_confirm.status_code, status.HTTP_200_OK)
         sign_in_data = {
             "email": "user@example.com",

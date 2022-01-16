@@ -20,9 +20,10 @@ User = get_user_model()
 
 
 class TemplateAPIView(APIView):
-    """ Help to build CMS System using DRF, JWT and Cookies
-        path('some-path/', TemplateAPIView.as_view(template_name='template.html'))
+    """Help to build CMS System using DRF, JWT and Cookies
+    path('some-path/', TemplateAPIView.as_view(template_name='template.html'))
     """
+
     permission_classes = (AllowAny,)
     template_name = ''
 
@@ -45,7 +46,7 @@ class UserView(GenericAPIView):
     def get(self, request):
         """Current user view
 
-            Using this construction you can load related fields (select_related and prefetch_related) in queryset
+        Using this construction you can load related fields (select_related and prefetch_related) in queryset
         """
 
         serializer = self.get_serializer(self.get_object())

@@ -12,6 +12,7 @@ User = get_user_model()
 
 class EmailsInline(admin.TabularInline):
     """Class for inherit emails table to UserAdmin"""
+
     model = EmailAddress
     can_delete = False
     extra = 1
@@ -33,16 +34,22 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = (
         (_('Personal info'), {'fields': ('id', 'first_name', 'last_name', 'email')}),
         (_('Secrets'), {'fields': ('password',)}),
-        (_('Permissions'), {
-            'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
-        }),
+        (
+            _('Permissions'),
+            {
+                'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
+            },
+        ),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
     )
     add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2'),
-        }),
+        (
+            None,
+            {
+                'classes': ('wide',),
+                'fields': ('email', 'password1', 'password2'),
+            },
+        ),
     )
     readonly_fields = ('id',)
     actions = ('delete_selected_users',)

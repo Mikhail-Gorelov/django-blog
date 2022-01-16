@@ -16,16 +16,13 @@ from sentry_sdk.integrations.django import DjangoIntegration
 sentry_sdk.init(
     dsn="https://examplePublicKey@o0.ingest.sentry.io/0",
     integrations=[DjangoIntegration()],
-
     # Set traces_sample_rate to 1.0 to capture 100%
     # of transactions for performance monitoring.
     # We recommend adjusting this value in production,
     traces_sample_rate=1.0,
-
     # If you wish to associate users to errors (assuming you are using
     # django.contrib.auth) you may enable sending PII data.
     send_default_pii=True,
-
     # By default the SDK will try to use the SENTRY_RELEASE
     # environment variable, or infer a git commit
     # SHA as release, however you may want to set
@@ -95,7 +92,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-
 ]
 
 THIRD_PARTY_APPS = [
@@ -112,7 +108,6 @@ THIRD_PARTY_APPS = [
     'corsheaders',
     'rosetta',
     'django_summernote',
-
 ]
 
 LOCAL_APPS = [
@@ -123,7 +118,6 @@ LOCAL_APPS = [
     'about.apps.AboutConfig',
     'user_profile.apps.UserProfileConfig',
     'actions.apps.ActionsConfig',
-
 ]
 
 INSTALLED_APPS += THIRD_PARTY_APPS + LOCAL_APPS
@@ -140,37 +134,30 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'defender.middleware.FailedLoginMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-
 ]
 
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": REDIS_URL + '/2',
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient"
-        },
+        "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
     }
 }
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'microservice_request.permissions.HasApiKeyOrIsAuthenticated',
-    ),
+    'DEFAULT_PERMISSION_CLASSES': ('microservice_request.permissions.HasApiKeyOrIsAuthenticated',),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         # 'rest_framework.authentication.SessionAuthentication',
     ),
-    'DEFAULT_FILTER_BACKENDS': (
-        'django_filters.rest_framework.DjangoFilterBackend',
-    ),
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
     'DEFAULT_PAGINATION_CLASS': 'blog.pagination.StandardResultsSetPagination',
     'PAGE_SIZE': 5,
 }
 
 if ENABLE_RENDERING:
-    """ For build CMS using DRF """
+    """For build CMS using DRF"""
     REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = (
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.TemplateHTMLRenderer',
@@ -233,7 +220,7 @@ CACHES = {
         'LOCATION': os.environ.get('REDIS_SOCKET', 'unix:///redis_socket/redis-server.sock?db=1'),
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-        }
+        },
     }
 }
 
@@ -256,13 +243,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-LOCALE_PATHS = (
-    os.path.join(BASE_DIR, 'locale'),
-)
+LOCALE_PATHS = (os.path.join(BASE_DIR, 'locale'),)
 
-LANGUAGES = (
-    ('en', _('English')),
-)
+LANGUAGES = (('en', _('English')),)
 
 SESSION_COOKIE_NAME = 'blog_sessionid'
 CSRF_COOKIE_NAME = 'blog_csrftoken'
@@ -310,16 +293,14 @@ if (SENTRY_DSN := os.environ.get('SENTRY_DSN')) and ENABLE_SENTRY:
             RedisIntegration(),
             CeleryIntegration(),
         ],
-
         # Set traces_sample_rate to 1.0 to capture 100%
         # of transactions for performance monitoring.
         # We recommend adjusting this value in production.
         traces_sample_rate=float(os.environ.get('SENTRY_TRACES_SAMPLE_RATE', '1.0')),
         environment=os.environ.get('SENTRY_ENV', 'development'),
         sample_rate=float(os.environ.get('SENTRY_SAMPLE_RATE', '1.0')),
-
         # If you wish to associate users to errors (assuming you are using
         # django.contrib.auth) you may enable sending PII data.
-        send_default_pii=True
+        send_default_pii=True,
     )
 print(CELERY_BROKER_URL, CELERY_RESULT_BACKEND)

@@ -11,7 +11,6 @@ from rest_framework.reverse import reverse_lazy
 
 
 class AccountAdapter(DefaultAccountAdapter):
-
     def collect_data(self, email_confirmation) -> dict:
         data = {
             "user": email_confirmation.email_address.user.get_full_name(),

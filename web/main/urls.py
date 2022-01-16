@@ -10,7 +10,6 @@ urlpatterns = [
     path('timezone/set/', views.SetUserTimeZone.as_view(), name='set_user_timezone'),
     path('jwt/callback/', views.ValidateJWTView.as_view(), name='validate-jwt'),
     path('chat/user-information/', views.ReturnUserInfoView.as_view(), name='user-information'),
-
 ]
 
 if settings.ENABLE_RENDERING:

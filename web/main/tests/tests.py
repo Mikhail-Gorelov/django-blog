@@ -7,7 +7,6 @@ from src.celery import app
 
 
 class UserModelTests(TestCase):
-
     @classmethod
     def setUpTestData(cls):
         cls.user = User.objects.create_user('user@test.com', 'pass')
