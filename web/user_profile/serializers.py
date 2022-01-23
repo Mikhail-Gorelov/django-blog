@@ -1,16 +1,17 @@
+from allauth.account.utils import setup_user_email
+from dj_rest_auth.serializers import PasswordChangeSerializer
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.request import Request
 from rest_framework.status import HTTP_400_BAD_REQUEST
-from . import models
+
 from main.services import MainService
 from src import settings
-from .models import Profile
-from django.contrib.auth import get_user_model
-from .choices import GenderChoice
-from dj_rest_auth.serializers import PasswordChangeSerializer
-from allauth.account.utils import setup_user_email
 
+from . import models
+from .choices import GenderChoice
+from .models import Profile
 from .services import UserProfileService
 
 User = get_user_model()

@@ -1,11 +1,11 @@
 from urllib.parse import urljoin
 
-from django.db import models
 from django.contrib.auth import get_user_model
+from django.db import models
 
 from src import settings
-from . import managers
-from . import choices
+
+from . import choices, managers
 
 User = get_user_model()
 

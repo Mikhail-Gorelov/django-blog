@@ -1,7 +1,8 @@
 from rest_framework import serializers
 
 from main.serializers import UserSerializer
-from .models import Category, Article, Comment
+
+from .models import Article, Category, Comment
 
 
 class CategorySerializer(serializers.ModelSerializer):

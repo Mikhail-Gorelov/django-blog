@@ -1,9 +1,11 @@
+from django.conf import settings
 from django.urls import path
 from django.views.generic import TemplateView
-from django.conf import settings
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
+
 from main.views import TemplateAPIView
+
 from . import views
 
 app_name = 'auth_app'

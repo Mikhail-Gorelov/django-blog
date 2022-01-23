@@ -1,20 +1,26 @@
-from django.contrib.auth import get_user_model
+from allauth.account.models import EmailAddress
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.utils.decorators import method_decorator
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework.generics import GenericAPIView, get_object_or_404
-from rest_framework.response import Response
-from rest_framework.parsers import FormParser
-from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny
-from user_profile import serializers as user_profile_serializer
 from rest_framework.authentication import SessionAuthentication
-from user_profile import models as user_profile_models
-from . import models
-from allauth.account.models import EmailAddress
-from src.celery import app
+from rest_framework.generics import GenericAPIView, get_object_or_404
+from rest_framework.parsers import FormParser
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from .serializers import UserSerializer, SetTimeZoneSerializer, ValidateJWTSerializer, ReturnUsersSerializer
+from src.celery import app
+from user_profile import models as user_profile_models
+from user_profile import serializers as user_profile_serializer
+
+from . import models
+from .serializers import (
+    ReturnUsersSerializer,
+    SetTimeZoneSerializer,
+    UserSerializer,
+    ValidateJWTSerializer,
+)
 
 User = get_user_model()
 

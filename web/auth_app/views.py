@@ -1,12 +1,9 @@
 import logging
 
 import django
-from django.contrib.auth import logout as django_logout
-
 from dj_rest_auth import views as auth_views
-from dj_rest_auth.registration.views import (
-    VerifyEmailView as _VerifyEmailView,
-)
+from dj_rest_auth.registration.views import VerifyEmailView as _VerifyEmailView
+from django.contrib.auth import logout as django_logout
 from django.views.generic.base import TemplateResponseMixin, TemplateView
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import AllowAny

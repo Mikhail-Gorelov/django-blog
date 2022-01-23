@@ -7,8 +7,10 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
-from user_profile import choices
+
 from main.services import CeleryService
+from user_profile import choices
+
 from .forms import PassResetForm
 from .services import AuthAppService
 

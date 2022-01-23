@@ -1,5 +1,5 @@
-from django.urls import path
 from django.conf import settings
+from django.urls import path
 from django.views.generic import TemplateView
 from rest_framework.routers import DefaultRouter
 

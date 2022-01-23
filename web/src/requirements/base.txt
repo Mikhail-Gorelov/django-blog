@@ -64,8 +64,3 @@ django-summernote==0.8.11.6
 
 # Tags
 django-taggit==1.4.0
-
-#Linters
-mypy==0.931
-django-stubs==1.9.0
-djangorestframework-stubs==1.4.0

@@ -1,5 +1,5 @@
 import smtplib
-from typing import Union, List
+from typing import List, Union
 
 from django.core.mail import EmailMultiAlternatives
 from django.template import loader

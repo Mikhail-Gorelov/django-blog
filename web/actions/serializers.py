@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from .models import Follower
 
+from .models import Follower
 
 # Create your serializers here.
 

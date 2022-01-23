@@ -6,7 +6,6 @@ from allauth.socialaccount import app_settings
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from allauth.socialaccount.models import SocialApp
 from django.conf import settings
-
 from rest_framework.reverse import reverse_lazy
 
 

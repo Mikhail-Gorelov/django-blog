@@ -1,9 +1,9 @@
 from django.conf import settings
-from rest_framework.reverse import reverse_lazy
 from django.db.models import Count
+from rest_framework.reverse import reverse_lazy
 
 from .choices import ArticleStatus
-from .models import Category, Article, Comment
+from .models import Article, Category, Comment
 
 
 class BlogService:

@@ -72,14 +72,14 @@ jobs:
           docker-compose -f prod.yml build --pull
           docker-compose -f prod.yml push
 
-      - name: Build the Docker image in the aws server
+      - name: Pull the Docker image in the aws server
         uses: garygrossgarten/github-action-ssh@release
         with:
           command: |
             cd ${{ env.PROJECT_PATH }}
             export DOCKER_REGISTRY=$DOCKER_REGISTRY
             export DOCKER_TAG=$DOCKER_RELEASE_IMAGE
-            docker-compose -f prod.yml stop web celery nginx
+            docker-compose -f prod.yml stop blog celery nginx
             docker-compose -f prod.yml rm -f
             docker-compose -f prod.yml pull
             docker-compose -f prod.yml up -d
