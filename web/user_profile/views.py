@@ -12,12 +12,7 @@ from rest_framework.decorators import action
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
 from rest_framework.parsers import MultiPartParser
-from rest_framework.permissions import (
-    AllowAny,
-    BasePermission,
-    IsAdminUser,
-    IsAuthenticatedOrReadOnly,
-)
+from rest_framework.permissions import AllowAny, BasePermission, IsAdminUser, IsAuthenticatedOrReadOnly
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet

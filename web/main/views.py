@@ -15,12 +15,7 @@ from user_profile import models as user_profile_models
 from user_profile import serializers as user_profile_serializer
 
 from . import models
-from .serializers import (
-    ReturnUsersSerializer,
-    SetTimeZoneSerializer,
-    UserSerializer,
-    ValidateJWTSerializer,
-)
+from .serializers import ReturnUsersSerializer, SetTimeZoneSerializer, UserSerializer, ValidateJWTSerializer
 
 User = get_user_model()
 
