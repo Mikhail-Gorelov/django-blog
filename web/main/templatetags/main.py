@@ -30,4 +30,6 @@ def timezone_cookie_name():
 
 @register.simple_tag
 def chat_site_init():
+    if settings.BACKEND_SITE == 'http://localhost:8008':
+        return 'http://localhost:8010'
     return 'https://chat.mikhail.jollymanager.com/init/'

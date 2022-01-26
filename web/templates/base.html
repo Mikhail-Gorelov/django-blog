@@ -37,6 +37,10 @@
 <script>
   $(document).ready(function(){
     $.getScript('{% static 'auth_app/js/logout.js' %}');
+    {% if user.is_authenticated %}
+      $.getScript('{% static 'js/reconnecting_websocket.js' %}');
+      $.getScript('{% static 'js/online_connect.js' %}');
+    {% endif %}
     {% block jquery %} {% endblock jquery %}
 })
 </script>
