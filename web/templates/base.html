@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 {% load static main %}
 <html lang="en">
@@ -9,9 +10,13 @@
   <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
   <title>{% block title %} Blog Post {% endblock title%} </title>
   <link href="{% static 'blog/css/blog.css' %}" rel="stylesheet">
+  <link href="{% static 'blog/css/notification.css' %}" rel="stylesheet">
 
   {% block head %}{% endblock head %}
 </head>

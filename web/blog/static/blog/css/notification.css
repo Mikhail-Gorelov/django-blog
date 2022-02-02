@@ -1,0 +1,32 @@
+.icon-badge-group .icon-badge-container {
+    display: inline-block;
+    margin-left:15px;
+}
+
+.icon-badge-group .icon-badge-container:first-child {
+  margin-left:0;
+}
+
+.icon-badge-container {
+    margin-top:20px;
+    color: white;
+    position:relative;
+}
+
+.icon-badge-icon {
+    font-size: 30px;
+    position: relative;
+}
+
+.icon-badge {
+    background-color: red;
+    font-size: 12px;
+    color: white;
+    text-align: center;
+    width:20px;
+    height:20px;
+    border-radius: 100%;
+    position: absolute; /* changed */
+    top: -5px; /* changed */
+    left: 18px; /* changed */
+}

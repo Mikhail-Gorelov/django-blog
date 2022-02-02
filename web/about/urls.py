@@ -11,7 +11,7 @@ app_name = 'about'
 router = DefaultRouter()
 
 urlpatterns = [
-    url('', views.AboutListView.as_view(), name='my_about'),
+    url('', views.TemplateAPIView.as_view(template_name='about/about_list.html'), name='my_about'),
 ]
 
 urlpatterns += router.urls

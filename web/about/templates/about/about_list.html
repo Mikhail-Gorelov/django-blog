@@ -1,2 +1,10 @@
 {% extends "base.html" %}
+{% block active_about %}class="active"{% endblock active_about %}
+{% block header %}
+{% include 'includes/header.html'  with selected='about' %}
+{% endblock header %}
+
+{% block container %}
+
+{% endblock container %}
 <! -- можно переопределять блоки, такие как контент и менять base в сторону какой-то ссылки -->

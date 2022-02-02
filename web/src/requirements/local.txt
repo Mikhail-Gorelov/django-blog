@@ -36,3 +36,6 @@ djangorestframework-stubs==1.4.0
 drf-yasg-stubs==0.1.4
 celery-types==0.10.0
 types-requests==2.27.7
+
+# Prometheus
+django-prometheus==2.2.0

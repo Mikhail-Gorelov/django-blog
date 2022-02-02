@@ -1,6 +1,5 @@
 {% load static i18n %}
 {% if user.is_authenticated %}
-
 <form id="logoutForm" action="{% url 'auth_app:logout' %}" method="post" >
     {% csrf_token %}
     <ul class="nav navbar-nav navbar-right">
@@ -13,6 +12,12 @@
             <a href="{% url 'user_profile:user_profile' %}"><i class="fas fa-user-circle"></i>{% trans 'Profile' %} </a>
         </span></li>
         <li><a href="#" id="logoutSubmit">{% trans 'Log off' %}</a></li>
+    <li>
+      <div class="icon-badge-container">
+        <i class="far fa-envelope icon-badge-icon"></i>
+        <div class="icon-badge"></div>
+      </div>
+    </li>
     </ul>
 </form>
 {% else %}

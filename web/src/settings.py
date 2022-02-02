@@ -109,6 +109,7 @@ THIRD_PARTY_APPS = [
     'corsheaders',
     'rosetta',
     'django_summernote',
+    'django_prometheus',
 ]
 
 LOCAL_APPS = [
@@ -124,6 +125,7 @@ LOCAL_APPS = [
 INSTALLED_APPS += THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
+    'django_prometheus.middleware.PrometheusBeforeMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'main.middleware.HealthCheckMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -135,6 +137,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'defender.middleware.FailedLoginMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'django_prometheus.middleware.PrometheusAfterMiddleware',
 ]
 
 CACHES = {
