@@ -1,5 +1,5 @@
 import os
-
+import redis
 import sentry_sdk
 from django.utils.translation import gettext_lazy as _
 from sentry_sdk.integrations.django import DjangoIntegration
@@ -34,6 +34,10 @@ sentry_sdk.init(
 FRONTEND_SITE = "https://blog.mikhail.jollymanager.com"
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
+REDIS_DATABASE = redis.StrictRedis(
+    host=os.environ.get('REDIS_HOST'), port=os.environ.get('REDIS_PORT'), db=os.environ.get('REDIS_DB')
+)
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
