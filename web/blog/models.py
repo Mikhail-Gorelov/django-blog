@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from rest_framework.reverse import reverse_lazy
+from django.contrib.contenttypes.models import ContentType
 
 from . import managers
 from .choices import ArticleStatus
