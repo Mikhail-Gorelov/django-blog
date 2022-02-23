@@ -42,8 +42,8 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
       - postgres_socket:/postgres_socket
-    #    ports:
-    #      - 5432:5432
+    ports:
+      - "5432:5432"
     env_file:
       - docker/dev/env/.db.env
     networks:
@@ -99,12 +99,45 @@ services:
     image: grafana/grafana
     ports:
       - "3060:3060"
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.0.0
+    container_name: elasticsearch
+    restart: always
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - elasticsearch-data-volume:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:8.0.0
+    restart: always
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+
 
 volumes:
   postgres_data:
   redis_data:
   redis_socket:
   postgres_socket:
+  elasticsearch-data-volume:
+    driver: local
 
 networks:
   microservice_network:

@@ -1,7 +1,13 @@
 from django.contrib import admin
 from django_summernote.admin import SummernoteModelAdmin
-
+from actions.models import Like
 from .models import Article, Category, Comment
+from django.contrib.contenttypes.admin import GenericStackedInline
+
+
+class LikeContentTypeInline(GenericStackedInline):
+    model = Like
+    extra = 1
 
 
 class CommentInline(admin.TabularInline):
@@ -17,7 +23,7 @@ class ArticleAdmin(SummernoteModelAdmin):
     readonly_fields = ('created', 'updated')
     list_select_related = ('category', 'author')
     list_filter = ('status',)
-    inlines = [CommentInline]
+    inlines = [CommentInline, LikeContentTypeInline, ]
 
 
 @admin.register(Category)
@@ -34,3 +40,4 @@ class CommentAdmin(admin.ModelAdmin):
     summernote_fields = ('content',)
     readonly_fields = ('created', 'updated')
     list_select_related = ('user', 'article')
+    inlines = [LikeContentTypeInline, ]

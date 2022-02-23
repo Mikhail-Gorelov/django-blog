@@ -1,9 +1,13 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+
+from actions.choices import LikeChoice
+from actions.models import Like
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from rest_framework.reverse import reverse_lazy
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericRelation
 
 from . import managers
 from .choices import ArticleStatus
@@ -41,6 +45,7 @@ class Article(models.Model):
     status = models.PositiveSmallIntegerField(choices=ArticleStatus.choices, default=ArticleStatus.INACTIVE)
     image = models.ImageField(upload_to='articles/', blank=True, default='no-image-available.jpg')
     objects = models.Manager()
+    votes = GenericRelation(Like, related_query_name="articles")
 
     @property
     def short_title(self):
@@ -56,6 +61,18 @@ class Article(models.Model):
     def get_absolute_url(self):
         url = 'blog:post-detail'
         return reverse_lazy(url, kwargs={'slug': self.slug})
+
+    def likes(self):
+        return self.votes.aggregate(
+            count=models.Count(
+                "vote", filter=models.Q(vote=LikeChoice.LIKE))
+        )
+
+    def dislikes(self):
+        return self.votes.aggregate(
+            count=models.Count(
+                "vote", filter=models.Q(vote=LikeChoice.DISLIKE))
+        )
 
     class Meta:
         verbose_name = _('Article')
@@ -76,8 +93,20 @@ class Comment(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='comment_set')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-
+    votes = GenericRelation(Like, related_query_name="comments")
     objects = models.Manager()
+
+    def likes(self):
+        return self.votes.aggregate(
+            count=models.Count(
+                "vote", filter=models.Q(vote=LikeChoice.LIKE))
+        )
+
+    def dislikes(self):
+        return self.votes.aggregate(
+            count=models.Count(
+                "vote", filter=models.Q(vote=LikeChoice.DISLIKE))
+        )
 
     class Meta:
         verbose_name = _('Comment')

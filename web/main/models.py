@@ -1,16 +1,18 @@
 from urllib.parse import urljoin
-
+from actions.choices import LikeChoice
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
+from typing import TypeVar
 
 from .managers import UserManager
 
+UserType = TypeVar("UserType", bound="User")
+
 
 class User(AbstractUser):
-
     username = None
     email = models.EmailField(_('Email address'), unique=True)
 
@@ -44,5 +46,17 @@ class User(AbstractUser):
 
     def email_verified(self):
         return self.emailaddress_set.get(primary=True).verified
+
+    def likes_count(self) -> dict:
+        return self.user_likes.aggregate(
+            count=models.Count(
+                "like", filter=models.Q(vote=LikeChoice.LIKE))
+        )
+
+    def get_dislikes_count(self) -> dict:
+        return self.user_likes.aggregate(
+            count=models.Count(
+                "dislike", filter=models.Q(vote=LikeChoice.DISLIKE))
+        )
 
     email_verified.boolean = True

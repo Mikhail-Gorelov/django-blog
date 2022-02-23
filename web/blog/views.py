@@ -8,7 +8,6 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
-
 from blog.pagination import StandardResultsSetPagination
 from blog.serializers import CommentSerializer
 from main.pagination import BasePageNumberPagination
@@ -77,6 +76,7 @@ class ArticleViewSet(ViewSet):
 class CommentViewSet(ListModelMixin, GenericViewSet):
     pagination_class = StandardResultsSetPagination
     permission_classes = (AllowAny,)
+
     # article_id = serializers.ArticleSerializer.id
 
     def get_template_name(self):
