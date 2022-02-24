@@ -7,8 +7,9 @@ from blog.models import Comment, Article
 from typing import TYPE_CHECKING
 from main.models import UserType
 
-if TYPE_CHECKING:
-    from main.models import UserType
+
+# if TYPE_CHECKING:
+#     from main.models import UserType
 
 
 class ActionsService:
@@ -30,4 +31,3 @@ class ActionsService:
             return Like.objects.get(user=user, content_type=content_type, object_id=object_id)
         except Like.DoesNotExist:
             return None
-
