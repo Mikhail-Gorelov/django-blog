@@ -2,6 +2,7 @@ from rest_framework import serializers
 from . import choices
 from .services import ActionsService
 from .models import Follower, Like
+from blog.models import Article
 
 
 # Create your serializers here.
@@ -57,3 +58,9 @@ class AssessmentSerializer(serializers.Serializer):
             "dislike_count": obj.dislikes()["count"],
         }
         return return_data
+
+
+class ArticleRatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Article
+        fields = ('id', 'category', 'title', 'content', 'author', 'created', 'updated', 'status', 'image')

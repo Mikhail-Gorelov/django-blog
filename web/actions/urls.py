@@ -9,7 +9,8 @@ router = DefaultRouter()
 
 urlpatterns = [
     path('follow/', views.FollowerView.as_view(), name="follow"),
-    path('assessment/', views.AssessmentView.as_view(), name="assessment")
+    path('assessment/', views.AssessmentView.as_view(), name="assessment"),
+    path('article-rating/', views.ArticleRating.as_view(), name="popular_articles")
 ]
 
 urlpatterns += router.urls

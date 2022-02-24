@@ -2,61 +2,65 @@
 {% load static main %}
 
 {% block head %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 {% endblock head %}
 
 {% block container %}
-<div class="row">
-  <div class="col-lg-8">
+  <div class="row">
+    <div class="col-lg-8">
 
-    <!-- the actual blog post: title/author/date/content RESULTS -->
-    <h1><a href="{{ url }}">{{ title }}</a></h1>
-    <p class="lead"><i class="fa fa-user"></i> by <a href="">{{ author.full_name }}</a>
-    </p>
-    <hr>
-    <p><i class="fa fa-calendar"></i> {{ created }}</p>
+      <!-- the actual blog post: title/author/date/content RESULTS -->
+      <h1><a href="{{ url }}">{{ title }}</a></h1>
+      <p class="lead"><i class="fa fa-user"></i> by <a href="">{{ author.full_name }}</a>
+      </p>
+      <hr>
+      <p><i class="fa fa-calendar"></i> {{ created }}</p>
 
-    <p><i class="fa fa-tags"></i> Category: <a href="/{{ category.slug }}"><span class="badge badge-info"> {{ category.name }}</span></a></p>
-    <p><i id="articleLikeIcon"></i><span id="articleLikeCount"> {{ likes }}</span></p>
+      <p><i class="fa fa-tags"></i> Category: <a href="/{{ category.slug }}"><span
+        class="badge badge-info"> {{ category.name }}</span></a></p>
+      <i id="articleLikeIcon" class="fa fa-thumbs-up" style="font-size:24px"></i><span
+      id="articleLikeCount" data="{{ id }}" data-vote="{{ vote }}"> {{ likes }}</span>&emsp;
+      <i id="articleDislikeIcon" class="fa fa-thumbs-down" style="font-size:24px"></i><span
+      id="articleDislikeCount" data="{{ id }}" data-vote="{{ vote }}"> {{ dislikes }}</span>
 
 
-    <hr>
-    <p class="lead">{{ title }}</p>
-    <br/>
-    <p>{{ content |safe }}</p>
+      <hr>
+      <p class="lead">{{ title }}</p>
+      <br/>
+      <p>{{ content |safe }}</p>
 
-    <br/>
+      <br/>
 
-    <br/>
-    <hr>
-    <!-- the comment box -->
-    <div class="well">
-  <h4><i class="fa fa-paper-plane-o"></i> Leave a Comment:</h4>
-  <form role="form">
-    <div class="form-group">
-      <textarea class="form-control" rows="3"></textarea>
+      <br/>
+      <hr>
+      <!-- the comment box -->
+      <div class="well">
+        <h4><i class="fa fa-paper-plane-o"></i> Leave a Comment:</h4>
+        <form role="form">
+          <div class="form-group">
+            <textarea class="form-control" rows="3"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary"><i class="fa fa-reply"></i> Submit</button>
+        </form>
+      </div>
+      <hr>
+
+
+      <div id="articleId" data-id="{{ id }}"></div>
+      {% include 'blog/includes/previous_and_next.html' %}
+
+
     </div>
-    <button type="submit" class="btn btn-primary"><i class="fa fa-reply"></i> Submit</button>
-  </form>
-</div>
-<hr>
 
-
-    <div id="articleId" data-id="{{ id }}"></div>
-    {% include 'blog/includes/previous_and_next.html' %}
-
-
-
+    {% block right_sidebar %}
+      {{ block.super }}
+    {% endblock right_sidebar %}
   </div>
-
-  {% block right_sidebar %}
-  {{ block.super }}
-  {% endblock right_sidebar %}
-</div>
 {% endblock container %}
 
 
 {% block jquery %}
-$.getScript('{% static 'blog/js/detail.js' %}');
+  $.getScript('{% static 'blog/js/detail.js' %}');
+  $.getScript('{% static 'blog/js/likes.js' %}');
 {% endblock %}
 

@@ -1,8 +1,11 @@
 from rest_framework import serializers
-
+from django.db import models
+from django.contrib.contenttypes.models import ContentType
+from actions.choices import LikeChoice
 from main.serializers import UserSerializer
 
 from .models import Article, Category, Comment
+from actions.models import Like
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -19,10 +22,36 @@ class ArticleSerializer(serializers.ModelSerializer):
     category = CategorySerializer()
     comments_count = serializers.IntegerField()
     id = serializers.IntegerField()
+    likes = serializers.SerializerMethodField('get_likes')
+    dislikes = serializers.SerializerMethodField('get_dislikes')
+    vote = serializers.SerializerMethodField('get_vote')
+
+    def get_likes(self, obj):
+        count = obj.votes.aggregate(
+            count=models.Count(
+                "vote", filter=models.Q(vote=LikeChoice.LIKE))
+        )
+        return count["count"]
+
+    def get_dislikes(self, obj):
+        count = obj.votes.aggregate(
+            count=models.Count(
+                "vote", filter=models.Q(vote=LikeChoice.DISLIKE))
+        )
+        return count["count"]
+
+    def get_vote(self, obj):
+        try:
+            like = Like.objects.get(articles=obj, user=self.context['request'].user, content_type=17)
+            return like.vote
+        except Like.DoesNotExist:
+            return None
 
     class Meta:
         model = Article
-        fields = ('title', 'url', 'author', 'category', 'created', 'updated', 'comments_count', 'id')
+        fields = (
+            'vote', 'dislikes', 'likes', 'title', 'url', 'author', 'category', 'created', 'updated', 'comments_count',
+            'id')
 
 
 class CommentSerializer(serializers.ModelSerializer):

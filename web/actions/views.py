@@ -2,6 +2,7 @@ import logging
 
 from django.utils.translation import gettext_lazy as _
 from drf_yasg.utils import swagger_auto_schema
+from blog.models import Article
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
@@ -33,4 +34,12 @@ class AssessmentView(GenericAPIView):
 
 
 class ArticleRating(GenericAPIView):
-    pass
+    serializer_class = serializers.ArticleRatingSerializer
+    queryset = Article.objects.all()
+
+    def get(self, request):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(
+            reversed(sorted(queryset, key=lambda a: a.likes()["count"] - a.dislikes()["count"])),
+            many=True)
+        return Response(serializer.data)
