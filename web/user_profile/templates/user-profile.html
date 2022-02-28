@@ -3,122 +3,127 @@
 {% microservice_title as site_name %}
 {% chat_site_init as site_init %}
 {% block content %}
-<title>User profile</title>
-{% block head %}
-<link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-<script src="https://bootstraptema.ru/plugins/jquery/jquery-1.11.3.min.js"></script>
-<script src="https://bootstraptema.ru/plugins/2015/b-v3-3-6/bootstrap.min.js"></script>
-{% endblock head %}
-<script>
-  $(document).ready(function(){
-    $.getScript('{% static 'user_profile/js/user-profile.js' %}');
-    $.getScript('{% static 'user_profile/js/connect_chat.js' %}');
-    {% block jquery %} {% endblock jquery %}
-})
-</script>
-<br><br><br>
-
-<style>
-body{background:url(https://bootstraptema.ru/images/bg/bg-1.png)}
-
-#main {
- background-color: #f2f2f2;
- padding: 20px;
--webkit-border-radius: 4px;
- -moz-border-radius: 4px;
- -ms-border-radius: 4px;
- -o-border-radius: 4px;
- border-radius: 4px;
- border-bottom: 4px solid #ddd;
-}
-#real-estates-detail #author img {
- -webkit-border-radius: 100%;
- -moz-border-radius: 100%;
- -ms-border-radius: 100%;
- -o-border-radius: 100%;
- border-radius: 100%;
- border: 5px solid #ecf0f1;
- margin-bottom: 10px;
-}
-#real-estates-detail .sosmed-author i.fa {
- width: 30px;
- height: 30px;
- border: 2px solid #bdc3c7;
- color: #bdc3c7;
- padding-top: 6px;
- margin-top: 10px;
-}
-.panel-default .panel-heading {
- background-color: #fff;
-}
-#real-estates-detail .slides li img {
- height: 450px;
-}
-</style>
-
-<div class="container">
-<div id="main">
+  <title>User profile</title>
+  {% block head %}
+    <link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://bootstraptema.ru/plugins/jquery/jquery-1.11.3.min.js"></script>
+    <script src="https://bootstraptema.ru/plugins/2015/b-v3-3-6/bootstrap.min.js"></script>
+    <link href="{% static 'user_profile/css/user-profile.css' %}" rel="stylesheet">
+  {% endblock head %}
+  <script>
+    $(document).ready(function () {
+      $.getScript('{% static 'user_profile/js/user-profile.js' %}');
+      $.getScript('{% static 'user_profile/js/connect_chat.js' %}');
+      $.getScript('{% static 'user_profile/js/subscribe.js' %}');
+      {% block jquery %} {% endblock jquery %}
+    })
+  </script>
+  <br><br><br>
 
 
- <div class="row" id="real-estates-detail">
- <div class="col-lg-4 col-md-4 col-xs-12">
- <div class="panel panel-default">
- <div class="panel-heading">
- <header class="panel-title">
- <div class="text-center">
- <strong>Пользователь сайта <input type="text" data-href="{% url 'user_profile:user_profile' %}" name="full_name" id="full_name" value={{ user.full_name }}> </strong>
- </div>
- </header>
- </div>
- <div class="panel-body">
- <div class="text-center" id="author">
- <img src="{{ user.image }}" width="240" height="240" id="userAvatar">
-<input id="updateImageInput" data-href="{% url 'user_profile:update_image' %}" type="file" name="image" value="Обзор...">
-   <a id="chat-connect" data-href="{{ site_init }}" data-id="3" class="btn btn-primary">Написать сообщение</a>
- </div>
- </div>
- </div>
- </div>
- <div class="col-lg-8 col-md-8 col-xs-12">
- <div class="panel">
- <div class="panel-body">
- <ul id="myTab" class="nav nav-pills">
- <li class="active"><a href="#detail" data-toggle="tab">О пользователе</a></li>
- <li class=""><a href="#changepswd" class="btn btn-link pull-right" data-toggle="modal" data-target="#pwdModalChange"> Смена пароля </a></li>
- <li class=""><a href="{% url 'user_profile:api_list_true_users' %}">Посмотреть список пользователей</a></li>
- </ul>
- <div id="myTabContent" class="tab-content">
-<hr>
- <div class="tab-pane fade active in" id="detail">
- <h4>История профиля</h4>
- <table class="table table-th-block">
- <tbody>
-  <tr><td class="active">Дата рождения:</td><td> <input type="text" data-href="{% url 'user_profile:user_profile' %}" name="birthdate" id="birthdate" value={{ user.birthdate }}>
-</td></tr>
- {% if gender == 0 %}
-    <tr><td class="active">Пол:</td><td>  <input type="text" data-href="{% url 'user_profile:user_profile' %}" name="gender" id="gender" value="Male">
- </td></tr>
- {% endif %}
- {% if gender == 1 %}
-    <tr><td class="active">Пол:</td><td>  <input type="text" data-href="{% url 'user_profile:user_profile' %}" name="gender" id="gender" value="Female">
- </td></tr>
- {% endif %}
- <tr><td class="active">Веб-сайт:</td><td> <input type="text" data-href="{% url 'user_profile:user_profile' %}" name="website" id="website" value={{ user.website }}>
-</td></tr>
- <tr><td class="active">Биография:</td><td> <input type="text" data-href="{% url 'user_profile:user_profile' %}" name="bio" id="bio" value={{ user.bio }}>
-</td></tr>
-</tbody>
- </table>
- </div>
- </div>
- </div>
- </div>
- </div>
- </div>
-</div>
 
-</div><!-- /.main -->
-</div><!-- /.container -->
-{% include 'user_profile/reset_password_email_link.html' %}
+  <div class="container">
+    <div id="main">
+
+
+      <div class="row" id="real-estates-detail">
+        <div class="col-lg-4 col-md-4 col-xs-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <header class="panel-title">
+                <div class="text-center">
+                  <strong>Пользователь сайта <input type="text" data-href="{% url 'user_profile:user_profile' %}"
+                                                    name="full_name" id="full_name" value={{ user.full_name }}>
+                  </strong>
+                </div>
+              </header>
+            </div>
+            <div class="panel-body">
+              <div class="text-center" id="author">
+                <img src="{{ user.image }}" width="240" height="240" id="userAvatar">
+                <input id="updateImageInput" data-href="{% url 'user_profile:update_image' %}" type="file" name="image"
+                       value="Обзор...">
+                <a id="chat-connect" data-href="{{ site_init }}" data-id="3" class="btn btn-primary">Написать
+                  сообщение</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8 col-md-8 col-xs-12">
+          <div class="panel">
+            <div class="panel-body">
+              <ul id="myTab" class="nav nav-pills">
+                <li class="active"><a href="#detail" data-toggle="tab">О пользователе</a></li>
+                <li class=""><a href="#changepswd" class="btn btn-link pull-right" data-toggle="modal"
+                                data-target="#pwdModalChange"> Смена пароля </a></li>
+                <li class=""><a href="{% url 'user_profile:api_list_true_users' %}">Посмотреть список пользователей</a>
+                </li>
+              </ul>
+              <div id="myTabContent" class="tab-content">
+                <hr>
+                <div class="tab-pane fade active in" id="detail">
+                  <h4>История профиля</h4>
+                  <table class="table table-th-block">
+                    <tbody>
+                    <tr>
+                      <td class="active">Дата рождения:</td>
+                      <td><input type="text" data-href="{% url 'user_profile:user_profile' %}" name="birthdate"
+                                 id="birthdate" value={{ user.birthdate }}>
+                      </td>
+                    </tr>
+                    {% if gender == 0 %}
+                      <tr>
+                        <td class="active">Пол:</td>
+                        <td><input type="text" data-href="{% url 'user_profile:user_profile' %}" name="gender"
+                                   id="gender" value="Male">
+                        </td>
+                      </tr>
+                    {% endif %}
+                    {% if gender == 1 %}
+                      <tr>
+                        <td class="active">Пол:</td>
+                        <td><input type="text" data-href="{% url 'user_profile:user_profile' %}" name="gender"
+                                   id="gender" value="Female">
+                        </td>
+                      </tr>
+                    {% endif %}
+                    <tr>
+                      <td class="active">Веб-сайт:</td>
+                      <td><input type="text" data-href="{% url 'user_profile:user_profile' %}" name="website"
+                                 id="website" value={{ user.website }}>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="active">Биография:</td>
+                      <td><input type="text" data-href="{% url 'user_profile:user_profile' %}" name="bio" id="bio"
+                                 value={{ user.bio }}>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container"><a data-href="{% url 'actions:follow' %}" class="subscribe-button"
+                                data-count="{{ user.subscribers }}" data-user="{{ user.id }}"
+                                data-subscribed="{{ user.has_subscribed }}">
+        <svg xmlns="http://www.w3.org/2000/svg">
+          <g>
+            <rect class="plus__line1" width="2" height="12" x="5" y="0"></rect>
+            <rect class="plus__line2" width="12" height="2" x="0" y="5"></rect>
+          </g>
+        </svg>
+        <span class="subscribe-text">Subscribe</span></a></div>
+    </div>
+
+  </div><!-- /.main -->
+  </div><!-- /.container -->
+  {% include 'user_profile/reset_password_email_link.html' %}
 {% endblock %}

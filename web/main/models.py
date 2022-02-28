@@ -59,4 +59,11 @@ class User(AbstractUser):
                 "dislike", filter=models.Q(vote=LikeChoice.DISLIKE))
         )
 
+    def subscribers_count(self) -> dict:
+        return self.followers.aggregate(
+            count=models.Count(
+                "to_user"
+            )
+        )
+
     email_verified.boolean = True

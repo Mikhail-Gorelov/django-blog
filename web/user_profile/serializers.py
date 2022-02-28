@@ -8,7 +8,7 @@ from rest_framework.status import HTTP_400_BAD_REQUEST
 
 from main.services import MainService
 from src import settings
-
+from actions.models import Follower
 from . import models
 from .choices import GenderChoice
 from .models import Profile
@@ -29,15 +29,30 @@ class UserProfileSerializer(serializers.ModelSerializer):
     #    gender = serializers.ChoiceField(choices=GenderChoice.choices, source="profile.gender")
     # profile = UserShortInfoSerializer()
     profile = ProfileSerializer()
+    subscribers = serializers.SerializerMethodField("get_subscribers_count")
+    has_subscribed = serializers.SerializerMethodField("get_has_subscribed")
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
         rep.update(rep.pop("profile", {}))
         return rep
 
+    def get_subscribers_count(self, obj):
+        return obj.subscribers_count()["count"]
+
+    def get_has_subscribed(self, obj):
+        try:
+            Follower.objects.get(subscriber=self.context["request"].user,
+                                 to_user=User.objects.get(pk=obj.pk))
+            has_subscription = True
+        except Follower.DoesNotExist:
+            has_subscription = False
+
+        return has_subscription
+
     class Meta:
         model = User
-        fields = ['full_name', 'id', 'profile']
+        fields = ['full_name', 'id', 'profile', "subscribers", "has_subscribed"]
 
 
 class TrueUserSerializer(serializers.ModelSerializer):

@@ -1,8 +1,11 @@
 from rest_framework import serializers
 from . import choices
+from django.contrib.auth import get_user_model
 from .services import ActionsService
 from .models import Follower, Like
 from blog.models import Article
+
+User = get_user_model()
 
 
 # Create your serializers here.
@@ -16,20 +19,18 @@ class FollowerSerializer(serializers.ModelSerializer):
         fields = ('to_user',)
 
     def save(self):
-        if self.validated_data["to_user"] is None:
-            self.to_user = 296
-        else:
-            self.validated_data["to_user"] = None
-        # 1) проверка на существование записи
-        # 2) если записи нет
-        # 3) создаём подписку
-        # 4) иначе удаляем подписку
-        print(self.validated_data)
-        # return to_user_instance
+        try:
+            follower = Follower.objects.get(subscriber=self.context["request"].user,
+                                            to_user=User.objects.get(pk=self.validated_data["to_user"]))
+            follower.delete()
+        except Follower.DoesNotExist:
+            Follower.objects.create(subscriber=self.context["request"].user,
+                                    to_user=User.objects.get(pk=self.validated_data["to_user"]))
+        return
 
     @property
     def data(self):
-        return self.validated_data
+        return self.context["request"].user.subscribers_count()
 
 
 class AssessmentSerializer(serializers.Serializer):
