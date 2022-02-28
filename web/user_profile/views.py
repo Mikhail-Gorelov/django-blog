@@ -85,7 +85,10 @@ class ProfileViewSet(ViewSet, RetrieveModelMixin, UserViewSet):
     def profile(self, request):
         serializer = self.get_serializer(request.user)
         return Response(
-            {"user": serializer.data, "CHAT_SITE_INIT": os.environ.get("CHAT_SITE_INIT")},
+            {
+                "user": serializer.data,
+                "CHAT_SITE_INIT": os.environ.get("CHAT_SITE_INIT")
+            },
             template_name=self.template_name,
         )
 

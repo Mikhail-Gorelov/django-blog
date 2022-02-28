@@ -26,8 +26,6 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    #    gender = serializers.ChoiceField(choices=GenderChoice.choices, source="profile.gender")
-    # profile = UserShortInfoSerializer()
     profile = ProfileSerializer()
     subscribers = serializers.SerializerMethodField("get_subscribers_count")
     has_subscribed = serializers.SerializerMethodField("get_has_subscribed")

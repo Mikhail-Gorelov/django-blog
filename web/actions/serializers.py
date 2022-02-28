@@ -30,7 +30,7 @@ class FollowerSerializer(serializers.ModelSerializer):
 
     @property
     def data(self):
-        return self.context["request"].user.subscribers_count()
+        return User.objects.get(pk=self.validated_data["to_user"]).subscribers_count()
 
 
 class AssessmentSerializer(serializers.Serializer):

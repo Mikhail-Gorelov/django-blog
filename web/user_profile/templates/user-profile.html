@@ -111,16 +111,18 @@
           </div>
         </div>
       </div>
-      <div class="container"><a data-href="{% url 'actions:follow' %}" class="subscribe-button"
-                                data-count="{{ user.subscribers }}" data-user="{{ user.id }}"
-                                data-subscribed="{{ user.has_subscribed }}">
-        <svg xmlns="http://www.w3.org/2000/svg">
-          <g>
-            <rect class="plus__line1" width="2" height="12" x="5" y="0"></rect>
-            <rect class="plus__line2" width="12" height="2" x="0" y="5"></rect>
-          </g>
-        </svg>
-        <span class="subscribe-text">Subscribe</span></a></div>
+      {% if id and user.id != id%}
+        <div class="container"><a data-href="{% url 'actions:follow' %}" class="subscribe-button"
+                                  data-count="{{ subscribers }}" data-user="{{ id }}"
+                                  data-subscribed="{{ has_subscribed }}">
+          <svg xmlns="http://www.w3.org/2000/svg">
+            <g>
+              <rect class="plus__line1" width="2" height="12" x="5" y="0"></rect>
+              <rect class="plus__line2" width="12" height="2" x="0" y="5"></rect>
+            </g>
+          </svg>
+          <span class="subscribe-text">Subscribe</span></a></div>
+      {% endif %}
     </div>
 
   </div><!-- /.main -->

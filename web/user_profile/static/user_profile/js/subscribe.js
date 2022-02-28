@@ -6,7 +6,6 @@ let hasSubscribed = subButton.dataset.subscribed;
 let subbedClass = 'subbed';
 
 $(function () {
-  console.log(typeof hasSubscribed);
   if (hasSubscribed === "True") {
     subButton.classList.add(subbedClass);
     subButton.querySelector('.subscribe-text').innerHTML = 'Subscribed';
@@ -18,8 +17,8 @@ $(function () {
 
 
 subButton.addEventListener('click', function (e) {
-  toggleSubbed();
   follow();
+  toggleSubbed();
   e.preventDefault();
 });
 
