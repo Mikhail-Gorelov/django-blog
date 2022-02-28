@@ -23,6 +23,10 @@
             <span class="glyphicon glyphicon-user"></span>by <a href="#">{{ article.author.full_name }}</a> |
             <span class="glyphicon glyphicon-calendar"></span> {{ article.updated | date_time }} |
             <span class="glyphicon glyphicon-comment"></span><a href="#">{{ article.comments_count }} Comments</a> |
+            <i id="articleLikeIcon" class="fa fa-thumbs-up" style="font-size:15px"></i><span
+            id="articleLikeCount"> {{ article.likes }}</span>&emsp;
+            <i id="articleDislikeIcon" class="fa fa-thumbs-down" style="font-size:15px"></i><span
+            id="articleDislikeCount"> {{ article.dislikes }}</span> |
             <i class="icon-share"></i><a href="#">39 Shares</a> |
             <span class="glyphicon glyphicon-tags"></span> Tags: <a href="#">
             <span class="label label-info">Snipp</span></a> <a href="#">
