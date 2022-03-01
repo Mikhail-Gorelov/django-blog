@@ -1,0 +1,29 @@
+{% load static %}
+{% load i18n main %}
+{% microservice_title as site_name %}
+{% chat_site_init as site_init %}
+{% block container %}
+  <title>Django blog</title>
+  {% block head %}
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  {% endblock head %}
+  <!------ Include the above in your HEAD tag ---------->
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 ">
+        <div class="list-group ">
+          <a href="#" class="list-group-item list-group-item-action active">Change credentials</a>
+          <a href="#" class="list-group-item list-group-item-action">Posts media</a>
+          <a href="#" class="list-group-item list-group-item-action">Comments media</a>
+          <a href="#" class="list-group-item list-group-item-action">Settings</a>
+        </div>
+      </div>
+      {% include 'user_profile/update-credentials.html' %}
+    </div>
+  </div>
+{% endblock %}

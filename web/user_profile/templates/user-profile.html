@@ -2,8 +2,8 @@
 {% load i18n main %}
 {% microservice_title as site_name %}
 {% chat_site_init as site_init %}
-{% block content %}
-  <title>User profile</title>
+{% block container %}
+  <title>Django blog</title>
   {% block head %}
     <link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
@@ -35,8 +35,9 @@
             <div class="panel-heading">
               <header class="panel-title">
                 <div class="text-center">
-                  <strong>Пользователь сайта <input type="text" data-href="{% url 'user_profile:user_profile' %}"
-                                                    name="full_name" id="full_name" value={{ user.full_name }}>
+                  <strong>
+                    <p>Пользователь сайта</p>
+                    <p>{{ user.full_name }}</p>
                   </strong>
                 </div>
               </header>
@@ -60,7 +61,7 @@
                 <li class=""><a href="#changepswd" class="btn btn-link pull-right" data-toggle="modal"
                                 data-target="#pwdModalChange"> Смена пароля </a></li>
                 <li class=""><a href="{% url 'user_profile:api_list_true_users' %}">Посмотреть список пользователей</a>
-                </li>
+                <li class=""><a href="{% url 'user_profile:user_settings' %}">Настройки</a></li>
               </ul>
               <div id="myTabContent" class="tab-content">
                 <hr>
@@ -69,38 +70,28 @@
                   <table class="table table-th-block">
                     <tbody>
                     <tr>
-                      <td class="active">Дата рождения:</td>
-                      <td><input type="text" data-href="{% url 'user_profile:user_profile' %}" name="birthdate"
-                                 id="birthdate" value={{ user.birthdate }}>
-                      </td>
+                      <td>Дата рождения:</td>
+                      <td>{{ user.birthdate }}</td>
                     </tr>
-                    {% if gender == 0 %}
+                    {% if user.gender == 0 %}
                       <tr>
-                        <td class="active">Пол:</td>
-                        <td><input type="text" data-href="{% url 'user_profile:user_profile' %}" name="gender"
-                                   id="gender" value="Male">
-                        </td>
+                        <td>Пол:</td>
+                        <td>Мужской</td>
                       </tr>
                     {% endif %}
-                    {% if gender == 1 %}
+                    {% if user.gender == 1 %}
                       <tr>
-                        <td class="active">Пол:</td>
-                        <td><input type="text" data-href="{% url 'user_profile:user_profile' %}" name="gender"
-                                   id="gender" value="Female">
-                        </td>
+                        <td>Пол:</td>
+                        <td>Женский</td>
                       </tr>
                     {% endif %}
                     <tr>
-                      <td class="active">Веб-сайт:</td>
-                      <td><input type="text" data-href="{% url 'user_profile:user_profile' %}" name="website"
-                                 id="website" value={{ user.website }}>
-                      </td>
+                      <td>Веб-сайт:</td>
+                      <td>{{ user.website }}</td>
                     </tr>
                     <tr>
-                      <td class="active">Биография:</td>
-                      <td><input type="text" data-href="{% url 'user_profile:user_profile' %}" name="bio" id="bio"
-                                 value={{ user.bio }}>
-                      </td>
+                      <td>Биография:</td>
+                      <td>{{ user.bio }}</td>
                     </tr>
                     </tbody>
                   </table>
@@ -110,7 +101,7 @@
           </div>
         </div>
       </div>
-      {% if id and user.id != id%}
+      {% if id and user.id != id %}
         <div class="container"><a data-href="{% url 'actions:follow' %}" class="subscribe-button"
                                   data-count="{{ subscribers }}" data-user="{{ id }}"
                                   data-subscribed="{{ has_subscribed }}">

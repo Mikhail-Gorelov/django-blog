@@ -5,7 +5,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.request import Request
 from rest_framework.status import HTTP_400_BAD_REQUEST
-
+from user_profile import choices
 from main.services import MainService
 from src import settings
 from actions.models import Follower
@@ -104,3 +104,24 @@ class GetUsersIdSerializer(serializers.Serializer):
         if errors:
             raise serializers.ValidationError(errors)
         return attrs
+
+
+class ProfileUpdateSerializer(serializers.ModelSerializer):
+    birthday = serializers.DateField(required=False, source='profile.birthdate')
+    gender = serializers.ChoiceField(
+        required=False, choices=choices.GenderChoice.choices, source='profile.gender'
+    )
+    email = serializers.EmailField()
+    website = serializers.URLField(required=False, source='profile.website')
+    biography = serializers.CharField(required=False, source='profile.bio')
+
+    class Meta:
+        model = User
+        fields = ['id', 'first_name', 'last_name', 'email', 'birthday', 'gender', 'website', 'biography']
+
+    def save(self, **kwargs):
+        data = self.validated_data.copy()
+        profile_data = data.pop('profile')
+        user_data = dict(data)
+        User.objects.filter(id=kwargs.get("id")).update(**user_data)
+        models.Profile.objects.filter(user__pk=kwargs.get("id")).update(**profile_data)

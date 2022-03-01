@@ -16,7 +16,6 @@ from rest_framework.permissions import AllowAny, BasePermission, IsAdminUser, Is
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-
 from . import serializers, services
 from .models import Profile
 from .services import UserProfileService
@@ -127,3 +126,22 @@ class TrueUserViewSet(viewsets.GenericViewSet):
 
     def perform_create(self, serializer):
         serializer.save()
+
+
+class ProfileSettingsView(GenericAPIView):
+    queryset = User.objects.all()
+    serializer_class = serializers.ProfileUpdateSerializer
+
+    def get_object(self):
+        queryset = self.filter_queryset(self.get_queryset())
+        obj = queryset.get(pk=self.kwargs['user_id'])
+        return obj
+
+    def put(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response(serializer.data)
+
+    def perform_create(self, serializer):
+        serializer.save(id=self.kwargs['user_id'])
