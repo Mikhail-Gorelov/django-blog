@@ -4,7 +4,6 @@
 <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
 
 <br><br>
 <div class="container">
@@ -20,11 +19,11 @@
                 <strong>{{ user.birthdate }}</strong><br>
                 <a href="{% url 'user_profile:user_profile_id'  user.id %}"><strong>{{ user.full_name }}</strong></a><br>
             </div>
-            <div class="span1 dropdown-user" data-for=".cyruxx">
+            <div class="span1 dropdown-user" data-for=".{{ user.id }}">
                 <i class="icon-chevron-down text-muted"></i>
             </div>
         </div>
-        <div class="row-fluid user-infos cyruxx">
+        <div class="row-fluid user-infos {{ user.id }}">
             <div class="span10 offset1">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
@@ -69,18 +68,12 @@
                     </div>
                     <div class="panel-footer">
                         <div class="send-message" data-id="{{ user.id }}" data-href="{{ site_init }}">
+                        <span class="pull-right">
                         <button class="btn  btn-primary" type="button"
                                 data-toggle="tooltip"
                                 data-original-title="Send message to user"><i class="icon-envelope icon-white"></i></button>
-                        </div>
-                        <span class="pull-right">
-                            <button class="btn btn-warning" type="button"
-                                    data-toggle="tooltip"
-                                    data-original-title="Edit this user"><i class="icon-edit icon-white"></i></button>
-                            <button class="btn btn-danger" type="button"
-                                    data-toggle="tooltip"
-                                    data-original-title="Remove this user"><i class="icon-remove icon-white"></i></button>
                         </span>
+                        </div>
                     </div>
                 </div>
             </div>
