@@ -61,7 +61,10 @@
                 <li class=""><a href="#changepswd" class="btn btn-link pull-right" data-toggle="modal"
                                 data-target="#pwdModalChange"> Смена пароля </a></li>
                 <li class=""><a href="{% url 'user_profile:api_list_true_users' %}">Посмотреть список пользователей</a>
-                <li class=""><a href="{% url 'user_profile:user_settings' %}">Настройки</a></li>
+                  {% if not id or user.id == id%}
+                    <li class=""><a href="{% url 'user_profile:user_settings' user_id=user.id %}">Настройки</a>
+                    </li>
+                  {% endif %}
               </ul>
               <div id="myTabContent" class="tab-content">
                 <hr>

@@ -1,5 +1,7 @@
 from allauth.account.utils import setup_user_email
+from allauth.utils import email_address_exists
 from dj_rest_auth.serializers import PasswordChangeSerializer
+from allauth.account.models import EmailAddress
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
@@ -112,8 +114,8 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
         required=False, choices=choices.GenderChoice.choices, source='profile.gender'
     )
     email = serializers.EmailField()
-    website = serializers.URLField(required=False, source='profile.website')
-    biography = serializers.CharField(required=False, source='profile.bio')
+    website = serializers.URLField(source='profile.website')
+    biography = serializers.CharField(source='profile.bio')
 
     class Meta:
         model = User
@@ -125,3 +127,12 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
         user_data = dict(data)
         User.objects.filter(id=kwargs.get("id")).update(**user_data)
         models.Profile.objects.filter(user__pk=kwargs.get("id")).update(**profile_data)
+        EmailAddress.objects.filter(user__pk=kwargs.get("id")).update(email=user_data['email'])
+
+    def vaidate(self, attrs):
+        if not attrs.get('email'):
+            raise serializers.ValidationError({"email": "field is required"})
+
+        if attrs.get('email') and email_address_exists(attrs.get('email')):
+            raise serializers.ValidationError("User is already registered with this e-mail address.")
+        return attrs
