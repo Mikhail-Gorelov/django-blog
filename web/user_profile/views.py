@@ -148,14 +148,10 @@ class ProfileSettingsView(GenericAPIView):
 
 
 class ProfileSettingsRetrieveViewSet(viewsets.GenericViewSet):
-    template_name = "profile-settings.html"
+    template_name = 'profile-settings.html'
     serializer_class = serializers.ProfileUpdateSerializer
     queryset = User.objects.all()
-
-    def get_object(self):
-        queryset = self.filter_queryset(self.get_queryset())
-        obj = queryset.get(pk=self.kwargs['user_id'])
-        return obj
+    lookup_url_kwarg = 'user_id'
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()

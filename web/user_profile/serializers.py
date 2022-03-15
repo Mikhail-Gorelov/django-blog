@@ -8,7 +8,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.request import Request
 from rest_framework.status import HTTP_400_BAD_REQUEST
 from user_profile import choices
-from main.services import MainService
+from main.services import MainService, CeleryService
 from src import settings
 from actions.models import Follower
 from . import models
@@ -122,17 +122,13 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
         fields = ['id', 'first_name', 'last_name', 'email', 'birthday', 'gender', 'website', 'biography']
 
     def save(self, **kwargs):
+        user = User.objects.get(id=kwargs.get("id"))
         data = self.validated_data.copy()
         profile_data = data.pop('profile')
         user_data = dict(data)
         User.objects.filter(id=kwargs.get("id")).update(**user_data)
         models.Profile.objects.filter(user__pk=kwargs.get("id")).update(**profile_data)
+        email = EmailAddress.objects.get(user__pk=kwargs.get("id"))
+        UserProfileService.deactivate_email(email)
         EmailAddress.objects.filter(user__pk=kwargs.get("id")).update(email=user_data['email'])
-
-    def vaidate(self, attrs):
-        if not attrs.get('email'):
-            raise serializers.ValidationError({"email": "field is required"})
-
-        if attrs.get('email') and email_address_exists(attrs.get('email')):
-            raise serializers.ValidationError("User is already registered with this e-mail address.")
-        return attrs
+        CeleryService.send_email_confirm(user)

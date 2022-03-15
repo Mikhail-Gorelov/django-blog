@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from allauth.account.models import EmailAddress
 
 from main.services import MainService
 
@@ -21,3 +22,11 @@ class UserProfileService:
         return User.objects.filter(
             id=user_id,
         )
+
+    @staticmethod
+    def deactivate_email(email: EmailAddress):
+        email.verified = False
+        if email.primary:
+            email.primary = False
+        email.save(update_fields=["verified", "primary"])
+        return email

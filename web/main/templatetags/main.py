@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from urllib.parse import urljoin
 from django import template
 from django.conf import settings
 
@@ -37,4 +37,4 @@ def chat_site_init():
 
 @register.simple_tag
 def backend_site():
-    return settings.BACKEND_SITE + '/'
+    return urljoin(settings.BACKEND_SITE, '/')

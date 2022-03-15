@@ -24,7 +24,7 @@
   <br><br><br>
 
 
-
+  {% get_current_language as LANGUAGE_CODE %}
   <div class="container">
     <div id="main">
 
@@ -36,7 +36,7 @@
               <header class="panel-title">
                 <div class="text-center">
                   <strong>
-                    <p>Пользователь сайта</p>
+                    <p>{% translate "Пользователь сайта" %}</p>
                     <p>{{ user.full_name }}</p>
                   </strong>
                 </div>
@@ -47,8 +47,8 @@
                 <img src="{{ user.image }}" width="240" height="240" id="userAvatar">
                 <input id="updateImageInput" data-href="{% url 'user_profile:update_image' %}" type="file" name="image"
                        value="Обзор...">
-                <a id="chat-connect" data-href="{{ site_init }}" data-id="3" class="btn btn-primary">Написать
-                  сообщение</a>
+                <a id="chat-connect" data-href="{{ site_init }}" data-id="3" class="btn btn-primary">
+                  {% translate "Написать сообщение" %}</a>
               </div>
             </div>
           </div>
@@ -57,43 +57,44 @@
           <div class="panel">
             <div class="panel-body">
               <ul id="myTab" class="nav nav-pills">
-                <li class="active"><a href="#detail" data-toggle="tab">О пользователе</a></li>
+                <li class="active"><a href="#detail" data-toggle="tab">{% translate "О пользователе" %}</a></li>
                 <li class=""><a href="#changepswd" class="btn btn-link pull-right" data-toggle="modal"
-                                data-target="#pwdModalChange"> Смена пароля </a></li>
-                <li class=""><a href="{% url 'user_profile:api_list_true_users' %}">Посмотреть список пользователей</a>
-                  {% if not id or user.id == id%}
-                    <li class=""><a href="{% url 'user_profile:user_settings' user_id=user.id %}">Настройки</a>
+                                data-target="#pwdModalChange"> {% translate "Смена пароля" %} </a></li>
+                <li class=""><a href="{% url 'user_profile:api_list_true_users' %}">
+                  {% translate "Посмотреть список пользователей" %}</a>
+                  {% if not id or user.id == id %}
+                    <li class=""><a href="{% url 'user_profile:user_settings' user_id=user.id %}">{% translate "Настройки" %}</a>
                     </li>
                   {% endif %}
               </ul>
               <div id="myTabContent" class="tab-content">
                 <hr>
                 <div class="tab-pane fade active in" id="detail">
-                  <h4>История профиля</h4>
+                  <h4>{% translate "История профиля" %}</h4>
                   <table class="table table-th-block">
                     <tbody>
                     <tr>
-                      <td>Дата рождения:</td>
+                      <td>{% translate "Дата рождения:" %}</td>
                       <td>{{ user.birthdate }}</td>
                     </tr>
                     {% if user.gender == 0 %}
                       <tr>
-                        <td>Пол:</td>
-                        <td>Мужской</td>
+                        <td>{% translate "Пол:" %}</td>
+                        <td>{% translate "Мужской" %}</td>
                       </tr>
                     {% endif %}
                     {% if user.gender == 1 %}
                       <tr>
-                        <td>Пол:</td>
-                        <td>Женский</td>
+                        <td>{% translate "Пол:" %}</td>
+                        <td>{% translate "Женский" %}</td>
                       </tr>
                     {% endif %}
                     <tr>
-                      <td>Веб-сайт:</td>
+                      <td>{% translate "Веб-сайт:" %}</td>
                       <td>{{ user.website }}</td>
                     </tr>
                     <tr>
-                      <td>Биография:</td>
+                      <td>{% translate "Биография:" %}</td>
                       <td>{{ user.bio }}</td>
                     </tr>
                     </tbody>
@@ -114,7 +115,7 @@
               <rect class="plus__line2" width="12" height="2" x="0" y="5"></rect>
             </g>
           </svg>
-          <span class="subscribe-text">Subscribe</span></a></div>
+          <span class="subscribe-text">{% translate "Subscribe:" %}</span></a></div>
       {% endif %}
     </div>
 
