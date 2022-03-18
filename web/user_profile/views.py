@@ -145,3 +145,15 @@ class ProfileSettingsView(GenericAPIView):
 
     def perform_create(self, serializer):
         serializer.save(id=self.kwargs['user_id'])
+
+
+class ProfileSettingsRetrieveViewSet(viewsets.GenericViewSet):
+    template_name = 'profile-settings.html'
+    serializer_class = serializers.ProfileUpdateSerializer
+    queryset = User.objects.all()
+    lookup_url_kwarg = 'user_id'
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)

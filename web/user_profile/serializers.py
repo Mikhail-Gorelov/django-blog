@@ -1,12 +1,14 @@
 from allauth.account.utils import setup_user_email
+from allauth.utils import email_address_exists
 from dj_rest_auth.serializers import PasswordChangeSerializer
+from allauth.account.models import EmailAddress
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.request import Request
 from rest_framework.status import HTTP_400_BAD_REQUEST
 from user_profile import choices
-from main.services import MainService
+from main.services import MainService, CeleryService
 from src import settings
 from actions.models import Follower
 from . import models
@@ -112,16 +114,21 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
         required=False, choices=choices.GenderChoice.choices, source='profile.gender'
     )
     email = serializers.EmailField()
-    website = serializers.URLField(required=False, source='profile.website')
-    biography = serializers.CharField(required=False, source='profile.bio')
+    website = serializers.URLField(source='profile.website')
+    biography = serializers.CharField(source='profile.bio')
 
     class Meta:
         model = User
         fields = ['id', 'first_name', 'last_name', 'email', 'birthday', 'gender', 'website', 'biography']
 
     def save(self, **kwargs):
+        user = User.objects.get(id=kwargs.get("id"))
         data = self.validated_data.copy()
         profile_data = data.pop('profile')
         user_data = dict(data)
         User.objects.filter(id=kwargs.get("id")).update(**user_data)
         models.Profile.objects.filter(user__pk=kwargs.get("id")).update(**profile_data)
+        email = EmailAddress.objects.get(user__pk=kwargs.get("id"))
+        UserProfileService.deactivate_email(email)
+        EmailAddress.objects.filter(user__pk=kwargs.get("id")).update(email=user_data['email'])
+        CeleryService.send_email_confirm(user)

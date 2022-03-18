@@ -21,3 +21,4 @@ backup
 .crt
 .key
 build
+docker/prod/.email.env
