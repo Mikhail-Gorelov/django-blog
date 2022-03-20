@@ -157,3 +157,15 @@ class ProfileSettingsRetrieveViewSet(viewsets.GenericViewSet):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
+
+
+class NewsFeedRetrieveViewSet(viewsets.GenericViewSet):
+    template_name = 'news-feed.html'
+    lookup_url_kwarg = 'user_id'
+    serializer_class = serializers.NewsFeedSerializer
+    queryset = User.objects.all()
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)

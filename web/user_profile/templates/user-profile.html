@@ -11,14 +11,8 @@
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="https://bootstraptema.ru/plugins/jquery/jquery-1.11.3.min.js"></script>
     <script src="https://bootstraptema.ru/plugins/2015/b-v3-3-6/bootstrap.min.js"></script>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;800;900&display=swap">
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
     <!------ Include the above in your HEAD tag ---------->
     <link href="{% static 'user_profile/css/user-profile.css' %}" rel="stylesheet">
-    <link href="{% static 'user_profile/css/news-feed.css' %}" rel="stylesheet">
   {% endblock head %}
   <script>
     $(document).ready(function () {
@@ -74,6 +68,11 @@
                       <a href="{% url 'user_profile:user_settings' user_id=user.id %}">{% trans "Settings" %}</a>
                     </li>
                   {% endif %}
+                  {% if not id or user.id == id %}
+                    <li class="">
+                      <a href="{% url 'user_profile:news_feed' user_id=user.id %}">{% trans "News" %}</a>
+                    </li>
+                  {% endif %}
               </ul>
               <div id="myTabContent" class="tab-content">
                 <hr>
@@ -111,7 +110,6 @@
               </div>
             </div>
           </div>
-          {% include 'news-feed.html' %}
         </div>
       </div>
       {% if id and user.id != id %}
