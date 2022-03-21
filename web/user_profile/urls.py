@@ -17,8 +17,14 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    path('news-feed/<user_id>/', views.NewsFeedRetrieveViewSet.as_view({'get': 'retrieve'}),
-         name='news_feed'),
+    path('news-feed-article/<user_id>/', views.NewsFeedArticleListViewSet.as_view({'get': 'article_list'}),
+         name='news_feed_article'),
+    path('news-feed-comment/<user_id>/', views.NewsFeedCommentListViewSet.as_view({'get': 'comment_list'}),
+         name='news_feed_comment'),
+    path('news-feed-followers/<user_id>/', views.NewsFeedFollowerListViewSet.as_view({'get': 'follower_list'}),
+         name='news_feed_follower'),
+    path('news-feed-likes/<user_id>/', views.NewsFeedLikeListViewSet.as_view({'get': 'like_list'}),
+         name='news_feed_like'),
     path('settings-update/<user_id>', views.ProfileSettingsView.as_view(), name='change_user_credentials'),
     path('settings-retrieve/<user_id>/', views.ProfileSettingsRetrieveViewSet.as_view({'get': 'retrieve'}),
          name='user_settings'),

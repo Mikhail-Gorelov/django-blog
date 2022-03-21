@@ -70,7 +70,7 @@
                   {% endif %}
                   {% if not id or user.id == id %}
                     <li class="">
-                      <a href="{% url 'user_profile:news_feed' user_id=user.id %}">{% trans "News" %}</a>
+                      <a href="{% url 'user_profile:news_feed_article' user_id=user.id %}">{% trans "News" %}</a>
                     </li>
                   {% endif %}
               </ul>

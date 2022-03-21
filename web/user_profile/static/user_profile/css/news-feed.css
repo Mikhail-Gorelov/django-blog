@@ -1,42 +1,37 @@
 /* Override Bootstrap */
-body {
-    margin: 0;
-    font-family: "Nunito Sans", sans-serif;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #141416;
-    background-color: #fff;
+.card {
+  /* Add shadows to create the "card" effect */
+  width: 700px;
+  align-items: center;
 }
-
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
-    font-weight: 800;
+  font-weight: 800;
 }
 
 .btn {
-    font-weight: 800;
-    background-color: transparent;
+  font-weight: 800;
+  background-color: transparent;
 }
 
 /* Custom Styles */
 
 .avatar {
-    width: 48px;
-    height: 48px;
-    display: flex;
-    position: relative;
-    font-size: 1.25rem;
-    align-items: center;
-    flex-shrink: 0;
-    line-height: 1;
-    user-select: none;
-    border-radius: 50%;
-    justify-content: center;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  position: relative;
+  font-size: 1.25rem;
+  align-items: center;
+  flex-shrink: 0;
+  line-height: 1;
+  user-select: none;
+  border-radius: 50%;
+  justify-content: center;
 }
 
 .avatar-xl {
-    width: 96px;
-    height: 96px;
+  width: 96px;
+  height: 96px;
 }
 
 .avatar-img {
@@ -66,16 +61,4 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
   line-height: 1;
   font-size: 0.625rem;
   border-radius: 50%;
-}
-
-.btn-icon {
-  position: relative;
-  display: inline-flex;
-  flex-shrink: 0;
-  justify-content: center;
-  align-items: center;
-  font-size: 1rem;
-  width: 3rem;
-  height: 3rem;
-  padding: 0;
 }
