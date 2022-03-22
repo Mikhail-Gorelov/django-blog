@@ -19,7 +19,7 @@
   <!------ BODY ---------->
   <script>
     $(document).ready(function () {
-      $.getScript('{% static 'user_profile/js/news_feed.js' %}');
+      $.getScript('{% static 'user_profile/js/news_feed_comments.js' %}');
     })
   </script>
   <br><br><br><br><br>
@@ -27,13 +27,16 @@
     <div class="row">
       <div class="col-md-3 ">
         <div class="list-group ">
-          <a href="" class="list-group-item list-group-item-action active">Articles</a>
-          <a href="{% url 'user_profile:news_feed_comment' user_id=39 %}" class="list-group-item list-group-item-action">Comments</a>
-          <a href="{% url 'user_profile:news_feed_follower' user_id=39 %}" class="list-group-item list-group-item-action">Followers</a>
-          <a href="{% url 'user_profile:news_feed_like' user_id=39 %}" class="list-group-item list-group-item-action">Likes</a>
+          <a href="{% url 'user_profile:news_feed_article' %}"
+             class="list-group-item list-group-item-action">Articles</a>
+          <a href="" class="list-group-item list-group-item-action active">Comments</a>
+          <a href="{% url 'user_profile:news_feed_follower' %}"
+           class=" list-group-item list-group-item-action">Followers</a>
+          <a href="{% url 'user_profile:news_feed_like' %}"
+             class="list-group-item list-group-item-action">Likes</a>
         </div>
       </div>
-      {% include 'user_profile/news-feed-articles-render.html' %}
+      {% include 'news_feed/news-feed-comments-render.html' %}
     </div>
   </div>
 

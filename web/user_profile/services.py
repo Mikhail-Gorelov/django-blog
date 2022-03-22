@@ -1,3 +1,6 @@
+from typing import List
+from actions.models import Follower
+
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from allauth.account.models import EmailAddress
@@ -30,3 +33,8 @@ class UserProfileService:
             email.primary = False
         email.save(update_fields=["verified", "primary"])
         return email
+
+    @staticmethod
+    def get_subscriptions_to(user: User) -> List[User]:
+        following = list(Follower.objects.filter(subscriber=user).values_list("to_user", flat=True))
+        return User.objects.filter(id__in=following)

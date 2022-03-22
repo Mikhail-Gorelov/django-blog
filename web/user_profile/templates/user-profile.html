@@ -13,6 +13,9 @@
     <script src="https://bootstraptema.ru/plugins/2015/b-v3-3-6/bootstrap.min.js"></script>
     <!------ Include the above in your HEAD tag ---------->
     <link href="{% static 'user_profile/css/user-profile.css' %}" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="{% static 'user_profile/css/news-feed.css' %}" rel="stylesheet">
   {% endblock head %}
   <script>
     $(document).ready(function () {
@@ -70,7 +73,7 @@
                   {% endif %}
                   {% if not id or user.id == id %}
                     <li class="">
-                      <a href="{% url 'user_profile:news_feed_article' user_id=user.id %}">{% trans "News" %}</a>
+                      <a href="{% url 'user_profile:news_feed_article' %}">{% trans "News" %}</a>
                     </li>
                   {% endif %}
               </ul>
@@ -110,6 +113,7 @@
               </div>
             </div>
           </div>
+        {% include 'news_feed/news-feed-articles-render.html' %}
         </div>
       </div>
       {% if id and user.id != id %}
