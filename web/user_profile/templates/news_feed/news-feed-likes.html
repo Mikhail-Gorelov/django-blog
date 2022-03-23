@@ -23,7 +23,7 @@
     })
   </script>
   <br><br><br><br><br>
-  <div class="container">
+  <div class="container" data-href="{% url "user_profile:news_feed_like" %}" style="overflow-y:auto;">
     <div class="row">
       <div class="col-md-3 ">
         <div class="list-group ">
@@ -36,7 +36,12 @@
           <a href="" class="list-group-item list-group-item-action active">Likes</a>
         </div>
       </div>
-      {% include 'news_feed/news-feed-likes-render.html' %}
+      <div class="col-md-7">
+        <div class="card">
+          <div class="col-12 col-lg-7 order-lg-1" id="likeContainer">
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

@@ -2,23 +2,29 @@ $(function () {
   getArticleList();
 });
 $.fn.scrollBottom = function () {
-  console.log($(document).height(), this.scrollTop(), this.height());
   return $(document).height() - this.scrollTop() - this.height();
 };
 let requestedNewPageArticle = false;
-$('.container').scroll(function () {
-  console.log($(this).prop('scrollHeight'), $(this).height(), $(this).scrollTop(), !requestedNewPage);
-  if (($(this).prop('scrollHeight') - $(this).height()) <= $(this).scrollTop() && !requestedNewPage) {
-    if ($(this).attr("data-href")) {
+$(document).scroll(function () {
+  if ($(this).height() - $(this).scrollTop() < 1000  && !requestedNewPageArticle) {
+    if ($('.container').attr('data')) {
       requestedNewPageArticle = true;
-      getArticleList();
+      getArticleList($('.container').attr('data'));
     }
   }
 });
 
-function getArticleList() {
+function getArticleList(url = null) {
+  let url_web = ""
+
+  if (url == null) {
+    url_web = $(".container").attr("data-href");
+  } else {
+    url_web = url;
+  }
+
   $.ajax({
-    url: $(".container").attr("data-href"),
+    url: url_web,
     type: "GET",
     success: function (data) {
       articleListRender(data);
@@ -30,24 +36,15 @@ function articleListRender(data) {
   let articleList = data.results;
   $(".container").attr("data-href", data.next);
 
-  let blockStart = `
-  <div class="col-md-7">
-    <div class="card">
-      <div class="col-12 col-lg-7 order-lg-1">`;
   let articles = ``;
-  let blockEnd = `
-          </div>
-      </div>
-  </div>`;
   $.each(articleList, function (i) {
     articles += articleListFunc(
       articleList[i].author.image, articleList[i].author.full_name, articleList[i].updated, articleList[i].image,
       articleList[i].title, articleList[i].content,);
   })
-  blockStart += articles
-  blockStart += blockEnd
-  $('.row').append(blockStart);
-  requestedNewPage = false;
+  $('#articleContainer').append(articles);
+  $('.container').attr('data', data.next);
+  requestedNewPageArticle = false;
 }
 
 function articleListFunc(authorImage, authorFullName, articleUpdated, articleImage, articleTitle, articleContent) {

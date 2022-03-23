@@ -22,7 +22,8 @@ from rest_framework.viewsets import ModelViewSet
 from . import serializers, services
 from .models import Profile
 from .services import UserProfileService
-from main.pagination import BasePageNumberPagination, BasePageNumberArticlePagination
+from main.pagination import BasePageNumberPagination, BasePageNumberNewsFeedArticlePagination, \
+    BasePageNumberNewsFeedPagination
 
 User = get_user_model()
 logger = logging.getLogger(__name__)
@@ -166,10 +167,10 @@ class ProfileSettingsRetrieveViewSet(viewsets.GenericViewSet):
         return Response(serializer.data)
 
 
-class NewsFeedArticleListViewSet(ListAPIView):
+class NewsFeedArticleListView(ListAPIView):
     template_name = 'news_feed/news-feed-articles.html'
     lookup_url_kwarg = 'user_id'
-    pagination_class = BasePageNumberArticlePagination
+    pagination_class = BasePageNumberNewsFeedArticlePagination
     serializer_class = serializers.NewsFeedArticleSerializer
 
     def get_queryset(self):
@@ -179,66 +180,52 @@ class NewsFeedArticleListViewSet(ListAPIView):
 
     def list(self, request, *args, **kwargs):
         self.user = request.user
-        return super(NewsFeedArticleListViewSet, self).list(request, *args, **kwargs)
-
-    def get_template_name(self):
-        return 'news_feed/news-feed-articles.html'
+        return super(NewsFeedArticleListView, self).list(request, *args, **kwargs)
 
 
-class NewsFeedCommentListViewSet(viewsets.GenericViewSet):
-    pagination_class = BasePageNumberPagination
+class NewsFeedCommentListView(ListAPIView):
     template_name = 'news_feed/news-feed-comments.html'
+    pagination_class = BasePageNumberNewsFeedPagination
     lookup_url_kwarg = 'user_id'
     serializer_class = serializers.NewsFeedCommentSerializer
-    queryset = User.objects.all()
 
-    def comment_list(self, request, *args, **kwargs):
-        articles = Comment.objects.filter(
-            user__id__in=UserProfileService.get_subscriptions_to(request.user)
+    def get_queryset(self):
+        return Comment.objects.filter(
+            user__id__in=UserProfileService.get_subscriptions_to(self.user)
         ).order_by("-updated")
-        serializer = self.get_serializer(articles, many=True)
-        return Response(
-            {
-                "current_user": request.user.pk,
-                "comments": serializer.data
-            }
-        )
+
+    def list(self, request, *args, **kwargs):
+        self.user = request.user
+        return super(NewsFeedCommentListView, self).list(request, *args, **kwargs)
 
 
-class NewsFeedFollowerListViewSet(viewsets.GenericViewSet):
-    pagination_class = BasePageNumberPagination
+class NewsFeedFollowerListView(ListAPIView):
     template_name = 'news_feed/news-feed-followers.html'
+    pagination_class = BasePageNumberNewsFeedPagination
     lookup_url_kwarg = 'user_id'
     serializer_class = serializers.NewsFeedFollowerSerializer
-    queryset = User.objects.all()
 
-    def follower_list(self, request, *args, **kwargs):
-        instance = self.get_object()
-        followers = Follower.objects.filter(to_user=instance.id).order_by("-date")
-        serializer = self.get_serializer(followers, many=True)
-        return Response(
-            {
-                "current_user": request.user.pk,
-                "followers": serializer.data
-            }
-        )
+    def get_queryset(self):
+        return Follower.objects.filter(
+            to_user__in=UserProfileService.get_subscriptions_to(self.user)
+        ).order_by("-date")
+
+    def list(self, request, *args, **kwargs):
+        self.user = request.user
+        return super(NewsFeedFollowerListView, self).list(request, *args, **kwargs)
 
 
-class NewsFeedLikeListViewSet(viewsets.GenericViewSet):
-    pagination_class = BasePageNumberPagination
+class NewsFeedLikeListView(ListAPIView):
     template_name = 'news_feed/news-feed-likes.html'
+    pagination_class = BasePageNumberNewsFeedPagination
     lookup_url_kwarg = 'user_id'
     serializer_class = serializers.NewsFeedLikeSerializer
-    queryset = User.objects.all()
 
-    def like_list(self, request, *args, **kwargs):
-        likes = Like.objects.filter(
-            user__id__in=UserProfileService.get_subscriptions_to(request.user)
+    def get_queryset(self):
+        return Like.objects.filter(
+            user__id__in=UserProfileService.get_subscriptions_to(self.user)
         ).order_by("-date")
-        serializer = self.get_serializer(likes, many=True)
-        return Response(
-            {
-                "current_user": request.user.pk,
-                "likes": serializer.data
-            }
-        )
+
+    def list(self, request, *args, **kwargs):
+        self.user = request.user
+        return super(NewsFeedLikeListView, self).list(request, *args, **kwargs)
