@@ -50,5 +50,5 @@ RUN chmod +x /*.sh && \
     mkdir -p static logs  && \
     chown -R $USER:$USER static logs  && \
     flake8 .
-
+ENTRYPOINT ["/entrypoint.sh"]
 USER $USER

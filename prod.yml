@@ -30,7 +30,6 @@ services:
         - mushroom3/django-blog:${DOCKER_TAG:-latest}
       dockerfile: docker/prod/web/Dockerfile
     image: mushroom3/django-blog:${DOCKER_TAG:-latest}
-    entrypoint: /entrypoint.sh
     volumes:
       - static_volume:/home/ubuntu/web/static
       - media_volume:/home/ubuntu/web/media
@@ -67,6 +66,7 @@ services:
         - mushroom3/django-blog:${DOCKER_TAG:-latest}
       dockerfile: docker/prod/web/Dockerfile
     image: mushroom3/django-blog:${DOCKER_TAG:-latest}
+    entrypoint: ""
     command: celery -A src worker -l info
     env_file:
       - docker/prod/env/.env
