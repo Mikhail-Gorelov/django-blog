@@ -9,9 +9,10 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.request import Request
 from rest_framework.status import HTTP_400_BAD_REQUEST
+from django.conf import settings
 from user_profile import choices
+from urllib.parse import urljoin
 from main.services import MainService, CeleryService
-from src import settings
 from django.db.models import Q
 from . import models
 from blog.models import Article, Comment
@@ -139,14 +140,23 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
 
 
 class NewsFeedArticleShortSerializer(serializers.ModelSerializer):
+    slug = serializers.SerializerMethodField("get_slug")
+
+    def get_slug(self, obj):
+        backend_site = urljoin(settings.BACKEND_SITE, "/")
+        posts = urljoin(backend_site, "posts/")
+        article = urljoin(posts, obj.slug) + "/"
+        return article
+
     class Meta:
         model = Article
-        fields = ['title']
+        fields = ['title', 'slug']
 
 
 class NewsFeedArticleSerializer(serializers.ModelSerializer):
     author = serializers.SerializerMethodField("get_author")
     updated = serializers.SerializerMethodField("get_updated")
+    type = serializers.SerializerMethodField("get_type")
 
     def get_author(self, obj):
         author = obj.author
@@ -158,15 +168,19 @@ class NewsFeedArticleSerializer(serializers.ModelSerializer):
             datetime.datetime.now().replace(microsecond=0) - obj.updated.replace(tzinfo=None).replace(microsecond=0)
         )
 
+    def get_type(self, obj):
+        return 'article'
+
     class Meta:
         model = Article
-        fields = ['id', 'category', 'title', 'content', 'author', 'image', 'updated']
+        fields = ['id', 'type', 'category', 'title', 'content', 'author', 'image', 'updated']
 
 
 class NewsFeedCommentSerializer(serializers.ModelSerializer):
-    user = serializers.SerializerMethodField("get_author")
+    author = serializers.SerializerMethodField("get_author")
     updated = serializers.SerializerMethodField("get_updated")
     article = serializers.SerializerMethodField("get_article")
+    type = serializers.SerializerMethodField("get_type")
 
     def get_author(self, obj):
         user = obj.user
@@ -183,9 +197,12 @@ class NewsFeedCommentSerializer(serializers.ModelSerializer):
         serializer = NewsFeedArticleShortSerializer(article)
         return serializer.data
 
+    def get_type(self, obj):
+        return 'comment'
+
     class Meta:
         model = Comment
-        fields = ['id', 'user', 'content', 'article', 'updated']
+        fields = ['id', 'type', 'author', 'content', 'article', 'updated']
 
 
 class NewsFeedLikeSerializer(serializers.ModelSerializer):
@@ -232,7 +249,6 @@ class NewsFeedFollowerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Follower
         fields = ['id', 'subscriber', 'date']
-
 
 # class NewsFeedSerializer(serializers.ModelSerializer):
 #     article_set = serializers.SerializerMethodField("get_articles")

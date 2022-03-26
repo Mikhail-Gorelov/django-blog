@@ -39,15 +39,15 @@ function commentListRender(data) {
   let comments = ``;
   $.each(commentList, function (i) {
     comments += commentListFunc(
-      commentList[i].user.image, commentList[i].user.full_name, commentList[i].updated,
-      commentList[i].content, commentList[i].article.title,);
+      commentList[i].author.image, commentList[i].author.full_name, commentList[i].updated,
+      commentList[i].content, commentList[i].article.title, commentList[i].article.slug,);
   })
   $('#commentContainer').append(comments);
   $('.container').attr('data', data.next);
   requestedNewPageArticle = false;
 }
 
-function commentListFunc(authorImage, authorFullName, commentUpdated, commentContent, commentTitle,) {
+function commentListFunc(authorImage, authorFullName, commentUpdated, commentContent, commentTitle, commentSlug) {
   let comment = `
         <section class="py-4">
           <div class="mb-4 py-4">
@@ -63,7 +63,8 @@ function commentListFunc(authorImage, authorFullName, commentUpdated, commentCon
               </div>
             </div>
             <div class="mt-3">
-              <p class="text-muted mb-0">${commentContent} to <strong>${commentTitle}</strong></p>
+              <p class="text-muted mb-0"><a href="${commentSlug}"><strong>${commentTitle}</strong></a></p>
+              <p class="text-muted mb-0">${commentContent}</p>
             </div>
           </div>
       </section>

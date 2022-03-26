@@ -207,7 +207,7 @@ class NewsFeedFollowerListView(ListAPIView):
 
     def get_queryset(self):
         return Follower.objects.filter(
-            to_user__in=UserProfileService.get_subscriptions_to(self.user)
+            to_user=self.user
         ).order_by("-date")
 
     def list(self, request, *args, **kwargs):
