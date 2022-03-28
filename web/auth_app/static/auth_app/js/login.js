@@ -4,13 +4,14 @@ $(function () {
   $('#forgotPasswordForm').submit(forgotPassword);
   $('#forgotPasswordFormSuccess').submit(forgotPasswordSuccess)
 });
-$('.gallery-overlay').click(function() {
-    $(this).fadeOut('slow');
+$('.gallery-overlay').click(function () {
+  $(this).fadeOut('slow');
 });
 
-$('.gallery-image').click(function() {
-    return false;
+$('.gallery-image').click(function () {
+  return false;
 });
+
 function login(e) {
   let form = $(this);
   e.preventDefault();
@@ -21,21 +22,30 @@ function login(e) {
     data: form.serialize(),
     success: function (data) {
       url = '/';
-      localStorage.setItem('access_token' ,data.access_token);
+      localStorage.setItem('access_token', data.access_token);
       window.location.href = url;
     },
     error: function (data) {
-      $("#emailGroup").addClass("has-error");
-      $("#passwordGroup").addClass("has-error");
-      $(".help-block").remove()
-      $("#passwordGroup").append(
-        '<div class="help-block">' + data.responseJSON.email + "</div>"
-      );
-
+      if (data.responseJSON[0]) {
+        $("#emailGroup").addClass("has-error");
+        $("#passwordGroup").addClass("has-error");
+        $(".help-block").remove()
+        $("#passwordGroup").append(
+          '<div class="help-block">' + data.responseJSON[0] + "</div>"
+        );
+      } else {
+        $("#emailGroup").addClass("has-error");
+        $("#passwordGroup").addClass("has-error");
+        $(".help-block").remove()
+        $("#passwordGroup").append(
+          '<div class="help-block">' + data.responseJSON.email + "</div>"
+        );
+      }
     }
   })
   console.log(form.data())
 }
+
 function forgotPassword(e) {
   console.log("Here");
   let form = $(this);
@@ -55,6 +65,7 @@ function forgotPassword(e) {
     },
   })
 }
+
 function forgotPasswordSuccess(e) {
   let form = $(this);
   window.location.href = form.attr("action");
