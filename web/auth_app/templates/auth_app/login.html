@@ -28,13 +28,14 @@
 					<a href="#" class="btn btn-link pull-right" data-toggle="modal" data-target="#pwdModal">Forgot Password?</a>
 
 				</span>
-          <div class="captchaGroup">
-            <div class="g-recaptcha" data-sitekey="6LeQmx8fAAAAAOz-kcVFXMNXPu1JEzbhBLM5eWCO"></div>
+          <div id="captchaGroup">
+            <div class="g-recaptcha" data-sitekey="6LeQmx8fAAAAAOz-kcVFXMNXPu1JEzbhBLM5eWCO"
+                 data-callback="recaptchaCallback"></div>
           </div>
           <hr class="colorgraph">
           <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6">
-              <input type="submit" class="btn btn-lg btn-success btn-block" value="Sign In">
+              <input type="submit" class="btn btn-lg btn-success btn-block" value="Sign In" id="signInButton" disabled>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6">
               <a href="{% url 'auth_app:sign_up' %}" class="btn btn-lg btn-primary btn-block">Register</a>

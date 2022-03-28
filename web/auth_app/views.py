@@ -20,20 +20,6 @@ logger = logging.getLogger(__name__)
 class LoginView(auth_views.LoginView):
     serializer_class = serializers.LoginSerializer
 
-    def post(self, request, *args, **kwargs):
-        captcha_token = self.request.POST.get("g-recaptcha-response")
-        captcha_url = "https://www.google.com/recaptcha/api/siteverify"
-        captcha_secret = "6LeQmx8fAAAAAMo_RQroMylU3kkjrSU9r5tLfz9T"
-        captcha_data = {
-            "secret": captcha_secret,
-            "response": captcha_token,
-        }
-        captcha_server_response = requests.post(url=captcha_url, data=captcha_data)
-        captcha_json = json.loads(captcha_server_response.text)
-        if not captcha_json['success']:
-            raise ValidationError("Invalid captcha, try again")
-        return super(LoginView, self).post(request, *args, **kwargs)
-
 
 class SignUpView(CreateAPIView):
     permission_classes = (AllowAny,)
