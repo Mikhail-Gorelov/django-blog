@@ -35,7 +35,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 8000
               protocol: TCP
           livenessProbe:
             httpGet:
@@ -47,6 +47,21 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: SECRET_KEY
+              value: {{ required "django secret key is required" .Values.django.secretKey }}
+            - name: DJANGO_ALLOWED_HOSTS
+              value: {{ required "django allowed hosts is required" .Values.django.allowedHosts }}
+            - name: POSTGRES_HOST
+              value: {{ default (printf "%s-postgresql" .Release.Name) .Values.postgresql.host | quote }}
+            - name: POSTGRES_PORT
+              value: {{ .Values.django.db.postgresPort | quote }}
+            - name: POSTGRES_DB
+              value: {{ .Values.postgresql.postgresqlDatabase }}
+            - name: POSTGRES_USER
+              value: {{ .Values.postgresql.username }}
+            - name: POSTGRES_PASSWORD
+              value: {{ .Values.postgresql.postgresqlPassword }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
