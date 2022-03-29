@@ -38,3 +38,8 @@ def chat_site_init():
 @register.simple_tag
 def backend_site():
     return urljoin(settings.BACKEND_SITE, '/')
+
+
+@register.simple_tag
+def google_captcha():
+    return settings.GOOGLE_CAPTCHA_SITE_SECRET_KEY
