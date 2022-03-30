@@ -2,18 +2,29 @@ $(function () {
   // $(document).on("click", "a.login", login);
   $('#loginForm').submit(login);
   $('#forgotPasswordForm').submit(forgotPassword);
-  $('#forgotPasswordFormSuccess').submit(forgotPasswordSuccess)
-});
-$('.gallery-overlay').click(function() {
-    $(this).fadeOut('slow');
+  $('#forgotPasswordFormSuccess').submit(forgotPasswordSuccess);
 });
 
-$('.gallery-image').click(function() {
-    return false;
+function recaptchaCallback() {
+  $('#signInButton').removeAttr('disabled');
+}
+
+function recaptchaCallForgotback() {
+  $('#forgotButton').removeAttr('disabled');
+}
+
+$('.gallery-overlay').click(function () {
+  $(this).fadeOut('slow');
 });
+
+$('.gallery-image').click(function () {
+  return false;
+});
+
 function login(e) {
   let form = $(this);
   e.preventDefault();
+  recaptchaCallback();
   $.ajax({
     url: form.attr("action"),
     type: "POST",
@@ -21,25 +32,32 @@ function login(e) {
     data: form.serialize(),
     success: function (data) {
       url = '/';
-      localStorage.setItem('access_token' ,data.access_token);
+      localStorage.setItem('access_token', data.access_token);
       window.location.href = url;
     },
     error: function (data) {
-      $("#emailGroup").addClass("has-error");
-      $("#passwordGroup").addClass("has-error");
-      $(".help-block").remove()
-      $("#passwordGroup").append(
-        '<div class="help-block">' + data.responseJSON.email + "</div>"
-      );
-
+      if (data.responseJSON.non_field_errors) {
+        $("#captchaGroup").addClass("has-error");
+        $(".help-block").remove()
+        $("#captchaGroup").append(
+          '<div class="help-block">' + data.responseJSON.non_field_errors[0] + "</div>"
+        );
+      } else {
+        $("#emailGroup").addClass("has-error");
+        $("#passwordGroup").addClass("has-error");
+        $(".help-block").remove()
+        $("#passwordGroup").append(
+          '<div class="help-block">' + data.responseJSON.email + "</div>"
+        );
+      }
     }
   })
-  console.log(form.data())
 }
+
 function forgotPassword(e) {
-  console.log("Here");
   let form = $(this);
   e.preventDefault();
+  recaptchaCallForgotback();
   $.ajax({
     url: form.attr("action"),
     type: "POST",
@@ -48,14 +66,25 @@ function forgotPassword(e) {
     success: function (data) {
       $('#pwdModal').modal("hide");
       $('#pwdModalSecond').modal("show");
-      console.log(data, "success");
     },
     error: function (data) {
-      console.log(data, "error");
+      if (data.responseJSON.non_field_errors) {
+        $("#captchaGroupModal").addClass("has-error");
+        $(".help-block").remove()
+        $("#captchaGroupModal").append(
+          '<div class="help-block">' + data.responseJSON.non_field_errors[0] + "</div>"
+        );
+      }
     },
   })
 }
+
 function forgotPasswordSuccess(e) {
   let form = $(this);
   window.location.href = form.attr("action");
+}
+
+function buttonAvailable(e) {
+  console.log($(".g-recaptcha").val());
+  $("#signInButton").disabled = !$(".g-recaptcha");
 }

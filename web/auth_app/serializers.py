@@ -23,7 +23,14 @@ error_messages = {
 }
 
 
-class UserSignUpSerializer(serializers.Serializer):
+class CaptchaSerializerMixin(serializers.Serializer):
+    def validate(self, attrs):
+        captcha_token = self.context["request"].POST.get("g-recaptcha-response")
+        if not AuthAppService.validate_captcha(captcha_token, self.context["request"])[0]:
+            raise serializers.ValidationError("Invalid captcha, try again")
+
+
+class UserSignUpSerializer(CaptchaSerializerMixin, serializers.Serializer):
     first_name = serializers.CharField(min_length=2, max_length=100, required=True)
     last_name = serializers.CharField(min_length=2, max_length=100, required=True)
     email = serializers.EmailField(required=True)
@@ -52,6 +59,7 @@ class UserSignUpSerializer(serializers.Serializer):
         #     raise serializers.ValidationError({"birthdate": "Birthdate is required"})
         # if not data.get("gender"):
         #     raise serializers.ValidationError({"gender": "Gender is required"})
+        super(UserSignUpSerializer, self).validate(data)
         return data
 
     def save(self, **kwargs):
@@ -77,7 +85,7 @@ class UserSignUpSerializer(serializers.Serializer):
         return self.validated_data
 
 
-class LoginSerializer(auth_serializers.LoginSerializer):
+class LoginSerializer(CaptchaSerializerMixin, auth_serializers.LoginSerializer):
     username = None
     email = serializers.EmailField()
 
@@ -108,6 +116,7 @@ class LoginSerializer(auth_serializers.LoginSerializer):
             msg = {'email': error_messages['wrong_credentials']}
             raise serializers.ValidationError(msg)
         attrs['user'] = user
+        super(LoginSerializer, self).validate(attrs)
         return attrs
 
 

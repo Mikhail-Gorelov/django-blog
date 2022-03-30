@@ -3,15 +3,21 @@ $(function () {
   $('#buttonForm').submit(button_process); // проблема имеется именно в обращении к форме
 });
 const error_class_name = "has-error"
+
+function recaptchaCallback() {
+  $('#signUpButton').removeAttr('disabled');
+}
+
 function singUp(e) {
   let form = $(this);
   e.preventDefault();
+  recaptchaCallback();
   $.ajax({
     url: form.attr("action"),
     type: form.attr("method"),
     dataType: 'json',
     data: form.serialize(),
-    success: function(data) {
+    success: function (data) {
       button_process(data)
     },
     error: function (data) {
@@ -49,14 +55,18 @@ function error_process(data) {
   if (data.responseJSON.gender) {
     help_block("#genderGroup", data.responseJSON.gender)
   }
+  if (data.responseJSON.non_field_errors) {
+    help_block("#captchaGroup", data.responseJSON.non_field_errors[0])
+  }
 }
+
 function help_block(group, variable) {
   $(group).addClass(error_class_name);
   $(group).append('<div class="help-block">' + variable + "</div>");
 }
 
 function button_process(data) {
-  $('#clickMe').click(function() {
+  $('#clickMe').click(function () {
     window.location.href = "/auth/login";
   });
 }

@@ -54,6 +54,9 @@ ADMIN_EMAIL = ['misha_gorelov@mail.ru', 'gorielov.misha@gmail.com']
 MICROSERVICE_TITLE = os.environ.get('MICROSERVICE_TITLE', 'Template')
 MICROSERVICE_PREFIX = os.environ.get('MICROSERVICE_PREFIX', '')
 
+GOOGLE_CAPTCHA_SECRET_KEY = os.environ.get('GOOGLE_CAPTCHA_SECRET_KEY')
+GOOGLE_CAPTCHA_SITE_SECRET_KEY = os.environ.get('GOOGLE_CAPTCHA_SITE_SECRET_KEY')
+
 GITHUB_URL = os.environ.get('GITHUB_URL', 'https://github.com')
 
 REDIS_URL = os.environ.get('REDIS_URL', 'redis://redis:6379')
