@@ -116,6 +116,7 @@ class LoginSerializer(CaptchaSerializerMixin, auth_serializers.LoginSerializer):
             msg = {'email': error_messages['wrong_credentials']}
             raise serializers.ValidationError(msg)
         attrs['user'] = user
+        super(LoginSerializer, self).validate(attrs)
         return attrs
 
 
