@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: mushroom3/django-blog
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
@@ -87,13 +87,32 @@ postgresql:
   username: "postgres"
   postgresqlPassword: "develop1234"
 
+redis:
+  auth:
+    enabled: false
+#    password: "redis"
+
 #  auth:
 #    password: "develop"
 #    database: "testdb"
 
 django:
+  superUserEmail: "root@root.ru"
+  superUserPassword: "qwerty1234"
+  enableRendering: "1"
   secretKey: "g)g$9zy$=!2#^*%o^=s21ev@o-q-iszijbw%-54n%+n=z8*p+n"
   allowedHosts: "localhost,127.0.0.1,blog"
+  debug: "0"
+  siteId: "1"
+  sqlEngine: "django.db.backends.postgresql"
+  backendSite: "http://localhost:8008"
+  adminUrl: "admin"
+  djangoSettingsModule: "src.settings_dev"
   db:
     postgresHost: ""
     postgresPort: "5432"
+  redis:
+    redisUrl: "redis://redis:6379"
+    redisHost: ""
+    redisPort: "6379"
+    redisDB: "0"

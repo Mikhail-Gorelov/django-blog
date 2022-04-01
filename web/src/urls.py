@@ -15,7 +15,7 @@ urlpatterns = [
     path('auth/', include('auth_app.urls')),
     path('', include('blog.urls')),
     path('', include('contact_us.urls')),
-    path('', include('django_prometheus.urls')),
+    # path('', include('django_prometheus.urls')),
     path(f'{admin_url}/', admin.site.urls),
     path(f'{admin_url}/defender/', include('defender.urls')),
     path('api/', include('rest_framework.urls')),
