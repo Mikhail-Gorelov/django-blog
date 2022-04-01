@@ -72,8 +72,8 @@ autoscaling:
   enabled: true
   minReplicas: 1
   maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
+  targetCPUUtilizationPercentage: 50
+  targetMemoryUtilizationPercentage: 80
 
 nodeSelector: { }
 
@@ -87,14 +87,11 @@ postgresql:
 redis:
   auth:
     enabled: false
-#    password: "redis"
 
-#  auth:
-#    password: "develop"
-#    database: "testdb"
 
 django:
   enableRendering: "1"
+  healthCheckUrl: "/application/health/"
   allowedHosts: "localhost,127.0.0.1,blog"
   debug: "0"
   siteId: "1"
