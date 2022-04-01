@@ -49,13 +49,25 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
             - name: SUPERUSER_EMAIL
-              value: {{ .Values.django.superUserEmail | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: blogchart-secrets
+                  key: superUserEmail
+                  optional: false
             - name: SUPERUSER_PASSWORD
-              value: {{ .Values.django.superUserPassword | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: blogchart-secrets
+                  key: superUserPassword
+                  optional: false
             - name: ENABLE_RENDERING
               value: {{ .Values.django.enableRendering | quote }}
             - name: SECRET_KEY
-              value: {{ required "django secret key is required" .Values.django.secretKey | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: blogchart-secrets
+                  key: secretKey
+                  optional: false
             - name: DJANGO_ALLOWED_HOSTS
               value: {{ required "django allowed hosts is required" .Values.django.allowedHosts | quote }}
             - name: POSTGRES_HOST
@@ -63,11 +75,23 @@ spec:
             - name: POSTGRES_PORT
               value: {{ .Values.django.db.postgresPort | quote }}
             - name: POSTGRES_DB
-              value: {{ .Values.postgresql.postgresqlDatabase | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: blogchart-secrets
+                  key: postgresqlDatabase
+                  optional: false
             - name: POSTGRES_USER
-              value: {{ .Values.postgresql.username | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: blogchart-secrets
+                  key: username
+                  optional: false
             - name: POSTGRES_PASSWORD
-              value: {{ .Values.postgresql.postgresqlPassword | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: blogchart-secrets
+                  key: postgresqlPassword
+                  optional: false
             - name: REDIS_HOST
               value: {{ default (printf "%s-redis-master" .Release.Name) .Values.redis.host | quote }}
             - name: REDIS_PORT

@@ -83,9 +83,6 @@ affinity: { }
 
 postgresql:
   enabled: true
-  postgresqlDatabase: "develop"
-  username: "postgres"
-  postgresqlPassword: "develop1234"
 
 redis:
   auth:
@@ -97,10 +94,7 @@ redis:
 #    database: "testdb"
 
 django:
-  superUserEmail: "root@root.ru"
-  superUserPassword: "qwerty1234"
   enableRendering: "1"
-  secretKey: "g)g$9zy$=!2#^*%o^=s21ev@o-q-iszijbw%-54n%+n=z8*p+n"
   allowedHosts: "localhost,127.0.0.1,blog"
   debug: "0"
   siteId: "1"
