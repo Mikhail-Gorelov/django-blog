@@ -97,7 +97,7 @@ spec:
             - name: REDIS_PORT
               value: {{ .Values.django.redis.redisPort | quote }}
             - name: REDIS_URL
-              value: "$(REDIS_HOST)://$(REDIS_HOST):$(REDIS_PORT)"
+              value: "redis://$(REDIS_HOST):$(REDIS_PORT)"
             - name: REDIS_DB
               value: {{ .Values.django.redis.redisDB | quote }}
             - name: DEBUG
