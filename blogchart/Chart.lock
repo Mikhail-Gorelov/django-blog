@@ -5,8 +5,5 @@ dependencies:
 - name: redis
   repository: https://charts.bitnami.com/bitnami
   version: 16.3.0
-- name: nginx
-  repository: https://charts.bitnami.com/bitnami
-  version: 9.7.3
-digest: sha256:44a27180884655ac9095368492662a7d8181440d79f1016d569bf6b372bc0909
-generated: "2022-03-29T20:02:40.354522+03:00"
+digest: sha256:3e2052b7502cfdb460e35fe5dafcf3e5198575dcbd66b91d8b65491d340050e4
+generated: "2022-04-02T12:10:42.435871+03:00"
