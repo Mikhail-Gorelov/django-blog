@@ -1,10 +1,11 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "blogchart.fullname" . }}
   labels:
     {{- include "blogchart.labels" . | nindent 4 }}
 spec:
+  serviceName: {{ include "blogchart.fullname" . }}
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
@@ -81,23 +82,11 @@ spec:
             - name: POSTGRES_PORT
               value: {{ .Values.django.db.postgresPort | quote }}
             - name: POSTGRES_DB
-              valueFrom:
-                secretKeyRef:
-                  name: blogchart-secrets
-                  key: postgresqlDatabase
-                  optional: false
+              value: {{ .Values.postgresql.auth.database  | quote }}
             - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: blogchart-secrets
-                  key: username
-                  optional: false
+              value: {{ .Values.postgresql.auth.username | quote }}
             - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: blogchart-secrets
-                  key: postgresqlPassword
-                  optional: false
+              value: {{ .Values.postgresql.auth.password | quote }}
             - name: REDIS_HOST
               value: {{ default (printf "%s-redis-master" .Release.Name) .Values.redis.host | quote }}
             - name: REDIS_PORT
@@ -118,6 +107,13 @@ spec:
               value: {{ .Values.django.adminUrl | quote }}
             - name: DJANGO_SETTINGS_MODULE
               value: {{ .Values.django.djangoSettingsModule | quote }}
+          volumeMounts:
+            - name: {{ (printf "%s-media-storage" .Release.Name) }}
+              mountPath: /web/media
+      volumes:
+        - name: {{ (printf "%s-media-storage" .Release.Name) }}
+          persistentVolumeClaim:
+            claimName: {{ include "blogchart.fullname" . }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
