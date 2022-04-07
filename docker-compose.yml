@@ -89,6 +89,20 @@ services:
       - separated_network
     extra_hosts:
       - "docker-gateway-host:172.17.0.1"
+  flower:
+    build:
+      context: .
+      dockerfile: docker/dev/flower/Dockerfile
+    entrypoint: ""
+    env_file:
+      - docker/dev/env/.env
+    ports:
+      - "5555:5555"
+    depends_on:
+      - celery
+    restart: always
+    networks:
+      - separated_network
 
 
 volumes:

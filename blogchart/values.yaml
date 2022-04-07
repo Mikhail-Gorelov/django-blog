@@ -10,6 +10,8 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
+celeryContainerName: celery
+
 imagePullSecrets: [ ]
 nameOverride: ""
 fullnameOverride: ""
@@ -87,8 +89,6 @@ postgresql:
     username: "develop"
     password: "develop"
     database: "develop"
-#  postgresDatabase: "develop"
-#  postgresPassword: "dev"
 
 redis:
   auth:
@@ -108,7 +108,6 @@ django:
   db:
     postgresHost: ""
     postgresPort: "5432"
-    username: "postgres"
   redis:
     redisUrl: "redis://redis:6379"
     redisHost: ""
