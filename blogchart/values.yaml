@@ -94,6 +94,18 @@ redis:
   auth:
     enabled: false
 
+#elasticsearch:
+#  enabled: true
+#
+#kibana:
+#  enabled: true
+
+#kube-prometheus:
+#  enabled: true
+#
+#grafana:
+#  enabled: true
+
 
 django:
   enableRendering: "1"
@@ -117,3 +129,10 @@ django:
 persistentVolumeClaim:
   storageClassName: ""
   storageSize: 8Gi
+
+flower:
+  flowerFullName: "flower"
+  flowerImage: "mher/flower"
+  flowerTag: "latest"
+  flowerPort: "5555"
+  pullPolicy: Always

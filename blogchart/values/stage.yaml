@@ -1,0 +1,13 @@
+image:
+  tag: "latest"
+
+django:
+  secretKey: "pasdlfkjasdlfkjasdlkfj"
+  allowedHosts: "stage.domain.com"
+
+postgresql:
+  enabled: true
+  auth:
+    username: "stage"
+    password: "stage"
+    database: "stage"
