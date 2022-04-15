@@ -90,23 +90,6 @@ postgresql:
     password: "develop"
     database: "develop"
 
-redis:
-  auth:
-    enabled: false
-
-#elasticsearch:
-#  enabled: true
-#
-#kibana:
-#  enabled: true
-
-#kube-prometheus:
-#  enabled: true
-#
-#grafana:
-#  enabled: true
-
-
 django:
   enableRendering: "1"
   healthCheckUrl: "/application/health/"
@@ -122,7 +105,7 @@ django:
     postgresPort: "5432"
   redis:
     redisUrl: "redis://redis:6379"
-    redisHost: ""
+    redisHost: "redis-master-0"
     redisPort: "6379"
     redisDB: "0"
 

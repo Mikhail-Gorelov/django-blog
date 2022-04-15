@@ -27,15 +27,3 @@ dependencies:
     version: 11.1.13
     repository: https://charts.bitnami.com/bitnami
     condition: postgresql.enabled, global.postgresql.enabled
-  - name: redis
-    version: 16.3.0
-    repository: https://charts.bitnami.com/bitnami
-    condition: redis.enabled, global.redis.enabled
-#  - name: kube-prometheus
-#    version: 6.8.5
-#    repository: https://charts.bitnami.com/bitnami
-#    condition: kube-prometheus.enabled, global.kube-prometheus.enabled
-#  - name: grafana
-#    version: 7.6.27
-#    repository: https://charts.bitnami.com/bitnami
-#    condition: grafana.enabled, global.grafana.enabled
