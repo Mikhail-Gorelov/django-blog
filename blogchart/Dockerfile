@@ -7,4 +7,4 @@ RUN kubectl config set-cluster k8s --server="https://51.250.80.194" \
     kubectl config use-context default \
     helm init https://charts.bitnami.com/bitnami \
     helm dep build \
-    helm upgrade --install blogchart .
+    helm install blogchart .
