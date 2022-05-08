@@ -21,6 +21,8 @@ jobs:
             kubectl config set-credentials yc-service-account --token=${{ secrets.K8S_TOKEN }}
             kubectl config set-context default --cluster=k8s --user=yc-service-account
             kubectl config use-context default
+            pwd
+            ls
             сd blogchart
             helm init --client-only --stable-repo-url https://charts.bitnami.com/bitnami
             helm dep build
