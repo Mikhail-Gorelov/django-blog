@@ -11,3 +11,27 @@ class BasePageNumberPagination(PageNumberPagination):
         response = super().get_paginated_response(data)
         response.data.update(self.get_html_context())
         return response
+
+
+class BasePageNumberNewsFeedArticlePagination(PageNumberPagination):
+    page_size = 3
+    page_query_param = 'page'
+    max_page_size = 100
+    page_size_query_param = 'page_size'
+
+    def get_paginated_response(self, data):
+        response = super().get_paginated_response(data)
+        response.data.update(self.get_html_context())
+        return response
+
+
+class BasePageNumberNewsFeedPagination(PageNumberPagination):
+    page_size = 10
+    page_query_param = 'page'
+    max_page_size = 100
+    page_size_query_param = 'page_size'
+
+    def get_paginated_response(self, data):
+        response = super().get_paginated_response(data)
+        response.data.update(self.get_html_context())
+        return response

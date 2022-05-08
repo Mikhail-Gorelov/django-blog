@@ -1,3 +1,5 @@
+import datetime
+
 from allauth.account.utils import setup_user_email
 from allauth.utils import email_address_exists
 from dj_rest_auth.serializers import PasswordChangeSerializer
@@ -7,11 +9,14 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.request import Request
 from rest_framework.status import HTTP_400_BAD_REQUEST
+from django.conf import settings
 from user_profile import choices
+from urllib.parse import urljoin
 from main.services import MainService, CeleryService
-from src import settings
-from actions.models import Follower
+from django.db.models import Q
 from . import models
+from blog.models import Article, Comment
+from actions.models import Follower, Like
 from .choices import GenderChoice
 from .models import Profile
 from .services import UserProfileService
@@ -132,3 +137,145 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
         UserProfileService.deactivate_email(email)
         EmailAddress.objects.filter(user__pk=kwargs.get("id")).update(email=user_data['email'])
         CeleryService.send_email_confirm(user)
+
+
+class NewsFeedArticleShortSerializer(serializers.ModelSerializer):
+    slug = serializers.SerializerMethodField("get_slug")
+
+    def get_slug(self, obj):
+        backend_site = urljoin(settings.BACKEND_SITE, "/")
+        posts = urljoin(backend_site, "posts/")
+        article = urljoin(posts, obj.slug) + "/"
+        return article
+
+    class Meta:
+        model = Article
+        fields = ['title', 'slug']
+
+
+class NewsFeedArticleSerializer(serializers.ModelSerializer):
+    author = serializers.SerializerMethodField("get_author")
+    updated = serializers.SerializerMethodField("get_updated")
+    type = serializers.SerializerMethodField("get_type")
+
+    def get_author(self, obj):
+        author = obj.author
+        serializer = UserShortInfoSerializer(author)
+        return serializer.data
+
+    def get_updated(self, obj):
+        return str(
+            datetime.datetime.now().replace(microsecond=0) - obj.updated.replace(tzinfo=None).replace(microsecond=0)
+        )
+
+    def get_type(self, obj):
+        return 'article'
+
+    class Meta:
+        model = Article
+        fields = ['id', 'type', 'category', 'title', 'content', 'author', 'image', 'updated']
+
+
+class NewsFeedCommentSerializer(serializers.ModelSerializer):
+    author = serializers.SerializerMethodField("get_author")
+    updated = serializers.SerializerMethodField("get_updated")
+    article = serializers.SerializerMethodField("get_article")
+    type = serializers.SerializerMethodField("get_type")
+
+    def get_author(self, obj):
+        user = obj.user
+        serializer = UserShortInfoSerializer(user)
+        return serializer.data
+
+    def get_updated(self, obj):
+        return str(
+            datetime.datetime.now().replace(microsecond=0) - obj.updated.replace(tzinfo=None).replace(microsecond=0)
+        )
+
+    def get_article(self, obj):
+        article = obj.article
+        serializer = NewsFeedArticleShortSerializer(article)
+        return serializer.data
+
+    def get_type(self, obj):
+        return 'comment'
+
+    class Meta:
+        model = Comment
+        fields = ['id', 'type', 'author', 'content', 'article', 'updated']
+
+
+class NewsFeedLikeSerializer(serializers.ModelSerializer):
+    content_type = serializers.SerializerMethodField("get_content_type")
+    user = serializers.SerializerMethodField("get_user")
+
+    def get_content_type(self, obj):
+        article_content_type = 17
+        comment_content_type = 19
+        if obj.content_type.id == article_content_type:
+            article = Article.objects.get(id=obj.object_id)
+            serializer = NewsFeedArticleSerializer(article)
+            return serializer.data
+
+        if obj.content_type.id == comment_content_type:
+            comment = Comment.objects.get(id=obj.object_id)
+            serializer = NewsFeedCommentSerializer(comment)
+            return serializer.data
+
+    def get_user(self, obj):
+        user = obj.user
+        serializer = UserShortInfoSerializer(user)
+        return serializer.data
+
+    class Meta:
+        model = Like
+        fields = ['id', 'user', 'content_type', 'object_id', 'vote', 'date']
+
+
+class NewsFeedFollowerSerializer(serializers.ModelSerializer):
+    subscriber = serializers.SerializerMethodField("get_subscriber")
+    date = serializers.SerializerMethodField("get_date")
+
+    def get_subscriber(self, obj):
+        subscriber = obj.subscriber
+        serializer = UserShortInfoSerializer(subscriber)
+        return serializer.data
+
+    def get_date(self, obj):
+        return str(
+            datetime.datetime.now().replace(microsecond=0) - obj.date.replace(tzinfo=None).replace(microsecond=0)
+        )
+
+    class Meta:
+        model = Follower
+        fields = ['id', 'subscriber', 'date']
+
+# class NewsFeedSerializer(serializers.ModelSerializer):
+#     article_set = serializers.SerializerMethodField("get_articles")
+#     comment_set = serializers.SerializerMethodField("get_comments")
+#     following = serializers.SerializerMethodField("get_followers")
+#     user_likes = serializers.SerializerMethodField("get_likes")
+#
+#     def get_articles(self, obj):
+#         articles = Article.objects.filter(~Q(author__id=obj.id)).order_by("updated")
+#         serializer = NewsFeedBlogSerializer(articles, many=True)
+#         return serializer.data
+#
+#     def get_comments(self, obj):
+#         comments = Comment.objects.filter(~Q(user__id=obj.id)).order_by("updated")
+#         serializer = NewsFeedCommentSerializer(comments, many=True)
+#         return serializer.data
+#
+#     def get_followers(self, obj):
+#         followers = Follower.objects.filter(to_user=obj.id).order_by("date")
+#         serializer = NewsFeedFollowerSerializer(followers, many=True)
+#         return serializer.data
+#
+#     def get_likes(self, obj):
+#         likes = Like.objects.filter(~Q(user=obj.id)).order_by("date")
+#         serializer = NewsFeedLikeSerializer(likes, many=True)
+#         return serializer.data
+#
+#     class Meta:
+#         model = User
+#         fields = ['id', 'article_set', 'comment_set', 'following', 'user_likes']

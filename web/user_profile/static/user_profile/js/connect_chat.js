@@ -1,7 +1,6 @@
 $(function () {
   $('#chat-connect').click(ChatConnect);
 });
-console.log("Hello world!");
 
 function ChatConnect(e) {
   let href = $('#chat-connect').data("href");

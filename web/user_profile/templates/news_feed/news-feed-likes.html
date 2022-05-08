@@ -1,0 +1,66 @@
+{% load static %}
+{% load i18n main %}
+{% microservice_title as site_name %}
+{% chat_site_init as site_init %}
+{% block container %}
+  <title>Django blog</title>
+
+  {% block head %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;800;900&display=swap">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="{% static 'user_profile/css/news-feed.css' %}" rel="stylesheet">
+  {% endblock head %}
+
+  <!------ BODY ---------->
+  <script>
+    $(document).ready(function () {
+      $.getScript('{% static 'user_profile/js/news_feed_likes.js' %}');
+    })
+  </script>
+  <br><br><br><br><br>
+  <div class="container" data-href="{% url "user_profile:news_feed_like" %}" style="overflow-y:auto;">
+    <div class="row">
+      <div class="col-md-3 ">
+        <div class="list-group ">
+          <a href="{% url 'user_profile:news_feed_article' %}"
+             class="list-group-item list-group-item-action">Articles</a>
+          <a href="{% url 'user_profile:news_feed_comment' %}"
+             class="list-group-item list-group-item-action">Comments</a>
+          <a href="{% url 'user_profile:news_feed_follower' %}"
+             class="list-group-item list-group-item-action">Followers</a>
+          <a href="" class="list-group-item list-group-item-action active">Likes</a>
+        </div>
+      </div>
+      <div class="col-md-7">
+        <div class="card">
+          <div class="col-12 col-lg-7 order-lg-1" id="likeContainer">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+          integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+          crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+          integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+          crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script>
+    feather.replace();
+
+    var mySwiper = new Swiper('.swiper-container', {
+      // Optional parameters
+      slidesPerView: 'auto',
+      spaceBetween: 24,
+    });
+  </script>
+{% endblock %}

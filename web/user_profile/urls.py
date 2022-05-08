@@ -17,6 +17,14 @@ urlpatterns = [
 ]
 
 urlpatterns += [
+    path('news-feed-article/', views.NewsFeedArticleListView.as_view(),
+         name='news_feed_article'),
+    path('news-feed-comment/', views.NewsFeedCommentListView.as_view(),
+         name='news_feed_comment'),
+    path('news-feed-followers/', views.NewsFeedFollowerListView.as_view(),
+         name='news_feed_follower'),
+    path('news-feed-likes/', views.NewsFeedLikeListView.as_view(),
+         name='news_feed_like'),
     path('settings-update/<user_id>', views.ProfileSettingsView.as_view(), name='change_user_credentials'),
     path('settings-retrieve/<user_id>/', views.ProfileSettingsRetrieveViewSet.as_view({'get': 'retrieve'}),
          name='user_settings'),

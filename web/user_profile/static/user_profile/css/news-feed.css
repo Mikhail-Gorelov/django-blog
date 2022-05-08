@@ -1,0 +1,65 @@
+/* Override Bootstrap */
+.card {
+  /* Add shadows to create the "card" effect */
+  width: 705px;
+  align-items: center;
+  right: 15px;
+}
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+  font-weight: 800;
+}
+
+.btn {
+  font-weight: 800;
+  background-color: transparent;
+}
+
+/* Custom Styles */
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  position: relative;
+  font-size: 1.25rem;
+  align-items: center;
+  flex-shrink: 0;
+  line-height: 1;
+  user-select: none;
+  border-radius: 50%;
+  justify-content: center;
+}
+
+.avatar-xl {
+  width: 96px;
+  height: 96px;
+}
+
+.avatar-img {
+    color: transparent;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    text-align: center;
+    text-indent: 10000px;
+    border-radius: 50%;
+}
+
+.avatar-status {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: inline-flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  text-align: center;
+  vertical-align: baseline;
+  border: 0.125rem solid #fff;
+  width: 1.3125rem;
+  height: 1.3125rem;
+  line-height: 1;
+  font-size: 0.625rem;
+  border-radius: 50%;
+}
