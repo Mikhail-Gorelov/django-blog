@@ -24,7 +24,7 @@ jobs:
             сd blogchart
             helm init https://charts.bitnami.com/bitnami
             helm dep build
-            helm upgrade --install blogchart .
+            helm upgrade --install --force blogchart .
             kubectl get pods
 
 
