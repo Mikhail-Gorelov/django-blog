@@ -12,8 +12,10 @@ jobs:
       - name: Deploy
         uses: actions/checkout@v2
         with:
-          image: dtzar/helm-kubectl:3.8.2
+          image: dtzar/helm-kubectl:2.12.1
           command: |
+            pwd
+            ls
             kubectl config set-cluster k8s --server="${K8S_API}"
             kubectl config set clusters.k8s.certificate-authority-data ${K8S_CA_DATA}
             kubectl config set-credentials yc-service-account --token="${K8S_TOKEN}"
