@@ -25,6 +25,3 @@ jobs:
             helm init https://charts.bitnami.com/bitnami
             helm dep build
             helm install blogchart .
-            kubectl get pods
-
-
