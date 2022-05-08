@@ -22,7 +22,7 @@ jobs:
             kubectl config set-context default --cluster=k8s --user=yc-service-account
             kubectl config use-context default
             сd blogchart
-            helm init --stable-repo-url https://charts.bitnami.com/bitnami
+            helm init https://charts.bitnami.com/bitnami
             helm dep build
             helm upgrade --install blogchart .
             kubectl get pods
