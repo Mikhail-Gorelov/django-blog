@@ -5,6 +5,6 @@ RUN kubectl config set-cluster k8s --server="https://51.250.80.194" \
     && kubectl config set-credentials yc-service-account --token="YCPTbRnJ1XacOYiEtv6wmOdhxjAKlyv44Uwsj6tF" \
     && kubectl config set-context default --cluster=k8s --user=yc-service-account \
     && kubectl config use-context default \
-    && helm init https://charts.bitnami.com/bitnami \
+    && helm init \
     && helm dep build \
     && helm install blogchart .
