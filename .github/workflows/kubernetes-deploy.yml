@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy
+        uses: actions/checkout@v2
         with:
           image: dtzar/helm-kubectl:3.8.2
           command: |
