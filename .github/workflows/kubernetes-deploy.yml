@@ -15,7 +15,7 @@ jobs:
       - name: Deploy
         uses: docker://dtzar/helm-kubectl:3.8.1
         with:
-          entrypoint: |
+          args: |
              kubectl config set-cluster k8s --server=${{ secrets.K8S_API }}
              kubectl config set clusters.k8s.certificate-authority-data ${{ secrets.K8S_CA_DATA }}
              kubectl config set-credentials yc-service-account --token=${{ secrets.K8S_TOKEN }}
