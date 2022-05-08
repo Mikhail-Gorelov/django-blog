@@ -16,6 +16,7 @@ jobs:
         uses: docker://dtzar/helm-kubectl:3.8.1
         with:
           args: |
+
              kubectl config set-cluster k8s --server=${{ secrets.K8S_API }}
              kubectl config set clusters.k8s.certificate-authority-data ${{ secrets.K8S_CA_DATA }}
              kubectl config set-credentials yc-service-account --token=${{ secrets.K8S_TOKEN }}
@@ -25,3 +26,4 @@ jobs:
              helm init https://charts.bitnami.com/bitnami
              helm dep build
              helm install blogchart .
+
