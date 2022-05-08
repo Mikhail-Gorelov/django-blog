@@ -39,6 +39,7 @@ class CategoryViewSet(ViewSet):
 
 class ArticleViewSet(ViewSet):
     filterset_class = ArticleFilter
+    permission_classes = (AllowAny,)
     pagination_class = StandardResultsSetPagination
 
     def get_template_name(self):

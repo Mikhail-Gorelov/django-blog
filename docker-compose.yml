@@ -5,7 +5,6 @@ services:
     build:
       context: .
       dockerfile: docker/dev/web/Dockerfile
-    entrypoint: /entrypoint.sh
     volumes:
       - ./web/:/usr/src/web/
       - redis_socket:/redis_socket
@@ -72,6 +71,7 @@ services:
     build:
       context: .
       dockerfile: docker/dev/web/Dockerfile
+    entrypoint: ""
     command: celery -A src worker -l info
     volumes:
       - ./web/:/usr/src/web/

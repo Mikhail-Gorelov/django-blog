@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  flower:
+    build:
+      context: .
+      dockerfile: docker/modules/flower/Dockerfile
+    entrypoint: ""
+    env_file:
+      - docker/dev/env/.env
+    ports:
+      - "5555:5555"
+    restart: always
+    networks:
+      - separated_network
+
+networks:
+  separated_network:
+    driver: bridge

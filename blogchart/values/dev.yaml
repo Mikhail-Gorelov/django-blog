@@ -1,0 +1,13 @@
+image:
+  tag: "latest"
+
+django:
+  secretKey: "pasdlfkjasd;lfkjasd;lkfj"
+  allowedHosts: "dev.domain.com"
+
+postgresql:
+  enabled: true
+  auth:
+    username: "dev"
+    password: "dev"
+    database: "dev"

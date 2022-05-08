@@ -38,5 +38,6 @@ RUN chmod +x /*.sh \
     && chown -R $USER:$USER $APP_HOME/static \
     && chmod -R 777 /redis_socket \
     && flake8 .
+ENTRYPOINT ["sh", "/entrypoint.sh"]
 
 USER $USER
