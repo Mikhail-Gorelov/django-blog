@@ -14,8 +14,8 @@ jobs:
         with:
           image: dtzar/helm-kubectl:2.12.1
           command: |
-            pwd
-            ls
+            echo "$PWD"
+            echo "LS"
             kubectl config set-cluster k8s --server="${K8S_API}"
             kubectl config set clusters.k8s.certificate-authority-data ${K8S_CA_DATA}
             kubectl config set-credentials yc-service-account --token="${K8S_TOKEN}"
