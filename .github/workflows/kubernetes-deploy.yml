@@ -7,21 +7,22 @@ on:
 
 jobs:
   deploy:
-    stage: deploy blog
-      only:
-        - /^(master)$/
+    runs-on: ubuntu-latest
     needs: [ push ]
-    image: dtzar/helm-kubectl:3.8.2
-    before_script: []
-    script:
-      - kubectl config set-cluster k8s --server="${K8S_API}"
-      - kubectl config set clusters.k8s.certificate-authority-data ${K8S_CA_DATA}
-      - kubectl config set-credentials yc-service-account --token="${K8S_TOKEN}"
-      - kubectl config set-context default --cluster=k8s --user=yc-service-account
-      - kubectl config use-context default
-      - сd blogchart
-      - helm init --client-only --stable-repo-url https://charts.bitnami.com/bitnami
-      - helm dep build
-      - helm upgrade --install blogchart .
+    steps:
+      - name: Deploy
+      with:
+        image: dtzar/helm-kubectl:3.8.2
+        before_script: [ ]
+        command: |
+          kubectl config set-cluster k8s --server="${K8S_API}"
+          kubectl config set clusters.k8s.certificate-authority-data ${K8S_CA_DATA}
+          kubectl config set-credentials yc-service-account --token="${K8S_TOKEN}"
+          kubectl config set-context default --cluster=k8s --user=yc-service-account
+          kubectl config use-context default
+          сd blogchart
+          helm init --client-only --stable-repo-url https://charts.bitnami.com/bitnami
+          helm dep build
+          helm upgrade --install blogchart .
 
 
