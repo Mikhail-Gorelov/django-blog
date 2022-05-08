@@ -88,13 +88,17 @@ spec:
             - name: POSTGRES_PASSWORD
               value: {{ .Values.postgresql.auth.password | quote }}
             - name: REDIS_HOST
-              value: {{ .Values.django.redis.redisHost | quote }}
+              value: "redis-master"
             - name: REDIS_PORT
               value: {{ .Values.django.redis.redisPort | quote }}
             - name: REDIS_URL
               value: "redis://$(REDIS_HOST):$(REDIS_PORT)"
             - name: REDIS_DB
               value: {{ .Values.django.redis.redisDB | quote }}
+            - name: CELERY_BROKER_URL
+              value: "$(REDIS_URL)/3"
+            - name: CELERY_RESULT_BACKEND
+              value: "$(REDIS_URL)/3"
             - name: DEBUG
               value: {{ .Values.django.debug | quote }}
             - name: SITE_ID
@@ -117,6 +121,12 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          args:
+          {{- range .Values.celery.args}}
+            - {{ . | toYaml | indent 4 | trim }}
+          {{- end }}
+          command:
+            - ""
           env:
             - name: SECRET_KEY
               valueFrom:
@@ -135,7 +145,7 @@ spec:
             - name: POSTGRES_PASSWORD
               value: {{ .Values.postgresql.auth.password | quote }}
             - name: REDIS_HOST
-              value: {{ .Values.django.redis.redisHost | quote }}
+              value: "redis-master"
             - name: REDIS_PORT
               value: {{ .Values.django.redis.redisPort | quote }}
             - name: REDIS_URL
@@ -143,9 +153,9 @@ spec:
             - name: REDIS_DB
               value: {{ .Values.django.redis.redisDB | quote }}
             - name: CELERY_BROKER_URL
-              value: "redis://$(REDIS_HOST):$(REDIS_PORT)/3"
+              value: "$(REDIS_URL)/3"
             - name: CELERY_RESULT_BACKEND
-              value: "redis://$(REDIS_HOST):$(REDIS_PORT)/3"
+              value: "$(REDIS_URL)/3"
             - name: EMAIL_HOST
               valueFrom:
                 secretKeyRef:

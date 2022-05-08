@@ -53,5 +53,5 @@ RUN chmod +x /*.sh && \
     touch /var/run/nginx.pid && \
     chown -R $USER:$USER /etc/nginx /var/lib/nginx/ /var/log /var/run/nginx.pid && \
     flake8 .
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["sh", "/entrypoint.sh"]
 USER $USER
