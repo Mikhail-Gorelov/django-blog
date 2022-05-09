@@ -1,7 +1,5 @@
 FROM dtzar/helm-kubectl:2.12.1
 
-WORKDIR /blogchart
-
 COPY . .
 
 RUN CLUSTER_ID=catb3ppsdsh7vajr216f \
