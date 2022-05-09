@@ -17,7 +17,7 @@ RUN CLUSTER_ID=cat608hordqashs53228 \
     && COMMAND=$(echo "${SA_TOKEN_DOCKER}" |tr -d '\n') \
     && echo "1" \
     && kubectl config set-cluster k8s \
-               --certificate-authority=cert.pem \x
+               --certificate-authority=cert.pem \
                --server=https://51.250.80.194 \
                --kubeconfig=test.kubeconfig \
     && echo "2" \
