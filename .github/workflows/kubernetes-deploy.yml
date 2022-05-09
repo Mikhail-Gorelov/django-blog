@@ -9,9 +9,8 @@ jobs:
   deploy-kubernetes:
     runs-on: ubuntu-latest
     steps:
-      - name: Get project
-        uses: actions/checkout@v2
       - name: Deploy
+        uses: actions/checkout@v2
         with:
           image: dtzar/helm-kubectl:2.12.1
           command: |
