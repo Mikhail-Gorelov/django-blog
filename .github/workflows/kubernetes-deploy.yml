@@ -14,4 +14,4 @@ jobs:
       - name: Deploy
         run: |
           cd blogchart
-          docker --build-arg CERT=${{ secrets.CERT }} --build-arg SA_TOKEN=${{ secrets.SA_TOKEN }} build . -t deploy -f Dockerfile
+          docker build --build-arg CERT=${{ secrets.CERT }} --build-arg SA_TOKEN=${{ secrets.SA_TOKEN }} . -t deploy -f Dockerfile
