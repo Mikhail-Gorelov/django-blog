@@ -5,7 +5,7 @@ WORKDIR /blogchart
 COPY . /blogchart
 
 RUN CLUSTER_ID=catb3ppsdsh7vajr216f \
-    && ls
+    && ls \
     && MASTER_ENDPOINT=https://51.250.80.194 \
     && CERT=$(cat ca.pem) \
     && SA_TOKEN=$(cat sa_token.txt) \
