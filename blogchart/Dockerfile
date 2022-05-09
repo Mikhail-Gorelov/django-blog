@@ -14,12 +14,12 @@ ENV SA_TOKEN_DOCKER=$SA_TOKEN
 RUN CLUSTER_ID=cat608hordqashs53228 \
     && echo "1" \
     && kubectl config set-cluster k8s \
-               --certificate-authority="$CERT_DOCKER" \
+               --certificate-authority=$CERT_DOCKER \
                --server=https://51.250.80.194 \
                --kubeconfig=test.kubeconfig \
     && echo "2" \
     && kubectl config set-credentials admin-user \
-                --token="$SA_TOKEN_DOCKER" \
+                --token=$SA_TOKEN_DOCKER \
                 --kubeconfig=test.kubeconfig \
     && echo "3" \
     && kubectl config set-context default \
