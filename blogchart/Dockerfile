@@ -7,8 +7,8 @@ COPY . /blogchart
 RUN CLUSTER_ID=catb3ppsdsh7vajr216f \
     && ls \
     && MASTER_ENDPOINT=https://51.250.80.194 \
-    && CERT=$(base64 ca.pem ) \
-    && SA_TOKEN=$(base64 sa_token.txt ) \
+    && CERT=$(base64 -d ca.pem ) \
+    && SA_TOKEN=$(base64 -d sa_token.txt ) \
     && echo "$CERT" | base64 --decode \
     && echo "$SA_TOKEN" | base64 --decode \
     && kubectl config set-cluster k8s \
