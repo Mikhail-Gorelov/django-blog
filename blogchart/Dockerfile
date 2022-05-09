@@ -12,6 +12,7 @@ ENV SA_TOKEN_DOCKER=$SA_TOKEN
 
 RUN CLUSTER_ID=cat608hordqashs53228 \
     && echo "$CERT" >> docker_ca.pem \
+    && echo "$SA_TOKEN" >> sa_token.txt \
     && echo "1" \
     && kubectl config set-cluster k8s \
                --certificate-authority=docker_ca.pem \
@@ -19,7 +20,7 @@ RUN CLUSTER_ID=cat608hordqashs53228 \
                --kubeconfig=test.kubeconfig \
     && echo "2" \
     && kubectl config set-credentials admin-user \
-                --token=$SA_TOKEN \
+                --token=sa_token.txt \
                 --kubeconfig=test.kubeconfig \
     && echo "3" \
     && kubectl config set-context default \
