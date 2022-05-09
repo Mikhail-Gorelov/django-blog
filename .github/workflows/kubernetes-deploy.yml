@@ -14,4 +14,4 @@ jobs:
       - name: Deploy
         run: |
           cd blogchart
-          docker build . -t deploy -f Dockerfile
+          docker --env $CERT=${{ secrets.CERT }} --env $SA_TOKEN=${{ secrets.$SA_TOKEN }} build . -t deploy -f Dockerfile

@@ -6,11 +6,9 @@ COPY . /blogchart
 
 RUN CLUSTER_ID=catb3ppsdsh7vajr216f \
     && ls \
+    && echo "$SA_TOKEN" \
+    && echo "$CERT" \
     && MASTER_ENDPOINT=https://51.250.80.194 \
-    && CERT=$(base64 -d ca.pem ) \
-    && SA_TOKEN=$(base64 -d sa_token.txt ) \
-    && echo "$CERT" | base64 --decode \
-    && echo "$SA_TOKEN" | base64 --decode \
     && kubectl config set-cluster k8s \
                --certificate-authority=$CERT \
                --server=$MASTER_ENDPOINT \
@@ -23,5 +21,5 @@ RUN CLUSTER_ID=catb3ppsdsh7vajr216f \
     && echo "$MASTER_ENDPOINT" \
     && kubectl get pods --namespace=redis \
     && helm init --stable-repo-url https://charts.bitnami.com/bitnami /blogchart \
-    && helm dep build /blogchart \
-    && helm install blogchart /blogchart
+    && helm dep build . \
+    && helm install blogchart .
