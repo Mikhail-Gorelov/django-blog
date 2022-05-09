@@ -11,7 +11,7 @@ ARG SA_TOKEN
 ENV SA_TOKEN_DOCKER=$SA_TOKEN
 
 RUN CLUSTER_ID=cat608hordqashs53228 \
-    && echo "$CERT_DOCKER" >> docker_ca.pem \
+    && echo "$CERT" >> docker_ca.pem \
     && echo "1" \
     && kubectl config set-cluster k8s \
                --certificate-authority=docker_ca.pem \
