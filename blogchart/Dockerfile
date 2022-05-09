@@ -34,8 +34,6 @@ RUN CLUSTER_ID=cat608hordqashs53228 \
                --kubeconfig=test.kubeconfig \
     && echo "5" \
     && cat test.kubeconfig \
-    && cat cert.pem \
-    && cat sa.txt \
     && kubectl get pods --namespace=redis --kubeconfig=test.kubeconfig \
     && helm --client-only init --stable-repo-url https://charts.bitnami.com/bitnami \
     && helm dep build . \
