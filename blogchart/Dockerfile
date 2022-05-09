@@ -9,13 +9,17 @@ RUN CLUSTER_ID=catb3ppsdsh7vajr216f \
     && kubectl config set-cluster k8s \
                --certificate-authority=$CERT \
                --server=$MASTER_ENDPOINT \
+               --kubeconfig=test.kubeconfig \
     && kubectl config set-credentials admin-user \
                 --token=$SA_TOKEN \
+                --kubeconfig=test.kubeconfig \
     && kubectl config set-context default \
                --cluster=k8s \
                --user=admin-user \
+               --kubeconfig=test.kubeconfig \
     && kubectl config use-context default \
-    && kubectl get pods \
-    && helm init --stable-repo-url https://charts.bitnami.com/bitnami \
-    && helm dep build \
-    && helm install blogchart .
+                --kubeconfig=test.kubeconfig \
+    && kubectl get pods --namespace=redis --kubeconfig=test.kubeconfig \
+    && helm init --stable-repo-url https://charts.bitnami.com/bitnami --kubeconfig=test.kubeconfig \
+    && helm dep build --kubeconfig=test.kubeconfig \
+    && helm install blogchart . --kubeconfig=test.kubeconfig
