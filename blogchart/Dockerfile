@@ -1,11 +1,11 @@
-ARG CERT
-ARG SA_TOKEN
-
 FROM dtzar/helm-kubectl:2.12.1
 
 WORKDIR /blogchart
 
 COPY . /blogchart
+
+ARG CERT
+ARG SA_TOKEN
 
 ENV CERT_DOCKER=$CERT
 
