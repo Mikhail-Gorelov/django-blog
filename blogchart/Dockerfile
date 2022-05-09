@@ -14,7 +14,6 @@ COPY . /blogchart
 
 RUN CLUSTER_ID=cat608hordqashs53228 \
     && echo "${CERT_DOCKER}" >> cert.pem \
-    && COMMAND=$(echo "${SA_TOKEN_DOCKER}" |tr -d '\n') \
     && echo "1" \
     && kubectl config set-cluster k8s \
                --certificate-authority=cert.pem \
@@ -22,7 +21,7 @@ RUN CLUSTER_ID=cat608hordqashs53228 \
                --kubeconfig=test.kubeconfig \
     && echo "2" \
     && kubectl config set-credentials admin-user \
-                --token=$COMMAND \
+                --token=$(echo "${SA_TOKEN_DOCKER}" | tr -d '\n') \
                 --kubeconfig=test.kubeconfig \
     && echo "3" \
     && kubectl config set-context default \
