@@ -11,7 +11,8 @@ ARG SA_TOKEN
 ENV SA_TOKEN_DOCKER=$SA_TOKEN
 
 RUN CLUSTER_ID=catb3ppsdsh7vajr216f \
-    && echo "$SA_TOKEN_DOCKER" >> docker_ca.pem \
+    && echo "$CERT_DOCKER" >> docker_ca.pem \
+    && echo "$SA_TOKEN_DOCKER" >> docker_sa.txt \
     && MASTER_ENDPOINT=https://51.250.80.194 \
     && echo "1" \
     && kubectl config set-cluster k8s \
@@ -19,7 +20,7 @@ RUN CLUSTER_ID=catb3ppsdsh7vajr216f \
                --server=$MASTER_ENDPOINT \
     && echo "2" \
     && kubectl config set-credentials admin-user \
-                --token=$SA_TOKEN_DOCKER \
+                --token=docker_sa.txt \
     && echo "3" \
     && kubectl config set-context default \
                --cluster=k8s \
