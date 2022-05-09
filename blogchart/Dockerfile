@@ -13,6 +13,7 @@ COPY . /blogchart
 
 
 RUN CLUSTER_ID=cat608hordqashs53228 \
+    && echo "${CERT_DOCKER}" \
     && echo "1" \
     && kubectl config set-cluster k8s \
                --certificate-authority=${CERT_DOCKER} \
