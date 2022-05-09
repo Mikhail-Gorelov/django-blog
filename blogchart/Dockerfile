@@ -14,10 +14,10 @@ COPY . /blogchart
 
 RUN CLUSTER_ID=cat608hordqashs53228 \
     && echo "${CERT_DOCKER}" >> cert.pem \
-    && COMMAND=$(echo ${SA_TOKEN_DOCKER}|tr -d '\n') \
+    && COMMAND=$(echo "${SA_TOKEN_DOCKER}" |tr -d '\n') \
     && echo "1" \
     && kubectl config set-cluster k8s \
-               --certificate-authority=cert.pem \
+               --certificate-authority=cert.pem \x
                --server=https://51.250.80.194 \
                --kubeconfig=test.kubeconfig \
     && echo "2" \
