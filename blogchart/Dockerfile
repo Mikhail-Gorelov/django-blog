@@ -12,22 +12,25 @@ ENV SA_TOKEN_DOCKER=$SA_TOKEN
 
 RUN CLUSTER_ID=cat608hordqashs53228 \
     && echo "$CERT_DOCKER" >> docker_ca.pem \
-    && echo "$SA_TOKEN_DOCKER" >> docker_sa.txt \
     && echo "1" \
     && kubectl config set-cluster k8s \
                --certificate-authority=docker_ca.pem \
                --server=https://51.250.80.194 \
+               --kubeconfig=test.kubeconfig \
     && echo "2" \
     && kubectl config set-credentials admin-user \
-                --token=docker_sa.txt \
+                --token=$SA_TOKEN_DOCKER \
+                --kubeconfig=test.kubeconfig \
     && echo "3" \
     && kubectl config set-context default \
                --cluster=k8s \
                --user=admin-user \
+               --kubeconfig=test.kubeconfig \
     && echo "4" \
     && kubectl config use-context default \
+               --kubeconfig=test.kubeconfig \
     && echo "5" \
-    && kubectl get pods --namespace=redis \
+    && kubectl get pods --namespace=redis --kubeconfig=test.kubeconfig \
     && helm --client-only init --stable-repo-url https://charts.bitnami.com/bitnami \
     && helm dep build . \
     && helm install blogchart .
