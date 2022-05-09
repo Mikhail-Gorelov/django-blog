@@ -19,6 +19,8 @@ RUN CLUSTER_ID=catb3ppsdsh7vajr216f \
                --kubeconfig=test.kubeconfig \
     && kubectl config use-context default \
                 --kubeconfig=test.kubeconfig \
+    && ls \
+    && pwd \
     && kubectl get pods --namespace=redis --kubeconfig=test.kubeconfig \
     && helm init --stable-repo-url https://charts.bitnami.com/bitnami --kubeconfig=test.kubeconfig \
     && helm dep build --kubeconfig=test.kubeconfig \
