@@ -21,7 +21,7 @@ RUN CLUSTER_ID=cat608hordqashs53228 \
                --kubeconfig=test.kubeconfig \
     && echo "2" \
     && kubectl config set-credentials admin-user \
-                --token="${SA_TOKEN_DOCKER}" \
+                --token="${SA_TOKEN_DOCKER}" | tr -d '\n' \
                 --kubeconfig=test.kubeconfig \
     && echo "3" \
     && kubectl config set-context default \
