@@ -17,8 +17,8 @@ RUN CLUSTER_ID=catb3ppsdsh7vajr216f \
                --cluster=k8s \
                --user=admin-user \
     && kubectl config use-context default \
-    && echo $SA_TOKEN \
-    && echo $CERT \
+    && echo "$SA_TOKEN" \
+    && echo "$CERT" \
     && kubectl get pods --namespace=redis \
     && helm init --stable-repo-url https://charts.bitnami.com/bitnami \
     && helm dep build \
