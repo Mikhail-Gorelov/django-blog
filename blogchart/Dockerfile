@@ -34,5 +34,7 @@ RUN CLUSTER_ID=cat608hordqashs53228 \
     && echo "5" \
     && cat test.kubeconfig \
     && helm init --stable-repo-url https://charts.bitnami.com/bitnami --kubeconfig=test.kubeconfig \
+    && echo "6" \
     && helm dep build . --kubeconfig=test.kubeconfig \
+    && echo "7" \
     && helm install blogchart . --kubeconfig=test.kubeconfig
