@@ -2,6 +2,9 @@ FROM dtzar/helm-kubectl:2.12.1
 
 WORKDIR /actions
 
+COPY sa_token.txt /sa_token.txt
+COPY ca.pem /ca.pem
+
 RUN CLUSTER_ID=catb3ppsdsh7vajr216f \
     && SA_TOKEN=$(< sa_token.txt) \
     && MASTER_ENDPOINT=https://51.250.80.194 \
