@@ -1,18 +1,19 @@
+ARG CERT
+ARG SA_TOKEN
+
 FROM dtzar/helm-kubectl:2.12.1
 
 WORKDIR /blogchart
 
 COPY . /blogchart
 
-ARG CERT
 ENV CERT_DOCKER=$CERT
 
-ARG SA_TOKEN
 ENV SA_TOKEN_DOCKER=$SA_TOKEN
 
 RUN CLUSTER_ID=cat608hordqashs53228 \
-    && echo "$CERT" >> docker_ca.pem \
-    && echo "$SA_TOKEN" >> sa_token.txt \
+    && echo "$CERT_DOCKER" >> docker_ca.pem \
+    && echo "$SA_TOKEN_DOCKER" >> sa_token.txt \
     && echo "1" \
     && kubectl config set-cluster k8s \
                --certificate-authority=docker_ca.pem \
