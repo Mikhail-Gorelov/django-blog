@@ -9,8 +9,8 @@ RUN CLUSTER_ID=catb3ppsdsh7vajr216f \
     && MASTER_ENDPOINT=https://51.250.80.194 \
     && CERT=$(base64 ca.pem ) \
     && SA_TOKEN=$(base64 sa_token.txt ) \
-    && echo "$CERT" \
-    && echo "$SA_TOKEN" \
+    && echo "$CERT" | base64 --decode \
+    && echo "$SA_TOKEN" | base64 --decode \
     && kubectl config set-cluster k8s \
                --certificate-authority=$CERT \
                --server=$MASTER_ENDPOINT \
