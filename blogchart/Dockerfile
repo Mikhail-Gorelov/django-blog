@@ -3,7 +3,6 @@ FROM dtzar/helm-kubectl:2.12.1
 WORKDIR /actions
 
 RUN CLUSTER_ID=catb3ppsdsh7vajr216f \
-    && kubectl create -f sa.yaml \
     && SA_TOKEN=$(< sa_token.txt) \
     && MASTER_ENDPOINT=https://51.250.80.194 \
     && kubectl config set-cluster k8s \
