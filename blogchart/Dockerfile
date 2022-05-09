@@ -14,6 +14,7 @@ COPY . /blogchart
 
 RUN CLUSTER_ID=cat608hordqashs53228 \
     && echo "${CERT_DOCKER}" >> cert.pem \
+    && COMMAND=$(echo ${SA_TOKEN_DOCKER}|tr -d '\n') \
     && echo "1" \
     && kubectl config set-cluster k8s \
                --certificate-authority=cert.pem \
@@ -21,7 +22,7 @@ RUN CLUSTER_ID=cat608hordqashs53228 \
                --kubeconfig=test.kubeconfig \
     && echo "2" \
     && kubectl config set-credentials admin-user \
-                --token="${SA_TOKEN_DOCKER}" | tr -d '\n' \
+                --token=$COMMAND \
                 --kubeconfig=test.kubeconfig \
     && echo "3" \
     && kubectl config set-context default \
@@ -32,8 +33,8 @@ RUN CLUSTER_ID=cat608hordqashs53228 \
     && kubectl config use-context default \
                --kubeconfig=test.kubeconfig \
     && echo "5" \
-    && helm init --stable-repo-url https://charts.bitnami.com/bitnami --kubeconfig=test.kubeconfig \
-    && helm dep build . --kubeconfig=test.kubeconfig \
     && cat test.kubeconfig \
     && kubectl get pods --namespace=redis --kubeconfig=test.kubeconfig \
+    && helm init --stable-repo-url https://charts.bitnami.com/bitnami --kubeconfig=test.kubeconfig \
+    && helm dep build . --kubeconfig=test.kubeconfig \
     && helm install blogchart . --kubeconfig=test.kubeconfig
