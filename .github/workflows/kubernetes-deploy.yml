@@ -13,7 +13,8 @@ jobs:
         uses: actions/checkout@v2
         with:
           image: dtzar/helm-kubectl:2.12.1
-          command: |
+          args: |
+            \
             cd blogchart
             kubectl config set-cluster k8s --certificate-authority=${{ secrets.CERT }} --server=https://51.250.80.194 --kubeconfig=test.kubeconfig
             kubectl config set-credentials admin-user --token=${{ secrets.SA_TOKEN }} --kubeconfig=test.kubeconfig
@@ -24,3 +25,4 @@ jobs:
             helm --client-only init --stable-repo-url https://charts.bitnami.com/bitnami
             helm dep build .
             helm install blogchart .
+
