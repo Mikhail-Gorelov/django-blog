@@ -4,11 +4,7 @@ WORKDIR /actions
 
 RUN CLUSTER_ID=catb3ppsdsh7vajr216f \
     && kubectl create -f sa.yaml \
-    && SA_TOKEN=$(kubectl -n kube-system get secret $(kubectl -n kube-system get secret | \
-    grep admin-user | \
-    awk '{print $1}') -o json | \
-    jq -r .data.token | \
-    base64 --d) \
+    && SA_TOKEN=$(< sa_token.txt) \
     && MASTER_ENDPOINT=https://51.250.80.194 \
     && kubectl config set-cluster k8s \
                --certificate-authority=ca.pem \
