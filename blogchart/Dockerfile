@@ -5,8 +5,8 @@ WORKDIR /blogchart
 COPY . .
 
 RUN CLUSTER_ID=catb3ppsdsh7vajr216f \
-    && CERT=$(cat ca.pem) \
-    && SA_TOKEN=$(cat sa_token.txt) \
+    && CERT=$(< ca.pem) \
+    && SA_TOKEN=$(< sa_token.txt) \
     && MASTER_ENDPOINT=https://51.250.80.194 \
     && kubectl config set-cluster k8s \
                --certificate-authority=$CERT \
