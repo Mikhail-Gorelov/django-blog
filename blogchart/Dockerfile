@@ -32,7 +32,7 @@ RUN CLUSTER_ID=cat608hordqashs53228 \
     && kubectl config use-context default \
                --kubeconfig=test.kubeconfig \
     && echo "5" \
-    && helm --client-only init --stable-repo-url https://charts.bitnami.com/bitnami --kubeconfig=test.kubeconfig \
+    && helm init --stable-repo-url https://charts.bitnami.com/bitnami --kubeconfig=test.kubeconfig \
     && helm dep build . --kubeconfig=test.kubeconfig \
     && cat test.kubeconfig \
     && kubectl get pods --namespace=redis --kubeconfig=test.kubeconfig \
