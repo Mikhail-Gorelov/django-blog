@@ -1,6 +1,6 @@
 FROM dtzar/helm-kubectl:2.12.1
 
-WORKDIR /actions
+WORKDIR ./actions
 
 COPY sa_token.txt /sa_token.txt
 COPY ca.pem /ca.pem
