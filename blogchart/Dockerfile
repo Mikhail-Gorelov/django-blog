@@ -1,25 +1,26 @@
-ARG CERT
-ARG SA_TOKEN
-
 FROM dtzar/helm-kubectl:2.12.1
 
-WORKDIR /blogchart
-
-COPY . /blogchart
+ARG CERT
+ARG SA_TOKEN
 
 ENV CERT_DOCKER=$CERT
 
 ENV SA_TOKEN_DOCKER=$SA_TOKEN
 
+WORKDIR /blogchart
+
+COPY . /blogchart
+
+
 RUN CLUSTER_ID=cat608hordqashs53228 \
     && echo "1" \
     && kubectl config set-cluster k8s \
-               --certificate-authority=${CERT} \
+               --certificate-authority=${CERT_DOCKER} \
                --server=https://51.250.80.194 \
                --kubeconfig=test.kubeconfig \
     && echo "2" \
     && kubectl config set-credentials admin-user \
-                --token=${SA_TOKEN} \
+                --token=${SA_TOKEN_DOCKER} \
                 --kubeconfig=test.kubeconfig \
     && echo "3" \
     && kubectl config set-context default \
