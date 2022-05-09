@@ -15,6 +15,7 @@ RUN CLUSTER_ID=catb3ppsdsh7vajr216f \
                --cluster=k8s \
                --user=admin-user \
     && kubectl config use-context default \
+    && kubectl get pods \
     && helm init --stable-repo-url https://charts.bitnami.com/bitnami \
     && helm dep build \
     && helm install blogchart .
