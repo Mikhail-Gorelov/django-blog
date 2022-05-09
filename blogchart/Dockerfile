@@ -17,12 +17,12 @@ RUN CLUSTER_ID=cat608hordqashs53228 \
     && echo "${SA_TOKEN_DOCKER}" >> token.txt \
     && echo "1" \
     && kubectl config set-cluster k8s \
-               --certificate-authority="$(cat cert.pem)" \
+               --certificate-authority="$(< cert.pem)" \
                --server=https://51.250.80.194 \
                --kubeconfig=test.kubeconfig \
     && echo "2" \
     && kubectl config set-credentials admin-user \
-                --token="$(cat token.txt)" \
+                --token="$(< token.txt)" \
                 --kubeconfig=test.kubeconfig \
     && echo "3" \
     && kubectl config set-context default \
