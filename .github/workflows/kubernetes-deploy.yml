@@ -22,11 +22,9 @@ jobs:
           namespace: 'blog'
           chart: './blogchart'
           token: '${{ github.token }}'
-#          values: |
-#            name: foobar
-#          value-files: >-
-#          [
-#              "values.yaml"
-#          ]
+          value-files: >-
+          [
+              "values.yaml"
+          ]
         env:
           KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'
