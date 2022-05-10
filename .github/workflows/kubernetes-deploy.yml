@@ -18,6 +18,10 @@ jobs:
           echo "${{ secrets.KUBECONFIG }}" >> config
           cat config
           kubectl get pods --namespace=redis --kubeconfig=config
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm repo update
+          helm dep build
+          helm upgrade --install blogchart . --namespace redis
 #      - name: Deploy
 #        run: |
 #          cd blogchart
