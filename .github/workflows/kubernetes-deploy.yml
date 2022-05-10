@@ -23,8 +23,6 @@ jobs:
           chart: './blogchart'
           token: '${{ github.token }}'
           value-files: >-
-          [
               "values.yaml"
-          ]
         env:
           KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'
