@@ -16,8 +16,8 @@ jobs:
           echo kubectl version --client
           cd blogchart
           echo "${{ secrets.KUBECONFIG }}" >> config
-          cat config
-          kubectl get pods --namespace=redis --kubeconfig=config
+          export KUBECONFIG=config
+          kubectl get pods --namespace=redis
           helm repo add bitnami https://charts.bitnami.com/bitnami
           helm repo update
           helm dep build
