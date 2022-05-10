@@ -16,7 +16,7 @@ jobs:
 #          cd blogchart
 #          docker build --build-arg CERT="${{ secrets.CERT }}" --build-arg SA_TOKEN="${{ secrets.SA_TOKEN }}" -t deploy . -f Dockerfile
       - name: 'Deploy'
-        uses: 'deliverybot/helm@v1'
+        uses: 'deliverybot/helm@master'
         with:
           release: 'blogchart'
           namespace: 'blog'
