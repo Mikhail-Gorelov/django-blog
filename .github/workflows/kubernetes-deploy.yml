@@ -2,7 +2,7 @@ name: Kubernetes Deploy
 
 on:
   push:
-    branches: [ main ]
+    branches: [ cicd_kubernetes ]
   workflow_dispatch:
 
 jobs:
@@ -11,7 +11,22 @@ jobs:
     steps:
       - name: Get project
         uses: actions/checkout@v2
-      - name: Deploy
-        run: |
-          cd blogchart
-          docker build --build-arg CERT="${{ secrets.CERT }}" --build-arg SA_TOKEN="${{ secrets.SA_TOKEN }}" -t deploy . -f Dockerfile
+#      - name: Deploy
+#        run: |
+#          cd blogchart
+#          docker build --build-arg CERT="${{ secrets.CERT }}" --build-arg SA_TOKEN="${{ secrets.SA_TOKEN }}" -t deploy . -f Dockerfile
+      - name: 'Deploy'
+        uses: 'deliverybot/helm@v1'
+        with:
+          release: 'blogchart'
+          namespace: 'blog'
+          chart: './blogchart'
+          token: '${{ github.token }}'
+#          values: |
+#            name: foobar
+#          value-files: >-
+#          [
+#              "values.yaml"
+#          ]
+        env:
+          KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'
