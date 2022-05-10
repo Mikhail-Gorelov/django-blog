@@ -17,7 +17,7 @@ jobs:
           cd blogchart
           echo "${{ secrets.KUBECONFIG }}" >> config
           cat config
-          kubectl get pods --namespace=redis --kubeconfig=test.kubeconfig
+          kubectl get pods --namespace=redis --kubeconfig=config
 #      - name: Deploy
 #        run: |
 #          cd blogchart
