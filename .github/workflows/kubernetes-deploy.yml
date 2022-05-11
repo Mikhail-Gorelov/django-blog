@@ -8,10 +8,15 @@ on:
 jobs:
   deploy-kubernetes:
     runs-on: ubuntu-latest
+    container: dtzar/helm-kubectl:3.7.1
     steps:
       - name: Get project
         uses: actions/checkout@v2
-      - name: Deploy
-        run: |
+      - run: |
           cd blogchart
-          docker build --build-arg CERT="${{ secrets.CERT }}" --build-arg SA_TOKEN="${{ secrets.SA_TOKEN }}" -t deploy . -f Dockerfile
+          echo "${{ secrets.KUBECONFIG }}" >> config
+          export KUBECONFIG=config
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm repo update
+          helm dep build
+          helm upgrade --install blogchart . --namespace redis
