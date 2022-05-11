@@ -13,27 +13,10 @@ jobs:
       - name: Get project
         uses: actions/checkout@v2
       - run: |
-          echo kubectl version --client
           cd blogchart
           echo "${{ secrets.KUBECONFIG }}" >> config
           export KUBECONFIG=config
-          kubectl get pods --namespace=redis
           helm repo add bitnami https://charts.bitnami.com/bitnami
           helm repo update
           helm dep build
           helm upgrade --install blogchart . --namespace redis
-#      - name: Deploy
-#        run: |
-#          cd blogchart
-#          docker build --build-arg CERT="${{ secrets.CERT }}" --build-arg SA_TOKEN="${{ secrets.SA_TOKEN }}" -t deploy . -f Dockerfile
-#      - name: 'Deploy'
-#        uses: 'deliverybot/helm@master'
-#        with:
-#          release: 'blogchart'
-#          namespace: 'blog'
-#          chart: './blogchart'
-#          token: '${{ github.token }}'
-#          value-files: >-
-#              "values.yaml"
-#        env:
-#          KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'
