@@ -9,19 +9,9 @@ jobs:
   deploy-kubernetes:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy
+      - name: Get project
         uses: actions/checkout@v2
-        with:
-          image: dtzar/helm-kubectl:3.8.2
-          command: |
-            kubectl config set-cluster k8s --server="${K8S_API}"
-            kubectl config set clusters.k8s.certificate-authority-data ${K8S_CA_DATA}
-            kubectl config set-credentials yc-service-account --token="${K8S_TOKEN}"
-            kubectl config set-context default --cluster=k8s --user=yc-service-account
-            kubectl config use-context default
-            сd blogchart
-            helm init --client-only --stable-repo-url https://charts.bitnami.com/bitnami
-            helm dep build
-            helm upgrade --install blogchart .
-
-
+      - name: Deploy
+        run: |
+          cd blogchart
+          docker build --build-arg CERT="${{ secrets.CERT }}" --build-arg SA_TOKEN="${{ secrets.SA_TOKEN }}" -t deploy . -f Dockerfile
