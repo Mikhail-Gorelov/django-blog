@@ -2,7 +2,7 @@ name: Kubernetes Deploy
 
 on:
   push:
-    branches: [ cicd_kubernetes ]
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
