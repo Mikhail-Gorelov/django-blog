@@ -71,7 +71,7 @@ jobs:
     needs: [ push ]
     steps:
       - name: Server Login
-        uses: shimataro/ssh-key-action@v2.3.1
+        uses: shimataro/ssh-key-action@v2.7.0
         with:
           key: ${{ secrets.AWS_PEM }}
           known_hosts: 'empty'
