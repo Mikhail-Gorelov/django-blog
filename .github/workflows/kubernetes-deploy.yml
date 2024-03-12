@@ -11,7 +11,7 @@ jobs:
     container: dtzar/helm-kubectl:3.7.1
     steps:
       - name: Get project
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - run: |
           cd blogchart
           echo "${{ secrets.KUBECONFIG }}" >> config
