@@ -1,5 +1,5 @@
 Sphinx==7.2.6
-doc8==0.10.1
+doc8==1.1.1
 numpydoc==1.1.0
 setuptools-scm==8.0.4
 sphinx_rtd_theme==2.0.0
