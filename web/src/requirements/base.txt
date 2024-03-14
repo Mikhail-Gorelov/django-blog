@@ -21,7 +21,7 @@ djangorestframework-simplejwt==5.0.0
 PyJWT==2.1.0
 
 # For backend working
-celery==5.1.2
+celery==5.2.2
 pyamqp==0.1.0.7
 
 # for react
