@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from django.db import models
-from django.contrib.contenttypes.models import ContentType
 from actions.choices import LikeChoice
 from main.serializers import UserSerializer
 

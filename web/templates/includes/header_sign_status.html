@@ -23,6 +23,6 @@
 {% else %}
 <ul class="nav navbar-nav navbar-right">
     <li><a href="{% url 'auth_app:login' %}">{% trans 'Sign in' %}</a></li>
-    <li><a href="{% url 'auth_app:sign_up' %}">{% trans 'Sign up' %}</a></li>
+    <li data-testid="signUpButton"><a href="{% url 'auth_app:sign_up' %}">{% trans 'Sign up' %}</a></li>
 </ul>
 {% endif %}
