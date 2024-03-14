@@ -1,13 +1,11 @@
 import logging
 
-from django.utils.translation import gettext_lazy as _
-from drf_yasg.utils import swagger_auto_schema
 from blog.models import Article
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
-from . import serializers, services
+from . import serializers
 
 logger = logging.getLogger(__name__)
 
