@@ -17,9 +17,9 @@
 
 # -- Project information -----------------------------------------------------
 
-project = "Django template"
-copyright = "2021, bandirom"
-author = "bandirom"
+project = "Django blog"
+copyright = "2024, mikhail"
+author = "mikhail"
 
 
 # -- General configuration ---------------------------------------------------
