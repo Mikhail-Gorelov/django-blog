@@ -57,17 +57,15 @@ class UserView(GenericAPIView):
 class SetUserTimeZone(GenericAPIView):
     authentication_classes = (SessionAuthentication,)
     serializer_class = SetTimeZoneSerializer
-    parser_classes = (FormParser,)
 
     def post(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        result = app.send_task(
+        app.send_task(
             name='main.tasks.add',
             kwargs={'x': 2, 'y': 2},
         )
-        print(result)
-        response = Response()
+        response = Response(serializer.data)
         response.set_cookie(
             key=getattr(settings, 'TIMEZONE_COOKIE_NAME', 'timezone'),
             value=serializer.data.get('timezone'),
@@ -83,7 +81,6 @@ class ValidateJWTView(GenericAPIView):
     def post(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        # return Response({"detail": "hello from blog"})
         return Response(serializer.response_data)
 
 
