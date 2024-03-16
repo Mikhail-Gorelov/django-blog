@@ -17,17 +17,16 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    path('news-feed-article/', views.NewsFeedArticleListView.as_view(),
-         name='news_feed_article'),
-    path('news-feed-comment/', views.NewsFeedCommentListView.as_view(),
-         name='news_feed_comment'),
-    path('news-feed-followers/', views.NewsFeedFollowerListView.as_view(),
-         name='news_feed_follower'),
-    path('news-feed-likes/', views.NewsFeedLikeListView.as_view(),
-         name='news_feed_like'),
+    path('news-feed-article/', views.NewsFeedArticleListView.as_view(), name='news_feed_article'),
+    path('news-feed-comment/', views.NewsFeedCommentListView.as_view(), name='news_feed_comment'),
+    path('news-feed-followers/', views.NewsFeedFollowerListView.as_view(), name='news_feed_follower'),
+    path('news-feed-likes/', views.NewsFeedLikeListView.as_view(), name='news_feed_like'),
     path('settings-update/<user_id>', views.ProfileSettingsView.as_view(), name='change_user_credentials'),
-    path('settings-retrieve/<user_id>/', views.ProfileSettingsRetrieveViewSet.as_view({'get': 'retrieve'}),
-         name='user_settings'),
+    path(
+        'settings-retrieve/<user_id>/',
+        views.ProfileSettingsRetrieveViewSet.as_view({'get': 'retrieve'}),
+        name='user_settings',
+    ),
     path('true-users/', views.TrueUserViewSet.as_view({'get': 'user_list'}), name='api_list_true_users'),
     path('password-change/', views.UserViewSet.as_view({"post": 'password_change'}), name='password_change'),
     path('update-image/', views.UserViewSet.as_view({"post": 'update_image'}), name='update_image'),

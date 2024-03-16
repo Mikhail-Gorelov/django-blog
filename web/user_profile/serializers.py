@@ -47,8 +47,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     def get_has_subscribed(self, obj):
         try:
-            Follower.objects.get(subscriber=self.context["request"].user,
-                                 to_user=User.objects.get(pk=obj.pk))
+            Follower.objects.get(subscriber=self.context["request"].user, to_user=User.objects.get(pk=obj.pk))
             has_subscription = True
         except Follower.DoesNotExist:
             has_subscription = False
@@ -165,7 +164,8 @@ class NewsFeedArticleSerializer(serializers.ModelSerializer):
 
     def get_updated(self, obj):
         return str(
-            datetime.datetime.now().replace(microsecond=0) - obj.updated.replace(tzinfo=None).replace(microsecond=0)
+            datetime.datetime.now().replace(microsecond=0)
+            - obj.updated.replace(tzinfo=None).replace(microsecond=0)
         )
 
     def get_type(self, obj):
@@ -189,7 +189,8 @@ class NewsFeedCommentSerializer(serializers.ModelSerializer):
 
     def get_updated(self, obj):
         return str(
-            datetime.datetime.now().replace(microsecond=0) - obj.updated.replace(tzinfo=None).replace(microsecond=0)
+            datetime.datetime.now().replace(microsecond=0)
+            - obj.updated.replace(tzinfo=None).replace(microsecond=0)
         )
 
     def get_article(self, obj):
@@ -243,12 +244,14 @@ class NewsFeedFollowerSerializer(serializers.ModelSerializer):
 
     def get_date(self, obj):
         return str(
-            datetime.datetime.now().replace(microsecond=0) - obj.date.replace(tzinfo=None).replace(microsecond=0)
+            datetime.datetime.now().replace(microsecond=0)
+            - obj.date.replace(tzinfo=None).replace(microsecond=0)
         )
 
     class Meta:
         model = Follower
         fields = ['id', 'subscriber', 'date']
+
 
 # class NewsFeedSerializer(serializers.ModelSerializer):
 #     article_set = serializers.SerializerMethodField("get_articles")

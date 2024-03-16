@@ -22,8 +22,11 @@ from rest_framework.viewsets import ModelViewSet
 from . import serializers, services
 from .models import Profile
 from .services import UserProfileService
-from main.pagination import BasePageNumberPagination, BasePageNumberNewsFeedArticlePagination, \
-    BasePageNumberNewsFeedPagination
+from main.pagination import (
+    BasePageNumberPagination,
+    BasePageNumberNewsFeedArticlePagination,
+    BasePageNumberNewsFeedPagination,
+)
 
 User = get_user_model()
 logger = logging.getLogger(__name__)
@@ -94,7 +97,7 @@ class ProfileViewSet(ViewSet, RetrieveModelMixin, UserViewSet):
             {
                 "user": serializer.data,
                 "CHAT_SITE_INIT": os.environ.get("CHAT_SITE_INIT"),
-                "articles": articles_serializer.data
+                "articles": articles_serializer.data,
             },
             template_name=self.template_name,
         )
@@ -206,9 +209,7 @@ class NewsFeedFollowerListView(ListAPIView):
     serializer_class = serializers.NewsFeedFollowerSerializer
 
     def get_queryset(self):
-        return Follower.objects.filter(
-            to_user=self.user
-        ).order_by("-date")
+        return Follower.objects.filter(to_user=self.user).order_by("-date")
 
     def list(self, request, *args, **kwargs):
         self.user = request.user
@@ -222,9 +223,9 @@ class NewsFeedLikeListView(ListAPIView):
     serializer_class = serializers.NewsFeedLikeSerializer
 
     def get_queryset(self):
-        return Like.objects.filter(
-            user__id__in=UserProfileService.get_subscriptions_to(self.user)
-        ).order_by("-date")
+        return Like.objects.filter(user__id__in=UserProfileService.get_subscriptions_to(self.user)).order_by(
+            "-date"
+        )
 
     def list(self, request, *args, **kwargs):
         self.user = request.user

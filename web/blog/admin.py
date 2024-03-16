@@ -23,7 +23,10 @@ class ArticleAdmin(SummernoteModelAdmin):
     readonly_fields = ('created', 'updated')
     list_select_related = ('category', 'author')
     list_filter = ('status',)
-    inlines = [CommentInline, LikeContentTypeInline, ]
+    inlines = [
+        CommentInline,
+        LikeContentTypeInline,
+    ]
 
 
 @admin.register(Category)
@@ -40,4 +43,6 @@ class CommentAdmin(admin.ModelAdmin):
     summernote_fields = ('content',)
     readonly_fields = ('created', 'updated')
     list_select_related = ('user', 'article')
-    inlines = [LikeContentTypeInline, ]
+    inlines = [
+        LikeContentTypeInline,
+    ]

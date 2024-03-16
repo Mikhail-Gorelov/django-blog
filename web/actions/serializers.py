@@ -20,12 +20,16 @@ class FollowerSerializer(serializers.ModelSerializer):
 
     def save(self):
         try:
-            follower = Follower.objects.get(subscriber=self.context["request"].user,
-                                            to_user=User.objects.get(pk=self.validated_data["to_user"]))
+            follower = Follower.objects.get(
+                subscriber=self.context["request"].user,
+                to_user=User.objects.get(pk=self.validated_data["to_user"]),
+            )
             follower.delete()
         except Follower.DoesNotExist:
-            Follower.objects.create(subscriber=self.context["request"].user,
-                                    to_user=User.objects.get(pk=self.validated_data["to_user"]))
+            Follower.objects.create(
+                subscriber=self.context["request"].user,
+                to_user=User.objects.get(pk=self.validated_data["to_user"]),
+            )
         return
 
     @property

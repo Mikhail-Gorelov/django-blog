@@ -20,11 +20,7 @@ class Follower(models.Model):
 
 
 class Like(models.Model):
-    user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name='user_likes'
-    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_likes')
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, limit_choices_to=limit)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey()

@@ -63,16 +63,10 @@ class Article(models.Model):
         return reverse_lazy(url, kwargs={'slug': self.slug})
 
     def likes(self):
-        return self.votes.aggregate(
-            count=models.Count(
-                "vote", filter=models.Q(vote=LikeChoice.LIKE))
-        )
+        return self.votes.aggregate(count=models.Count("vote", filter=models.Q(vote=LikeChoice.LIKE)))
 
     def dislikes(self):
-        return self.votes.aggregate(
-            count=models.Count(
-                "vote", filter=models.Q(vote=LikeChoice.DISLIKE))
-        )
+        return self.votes.aggregate(count=models.Count("vote", filter=models.Q(vote=LikeChoice.DISLIKE)))
 
     class Meta:
         verbose_name = _('Article')
@@ -97,16 +91,10 @@ class Comment(models.Model):
     objects = models.Manager()
 
     def likes(self):
-        return self.votes.aggregate(
-            count=models.Count(
-                "vote", filter=models.Q(vote=LikeChoice.LIKE))
-        )
+        return self.votes.aggregate(count=models.Count("vote", filter=models.Q(vote=LikeChoice.LIKE)))
 
     def dislikes(self):
-        return self.votes.aggregate(
-            count=models.Count(
-                "vote", filter=models.Q(vote=LikeChoice.DISLIKE))
-        )
+        return self.votes.aggregate(count=models.Count("vote", filter=models.Q(vote=LikeChoice.DISLIKE)))
 
     class Meta:
         verbose_name = _('Comment')

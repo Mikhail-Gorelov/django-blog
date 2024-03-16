@@ -26,17 +26,11 @@ class ArticleSerializer(serializers.ModelSerializer):
     vote = serializers.SerializerMethodField('get_vote')
 
     def get_likes(self, obj):
-        count = obj.votes.aggregate(
-            count=models.Count(
-                "vote", filter=models.Q(vote=LikeChoice.LIKE))
-        )
+        count = obj.votes.aggregate(count=models.Count("vote", filter=models.Q(vote=LikeChoice.LIKE)))
         return count["count"]
 
     def get_dislikes(self, obj):
-        count = obj.votes.aggregate(
-            count=models.Count(
-                "vote", filter=models.Q(vote=LikeChoice.DISLIKE))
-        )
+        count = obj.votes.aggregate(count=models.Count("vote", filter=models.Q(vote=LikeChoice.DISLIKE)))
         return count["count"]
 
     def get_vote(self, obj):
@@ -49,8 +43,18 @@ class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
         fields = (
-            'vote', 'dislikes', 'likes', 'title', 'url', 'author', 'category', 'created', 'updated', 'comments_count',
-            'id')
+            'vote',
+            'dislikes',
+            'likes',
+            'title',
+            'url',
+            'author',
+            'category',
+            'created',
+            'updated',
+            'comments_count',
+            'id',
+        )
 
 
 class CommentSerializer(serializers.ModelSerializer):
