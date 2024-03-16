@@ -8,8 +8,8 @@ from dj_rest_auth.registration.views import VerifyEmailView as _VerifyEmailView
 from django.contrib.auth import logout as django_logout
 from django.views.generic.base import TemplateResponseMixin, TemplateView
 from rest_framework.generics import CreateAPIView
-from rest_framework.serializers import ValidationError
 from rest_framework.permissions import AllowAny
+from rest_framework.serializers import ValidationError
 
 from . import serializers
 from .services import full_logout

@@ -1,9 +1,11 @@
-from rest_framework import serializers
-from . import choices
 from django.contrib.auth import get_user_model
-from .services import ActionsService
-from .models import Follower, Like
+from rest_framework import serializers
+
 from blog.models import Article
+
+from . import choices
+from .models import Follower, Like
+from .services import ActionsService
 
 User = get_user_model()
 

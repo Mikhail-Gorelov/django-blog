@@ -1,12 +1,13 @@
+from typing import TYPE_CHECKING, Optional, Union
+
 from django.conf import settings
-from typing import Union, Optional
-from .models import Like
-from . import choices
 from django.contrib.contenttypes.models import ContentType
-from blog.models import Comment, Article
-from typing import TYPE_CHECKING
+
+from blog.models import Article, Comment
 from main.models import UserType
 
+from . import choices
+from .models import Like
 
 # if TYPE_CHECKING:
 #     from main.models import UserType

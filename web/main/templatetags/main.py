@@ -1,5 +1,6 @@
 from datetime import datetime
 from urllib.parse import urljoin
+
 from django import template
 from django.conf import settings
 
