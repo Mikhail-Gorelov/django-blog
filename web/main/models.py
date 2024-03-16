@@ -41,9 +41,7 @@ class User(AbstractUser):
 
     def get_absolute_url(self):
         url = "user_profile:user_profile_id"
-        return urljoin(
-            settings.BACKEND_SITE, str(reverse_lazy(url, kwargs={"id": self.id}))
-        )
+        return urljoin(settings.BACKEND_SITE, str(reverse_lazy(url, kwargs={"id": self.id})))
 
     # def get_short_name(self):
     #     return super().get_short_name()
@@ -52,9 +50,7 @@ class User(AbstractUser):
         return self.emailaddress_set.get(primary=True).verified
 
     def likes_count(self) -> dict:
-        return self.user_likes.aggregate(
-            count=models.Count("like", filter=models.Q(vote=LikeChoice.LIKE))
-        )
+        return self.user_likes.aggregate(count=models.Count("like", filter=models.Q(vote=LikeChoice.LIKE)))
 
     def get_dislikes_count(self) -> dict:
         return self.user_likes.aggregate(

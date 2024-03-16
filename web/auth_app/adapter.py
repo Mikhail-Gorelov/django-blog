@@ -22,9 +22,7 @@ class AccountAdapter(DefaultAccountAdapter):
         activate_url = self.get_confirmation_url(email_confirmation, path)
         ctx.update({"activate_url": activate_url})
         email_template = "account/email/email_confirmation"
-        return self.send_mail(
-            email_template, email_confirmation.email_address.email, ctx
-        )
+        return self.send_mail(email_template, email_confirmation.email_address.email, ctx)
 
     @staticmethod
     def get_confirmation_url(email_confirmation, path):

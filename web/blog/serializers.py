@@ -27,22 +27,16 @@ class ArticleSerializer(serializers.ModelSerializer):
     vote = serializers.SerializerMethodField("get_vote")
 
     def get_likes(self, obj):
-        count = obj.votes.aggregate(
-            count=models.Count("vote", filter=models.Q(vote=LikeChoice.LIKE))
-        )
+        count = obj.votes.aggregate(count=models.Count("vote", filter=models.Q(vote=LikeChoice.LIKE)))
         return count["count"]
 
     def get_dislikes(self, obj):
-        count = obj.votes.aggregate(
-            count=models.Count("vote", filter=models.Q(vote=LikeChoice.DISLIKE))
-        )
+        count = obj.votes.aggregate(count=models.Count("vote", filter=models.Q(vote=LikeChoice.DISLIKE)))
         return count["count"]
 
     def get_vote(self, obj):
         try:
-            like = Like.objects.get(
-                articles=obj, user=self.context["request"].user, content_type=17
-            )
+            like = Like.objects.get(articles=obj, user=self.context["request"].user, content_type=17)
             return like.vote
         except Like.DoesNotExist:
             return None

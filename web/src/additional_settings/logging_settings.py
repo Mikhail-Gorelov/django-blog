@@ -6,9 +6,7 @@ LOGGING = {
     "root": {"level": "INFO", "handlers": ["default"]},
     "formatters": {
         "simple": {"format": "%(levelname)s %(message)s"},
-        "verbose": {
-            "format": "%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s"
-        },
+        "verbose": {"format": "%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s"},
         "django.server": {
             "()": "django.utils.log.ServerFormatter",
             "format": "[{server_time}] {message}",

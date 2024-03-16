@@ -15,11 +15,7 @@ class FeedbackSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         user = self.context["request"].user
         if not user.is_authenticated:
-            if (
-                not attrs.get("email")
-                and not attrs.get("name")
-                and not attrs.get("content")
-            ):
+            if not attrs.get("email") and not attrs.get("name") and not attrs.get("content"):
                 raise serializers.ValidationError(
                     {
                         "name": "field is required",
@@ -28,9 +24,7 @@ class FeedbackSerializer(serializers.ModelSerializer):
                     }
                 )
             if not attrs.get("email") and not attrs.get("name"):
-                raise serializers.ValidationError(
-                    {"name": "field is required", "email": "field is required"}
-                )
+                raise serializers.ValidationError({"name": "field is required", "email": "field is required"})
             if not attrs.get("email") and not attrs.get("content"):
                 raise serializers.ValidationError(
                     {"email": "field is required", "content": "field is required"}

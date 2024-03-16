@@ -15,18 +15,14 @@ class UtilsTestCase(TestCase):
         }
         self.assertEqual(utils.find_by_key(data, "tes"), "t")
         self.assertEqual(utils.find_by_key(data, "AWS"), data["dict"]["AWS"])
-        self.assertEqual(
-            utils.find_by_key(data, "founder"), data["dict"]["AWS"]["founder"]
-        )
+        self.assertEqual(utils.find_by_key(data, "founder"), data["dict"]["AWS"]["founder"])
         data = {
             "list_dict": [
                 {"clouds": ["AWS", "GCP", "Azure", "Digital Ocean"]},
                 {"brands": ["Samsung", "Tesla", "Renault"]},
             ],
         }
-        self.assertEqual(
-            utils.find_by_key(data, "clouds"), data["list_dict"][0]["clouds"]
-        )
+        self.assertEqual(utils.find_by_key(data, "clouds"), data["list_dict"][0]["clouds"])
 
     def test_parse_str_with_space(self):
         str1 = "We are the champions"
@@ -58,23 +54,13 @@ class UtilsTestCase(TestCase):
                 "key2": ["test1"],
             },
         ]
-        result = utils.find_dict_in_list(
-            target=list_1, dict_key="key1", lookup_value="Test1"
-        )
+        result = utils.find_dict_in_list(target=list_1, dict_key="key1", lookup_value="Test1")
         self.assertEqual(result, list_1[0])
-        result = utils.find_dict_in_list(
-            target=list_1, dict_key="key2", lookup_value="test2"
-        )
+        result = utils.find_dict_in_list(target=list_1, dict_key="key2", lookup_value="test2")
         self.assertEqual(result, list_1[0])
-        result = utils.find_dict_in_list(
-            target=list_1, dict_key="key1", lookup_value=100500
-        )
+        result = utils.find_dict_in_list(target=list_1, dict_key="key1", lookup_value=100500)
         self.assertEqual(result, list_1[3])
-        result = utils.find_dict_in_list(
-            target=list_1, dict_key="key2", lookup_value=["test1"]
-        )
+        result = utils.find_dict_in_list(target=list_1, dict_key="key2", lookup_value=["test1"])
         self.assertEqual(result, list_1[3])
-        result = utils.find_dict_in_list(
-            target=list_1, dict_key="key2", lookup_value=False
-        )
+        result = utils.find_dict_in_list(target=list_1, dict_key="key2", lookup_value=False)
         self.assertEqual(result, list_1[2])

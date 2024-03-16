@@ -21,9 +21,7 @@ urlpatterns += [
     path("sign-in/", views.LoginView.as_view(), name="api_login"),
     path("sign-up/", views.SignUpView.as_view(), name="api_sign_up"),
     path("sign-up/verify/", views.VerifyEmailView.as_view(), name="api_sign_up_verify"),
-    path(
-        "password/reset/", views.PasswordResetView.as_view(), name="api_forgot_password"
-    ),
+    path("password/reset/", views.PasswordResetView.as_view(), name="api_forgot_password"),
     path(
         "password/reset/confirm/",
         views.PasswordResetConfirmView.as_view(),
@@ -37,9 +35,7 @@ urlpatterns += router.urls
 urlpatterns += [
     path(
         "password-reset/<uidb64>/<token>/",
-        TemplateView.as_view(
-            template_name="auth_app/includes/reset_password_email_link.html"
-        ),
+        TemplateView.as_view(template_name="auth_app/includes/reset_password_email_link.html"),
         name="password_reset_confirm",
     ),
     path(
@@ -63,9 +59,7 @@ if settings.ENABLE_RENDERING:
         ),
         path(
             "verify-email/success",
-            TemplateAPIView.as_view(
-                template_name="auth_app/includes/success_enter_link_modal.html"
-            ),
+            TemplateAPIView.as_view(template_name="auth_app/includes/success_enter_link_modal.html"),
             name="verify_email_success",
         ),
         path(

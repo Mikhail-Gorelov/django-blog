@@ -39,11 +39,7 @@ class ArticleRating(GenericAPIView):
     def get(self, request):
         queryset = self.get_queryset()
         serializer = self.get_serializer(
-            reversed(
-                sorted(
-                    queryset, key=lambda a: a.likes()["count"] - a.dislikes()["count"]
-                )
-            ),
+            reversed(sorted(queryset, key=lambda a: a.likes()["count"] - a.dislikes()["count"])),
             many=True,
         )
         return Response(serializer.data)

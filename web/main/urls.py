@@ -17,12 +17,6 @@ urlpatterns = [
 ]
 
 if settings.ENABLE_RENDERING:
-    urlpatterns += [
-        path(
-            "", views.TemplateAPIView.as_view(template_name="index.html"), name="index"
-        )
-    ]
+    urlpatterns += [path("", views.TemplateAPIView.as_view(template_name="index.html"), name="index")]
 else:
-    urlpatterns += [
-        path("", login_required(RedirectView.as_view(pattern_name="admin:index")))
-    ]
+    urlpatterns += [path("", login_required(RedirectView.as_view(pattern_name="admin:index")))]

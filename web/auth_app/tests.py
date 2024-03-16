@@ -40,17 +40,13 @@ class AuthTestCase(APITestCase):
         self.assertFalse(user.is_active)
         self.assertEqual(len(mail.outbox), 1)
         message = mail.outbox[0]
-        pattern = (
-            r"(?P<url>https?://[^\s]+/auth/verify-email/[^\s]+[\r\n])" + r"([^\r\n]+/)"
-        )
+        pattern = r"(?P<url>https?://[^\s]+/auth/verify-email/[^\s]+[\r\n])" + r"([^\r\n]+/)"
         result = re.findall(pattern, str(message.message()))
         final_pattern = result[0][0].rstrip() + result[0][1]
         if not final_pattern:
             self.assertTrue(final_pattern, "wrong url pattern")
         data = {"key": str(final_pattern.split("/")[5]).replace("=", "")}
-        response_verify = self.client.post(
-            reverse("auth_app:api_sign_up_verify"), data, format="json"
-        )
+        response_verify = self.client.post(reverse("auth_app:api_sign_up_verify"), data, format="json")
         self.assertNotEqual(response_verify.status_code, status.HTTP_404_NOT_FOUND)
         user.refresh_from_db()
         self.assertTrue(user.is_active)
@@ -72,9 +68,7 @@ class AuthTestCase(APITestCase):
         user.emailaddress_set.create(email=user.email, verified=True, primary=True)
         # EmailAddress.objects.create(email=user_data['email'], user=user, verified=True, primary=True)
         self.assertTrue(user.is_active)
-        password_reset = self.client.post(
-            reverse("auth_app:api_forgot_password"), password_reset_data
-        )
+        password_reset = self.client.post(reverse("auth_app:api_forgot_password"), password_reset_data)
         self.assertEqual(password_reset.status_code, status.HTTP_200_OK)
         self.assertEqual(len(mail.outbox), 1)
         message = mail.outbox[0]

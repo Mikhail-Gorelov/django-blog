@@ -5,15 +5,7 @@ import sentry_sdk
 from django.utils.translation import gettext_lazy as _
 from sentry_sdk.integrations.django import DjangoIntegration
 
-from .additional_settings.allauth_settings import *
-from .additional_settings.cacheops_settings import *
 from .additional_settings.celery_settings import *
-from .additional_settings.defender_settings import *
-from .additional_settings.jwt_settings import *
-from .additional_settings.logging_settings import *
-from .additional_settings.smtp_settings import *
-from .additional_settings.summernote_settings import *
-from .additional_settings.swagger_settings import *
 
 sentry_sdk.init(
     dsn="https://examplePublicKey@o0.ingest.sentry.io/0",
@@ -159,9 +151,7 @@ CACHES = {
 }
 
 REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": (
-        "microservice_request.permissions.HasApiKeyOrIsAuthenticated",
-    ),
+    "DEFAULT_PERMISSION_CLASSES": ("microservice_request.permissions.HasApiKeyOrIsAuthenticated",),
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
@@ -285,9 +275,7 @@ if JAEGER_AGENT_HOST := os.environ.get("JAEGER_AGENT_HOST"):
         config={
             "sampler": {"type": "const", "param": 1},
             "local_agent": {
-                "reporting_port": os.environ.get(
-                    "JAEGER_AGENT_PORT", DEFAULT_REPORTING_PORT
-                ),
+                "reporting_port": os.environ.get("JAEGER_AGENT_PORT", DEFAULT_REPORTING_PORT),
                 "reporting_host": JAEGER_AGENT_HOST,
             },
             "logging": int(os.environ.get("JAEGER_LOGGING", False)),

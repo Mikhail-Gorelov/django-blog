@@ -27,9 +27,7 @@ class ViewsTest(APITestCase):
         self.assertEqual(response.status_code, HTTP_200_OK, response.data)
         self.assertEqual(response.data["timezone"], test_timezone)
         self.assertEqual(
-            response.cookies.get(
-                getattr(settings, "TIMEZONE_COOKIE_NAME", "timezone")
-            ).value,
+            response.cookies.get(getattr(settings, "TIMEZONE_COOKIE_NAME", "timezone")).value,
             test_timezone,
         )
         # Request need to activate timezone after set cookies

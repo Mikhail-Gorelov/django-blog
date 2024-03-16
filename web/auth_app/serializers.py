@@ -26,9 +26,7 @@ error_messages = {
 class CaptchaSerializerMixin(serializers.Serializer):
     def validate(self, attrs):
         captcha_token = self.context["request"].POST.get("g-recaptcha-response")
-        if not AuthAppService.validate_captcha(captcha_token, self.context["request"])[
-            0
-        ]:
+        if not AuthAppService.validate_captcha(captcha_token, self.context["request"])[0]:
             raise serializers.ValidationError("Invalid captcha, try again")
 
 
@@ -51,16 +49,12 @@ class UserSignUpSerializer(CaptchaSerializerMixin, serializers.Serializer):
         if not status:
             raise serializers.ValidationError(msg)
         if email and email_address_exists(email):
-            raise serializers.ValidationError(
-                _("User is already registered with this e-mail address.")
-            )
+            raise serializers.ValidationError(_("User is already registered with this e-mail address."))
         return email
 
     def validate(self, data):
         if data["password1"] != data["password2"]:
-            raise serializers.ValidationError(
-                {"password2": _("The two password fields didn't match.")}
-            )
+            raise serializers.ValidationError({"password2": _("The two password fields didn't match.")})
         # if not data.get("birthdate"):
         #     raise serializers.ValidationError({"birthdate": "Birthdate is required"})
         # if not data.get("gender"):
