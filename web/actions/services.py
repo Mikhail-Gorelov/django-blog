@@ -1,6 +1,5 @@
-from typing import TYPE_CHECKING, Optional, Union
+from typing import Optional, Union
 
-from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 
 from blog.models import Article, Comment
