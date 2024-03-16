@@ -36,7 +36,5 @@ class UserProfileService:
 
     @staticmethod
     def get_subscriptions_to(user: User) -> List[User]:
-        following = list(
-            Follower.objects.filter(subscriber=user).values_list("to_user", flat=True)
-        )
+        following = list(Follower.objects.filter(subscriber=user).values_list("to_user", flat=True))
         return User.objects.filter(id__in=following)

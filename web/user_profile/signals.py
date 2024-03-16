@@ -31,10 +31,7 @@ def auto_delete_file_on_change(sender, instance, **kwargs):
     new_image = instance.image
     # print(os.path.dirname(old_image.path))
     if not old_image == new_image:
-        if (
-            os.path.isfile(old_image.path)
-            and os.path.dirname(old_image.path) != "/usr/src/web/media"
-        ):
+        if os.path.isfile(old_image.path) and os.path.dirname(old_image.path) != "/usr/src/web/media":
             os.remove(old_image.path)
 
 

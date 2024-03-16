@@ -33,9 +33,7 @@ urlpatterns += [
         views.NewsFeedFollowerListView.as_view(),
         name="news_feed_follower",
     ),
-    path(
-        "news-feed-likes/", views.NewsFeedLikeListView.as_view(), name="news_feed_like"
-    ),
+    path("news-feed-likes/", views.NewsFeedLikeListView.as_view(), name="news_feed_like"),
     path(
         "settings-update/<user_id>",
         views.ProfileSettingsView.as_view(),

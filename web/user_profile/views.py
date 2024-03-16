@@ -70,9 +70,7 @@ class UserViewSet(viewsets.GenericViewSet):
         return serializers.UserProfileSerializer
 
     def update_image(self, request):
-        serializer = self.get_serializer(
-            data=request.data, instance=request.user.profile
-        )
+        serializer = self.get_serializer(data=request.data, instance=request.user.profile)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
@@ -95,9 +93,7 @@ class ProfileViewSet(ViewSet, RetrieveModelMixin, UserViewSet):
 
     def profile(self, request):
         serializer = self.get_serializer(request.user)
-        articles = Article.objects.filter(author__id=request.user.id).order_by(
-            "-updated"
-        )
+        articles = Article.objects.filter(author__id=request.user.id).order_by("-updated")
         articles_serializer = serializers.NewsFeedArticleSerializer(articles, many=True)
         return Response(
             {
@@ -232,9 +228,9 @@ class NewsFeedLikeListView(ListAPIView):
     serializer_class = serializers.NewsFeedLikeSerializer
 
     def get_queryset(self):
-        return Like.objects.filter(
-            user__id__in=UserProfileService.get_subscriptions_to(self.user)
-        ).order_by("-date")
+        return Like.objects.filter(user__id__in=UserProfileService.get_subscriptions_to(self.user)).order_by(
+            "-date"
+        )
 
     def list(self, request, *args, **kwargs):
         self.user = request.user

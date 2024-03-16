@@ -92,9 +92,7 @@ class ChangeImageSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         limit = 4 * 1024 * 1024  # 4 mb
         if attrs.get("image").size > limit:
-            raise serializers.ValidationError(
-                "File too large. Size should not exceed 4 MiB."
-            )
+            raise serializers.ValidationError("File too large. Size should not exceed 4 MiB.")
         return attrs
 
 
@@ -111,11 +109,7 @@ class GetUsersIdSerializer(serializers.Serializer):
     user_id = serializers.ListField(child=serializers.IntegerField())
 
     def validate(self, attrs):
-        users = set(
-            models.User.objects.filter(pk__in=attrs["user_id"]).values_list(
-                "id", flat=True
-            )
-        )
+        users = set(models.User.objects.filter(pk__in=attrs["user_id"]).values_list("id", flat=True))
         not_existed_users = set(attrs["user_id"]).difference(users)
         errors = {user: "Not found" for user in not_existed_users}
         if errors:
@@ -154,9 +148,7 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
         models.Profile.objects.filter(user__pk=kwargs.get("id")).update(**profile_data)
         email = EmailAddress.objects.get(user__pk=kwargs.get("id"))
         UserProfileService.deactivate_email(email)
-        EmailAddress.objects.filter(user__pk=kwargs.get("id")).update(
-            email=user_data["email"]
-        )
+        EmailAddress.objects.filter(user__pk=kwargs.get("id")).update(email=user_data["email"])
         CeleryService.send_email_confirm(user)
 
 
