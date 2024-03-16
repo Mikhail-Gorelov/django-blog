@@ -3,8 +3,8 @@ from django.utils.translation import gettext_lazy as _
 
 
 class LikeChoice(IntegerChoices):
-    LIKE = (1, _('Like'))
-    DISLIKE = (0, _('Dislike'))
+    LIKE = (1, _("Like"))
+    DISLIKE = (0, _("Dislike"))
 
 
 class LikeTypeChoice(TextChoices):

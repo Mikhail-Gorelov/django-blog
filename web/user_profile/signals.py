@@ -13,7 +13,7 @@ User = get_user_model()
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, created: bool, instance, **kwargs):
-    print(sender, created, instance, kwargs, 'SIGNAL')
+    print(sender, created, instance, kwargs, "SIGNAL")
     if created:
         Profile.objects.create(user=instance)
 
@@ -31,12 +31,15 @@ def auto_delete_file_on_change(sender, instance, **kwargs):
     new_image = instance.image
     # print(os.path.dirname(old_image.path))
     if not old_image == new_image:
-        if os.path.isfile(old_image.path) and os.path.dirname(old_image.path) != '/usr/src/web/media':
+        if (
+            os.path.isfile(old_image.path)
+            and os.path.dirname(old_image.path) != "/usr/src/web/media"
+        ):
             os.remove(old_image.path)
 
 
 def true_users_post_cache():
-    cache.delete('true_users')
+    cache.delete("true_users")
 
 
 @receiver(post_delete, sender=User)
@@ -46,5 +49,5 @@ def posts_post_delete_handler(sender, **kwargs):
 
 @receiver(post_save, sender=User)
 def posts_post_save_handler(sender, **kwargs):
-    if kwargs['created']:
+    if kwargs["created"]:
         true_users_post_cache()

@@ -15,7 +15,12 @@ from user_profile import models as user_profile_models
 from user_profile import serializers as user_profile_serializer
 
 from . import models
-from .serializers import ReturnUsersSerializer, SetTimeZoneSerializer, UserSerializer, ValidateJWTSerializer
+from .serializers import (
+    ReturnUsersSerializer,
+    SetTimeZoneSerializer,
+    UserSerializer,
+    ValidateJWTSerializer,
+)
 
 User = get_user_model()
 
@@ -26,9 +31,9 @@ class TemplateAPIView(APIView):
     """
 
     permission_classes = (AllowAny,)
-    template_name = ''
+    template_name = ""
 
-    @method_decorator(name='create', decorator=swagger_auto_schema(auto_schema=None))
+    @method_decorator(name="create", decorator=swagger_auto_schema(auto_schema=None))
     def get(self, request, *args, **kwargs):
         return Response()
 
@@ -62,14 +67,14 @@ class SetUserTimeZone(GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         app.send_task(
-            name='main.tasks.add',
-            kwargs={'x': 2, 'y': 2},
+            name="main.tasks.add",
+            kwargs={"x": 2, "y": 2},
         )
         response = Response(serializer.data)
         response.set_cookie(
-            key=getattr(settings, 'TIMEZONE_COOKIE_NAME', 'timezone'),
-            value=serializer.data.get('timezone'),
-            max_age=getattr(settings, 'TIMEZONE_COOKIE_AGE', 86400),
+            key=getattr(settings, "TIMEZONE_COOKIE_NAME", "timezone"),
+            value=serializer.data.get("timezone"),
+            max_age=getattr(settings, "TIMEZONE_COOKIE_AGE", 86400),
         )
         return response
 
@@ -91,6 +96,8 @@ class ReturnUserInfoView(GenericAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user_list = User.objects.filter(pk__in=serializer.data['user_id'])
-        users_info = user_profile_serializer.UserShortInfoSerializer(user_list, many=True)
+        user_list = User.objects.filter(pk__in=serializer.data["user_id"])
+        users_info = user_profile_serializer.UserShortInfoSerializer(
+            user_list, many=True
+        )
         return Response(users_info.data)

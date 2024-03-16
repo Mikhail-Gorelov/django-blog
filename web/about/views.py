@@ -14,8 +14,8 @@ class TemplateAPIView(APIView):
     """
 
     permission_classes = (AllowAny,)
-    template_name = ''
+    template_name = ""
 
-    @method_decorator(name='create', decorator=swagger_auto_schema(auto_schema=None))
+    @method_decorator(name="create", decorator=swagger_auto_schema(auto_schema=None))
     def get(self, request, *args, **kwargs):
         return Response()

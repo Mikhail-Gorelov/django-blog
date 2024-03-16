@@ -4,7 +4,11 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from rest_framework.response import Response
-from rest_framework.status import HTTP_200_OK, HTTP_401_UNAUTHORIZED, HTTP_500_INTERNAL_SERVER_ERROR
+from rest_framework.status import (
+    HTTP_200_OK,
+    HTTP_401_UNAUTHORIZED,
+    HTTP_500_INTERNAL_SERVER_ERROR,
+)
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -18,18 +22,18 @@ User = get_user_model()
 class AuthAppService:
     @staticmethod
     def validate_email(email):
-        re_email = r'^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,30})+$'
+        re_email = r"^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,30})+$"
         if not re.search(re_email, email):
             return False, _("Entered email address is not valid")
-        return True, ''
+        return True, ""
 
     @staticmethod
     def validate_captcha(captcha, request):
         url = "https://google.com/recaptcha/api/siteverify"
         params = {
-            'secret': settings.GOOGLE_CAPTCHA_SECRET_KEY,
-            'response': captcha,
-            'remoteip': get_client_ip(request),
+            "secret": settings.GOOGLE_CAPTCHA_SECRET_KEY,
+            "response": captcha,
+            "remoteip": get_client_ip(request),
         }
         response = captcha_request(url=url, params=params)
         data = response.json()
@@ -44,23 +48,28 @@ class AuthAppService:
 
 def full_logout(request):
     response = Response({"detail": _("Successfully logged out.")}, status=HTTP_200_OK)
-    if cookie_name := getattr(settings, 'JWT_AUTH_COOKIE', None):
+    if cookie_name := getattr(settings, "JWT_AUTH_COOKIE", None):
         response.delete_cookie(cookie_name)
-    refresh_cookie_name = getattr(settings, 'JWT_AUTH_REFRESH_COOKIE', None)
+    refresh_cookie_name = getattr(settings, "JWT_AUTH_REFRESH_COOKIE", None)
     refresh_token = request.COOKIES.get(refresh_cookie_name)
     if refresh_cookie_name:
         response.delete_cookie(refresh_cookie_name)
-    if 'rest_framework_simplejwt.token_blacklist' in settings.INSTALLED_APPS:
+    if "rest_framework_simplejwt.token_blacklist" in settings.INSTALLED_APPS:
         # add refresh token to blacklist
         try:
             token = RefreshToken(refresh_token)
             token.blacklist()
         except KeyError:
-            response.data = {"detail": _("Refresh token was not included in request data.")}
+            response.data = {
+                "detail": _("Refresh token was not included in request data.")
+            }
             response.status_code = HTTP_401_UNAUTHORIZED
         except (TokenError, AttributeError, TypeError) as error:
-            if hasattr(error, 'args'):
-                if 'Token is blacklisted' in error.args or 'Token is invalid or expired' in error.args:
+            if hasattr(error, "args"):
+                if (
+                    "Token is blacklisted" in error.args
+                    or "Token is invalid or expired" in error.args
+                ):
                     response.data = {"detail": _(error.args[0])}
                     response.status_code = HTTP_401_UNAUTHORIZED
                 else:

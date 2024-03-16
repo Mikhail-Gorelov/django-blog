@@ -18,7 +18,7 @@
 #       range.
 #
 
-bind = '127.0.0.1:8000'
+bind = "127.0.0.1:8000"
 backlog = 2048
 
 #
@@ -66,7 +66,7 @@ backlog = 2048
 #
 
 workers = 1
-worker_class = 'sync'
+worker_class = "sync"
 worker_connections = 1000
 timeout = 30
 keepalive = 2
@@ -124,8 +124,8 @@ spew = False
 
 daemon = False
 raw_env = [
-    'DJANGO_SECRET_KEY=something',
-    'SPAM=eggs',
+    "DJANGO_SECRET_KEY=something",
+    "SPAM=eggs",
 ]
 pidfile = None
 umask = 0
@@ -145,9 +145,9 @@ tmp_upload_dir = None
 #       A string of "debug", "info", "warning", "error", "critical"
 #
 
-errorlog = '-'
-loglevel = 'info'
-accesslog = '-'
+errorlog = "-"
+loglevel = "info"
+accesslog = "-"
 access_log_format = '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"'
 
 #
@@ -184,6 +184,7 @@ proc_name = None
 #       A callable that takes a server instance as the sole argument.
 #
 
+
 def post_fork(server, worker):
     server.log.info("Worker spawned (pid: %s)", worker.pid)
 
@@ -205,14 +206,13 @@ def worker_int(worker):
 
     # get traceback info
     import threading, sys, traceback
+
     id2name = {th.ident: th.name for th in threading.enumerate()}
     code = []
     for threadId, stack in sys._current_frames().items():
-        code.append("\n# Thread: %s(%d)" % (id2name.get(threadId, ""),
-                                            threadId))
+        code.append("\n# Thread: %s(%d)" % (id2name.get(threadId, ""), threadId))
         for filename, lineno, name, line in traceback.extract_stack(stack):
-            code.append('File: "%s", line %d, in %s' % (filename,
-                                                        lineno, name))
+            code.append('File: "%s", line %d, in %s' % (filename, lineno, name))
             if line:
                 code.append("  %s" % (line.strip()))
     worker.log.debug("\n".join(code))

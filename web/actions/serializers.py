@@ -18,7 +18,7 @@ class FollowerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Follower
-        fields = ('to_user',)
+        fields = ("to_user",)
 
     def save(self):
         try:
@@ -45,7 +45,7 @@ class AssessmentSerializer(serializers.Serializer):
     vote = serializers.ChoiceField(choices=choices.LikeChoice.choices)
 
     def save(self, **kwargs):
-        user = self.context['request'].user
+        user = self.context["request"].user
         vote: int = self.validated_data["vote"]
         like_type: str = self.validated_data["like_type"]
         object_id: int = self.validated_data["object_id"]
@@ -70,4 +70,14 @@ class AssessmentSerializer(serializers.Serializer):
 class ArticleRatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
-        fields = ('id', 'category', 'title', 'content', 'author', 'created', 'updated', 'status', 'image')
+        fields = (
+            "id",
+            "category",
+            "title",
+            "content",
+            "author",
+            "created",
+            "updated",
+            "status",
+            "image",
+        )

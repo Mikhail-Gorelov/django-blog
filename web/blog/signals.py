@@ -6,7 +6,7 @@ from . import models
 
 
 def clear_category_cache():
-    cache.delete('categories')
+    cache.delete("categories")
 
 
 @receiver(post_delete, sender=models.Category)
@@ -16,12 +16,12 @@ def category_post_delete_handler(sender, **kwargs):
 
 @receiver(post_save, sender=models.Category)
 def category_post_save_handler(sender, **kwargs):
-    if kwargs['created']:
+    if kwargs["created"]:
         clear_category_cache()
 
 
 def clear_post_cache():
-    cache.delete('posts')
+    cache.delete("posts")
 
 
 @receiver(post_delete, sender=models.Article)
@@ -31,5 +31,5 @@ def posts_post_delete_handler(sender, **kwargs):
 
 @receiver(post_save, sender=models.Article)
 def posts_post_save_handler(sender, **kwargs):
-    if kwargs['created']:
+    if kwargs["created"]:
         clear_post_cache()

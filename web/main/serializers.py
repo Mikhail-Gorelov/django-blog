@@ -12,7 +12,7 @@ User = get_user_model()
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'full_name', 'email')
+        fields = ("id", "full_name", "email")
 
 
 class SetTimeZoneSerializer(serializers.Serializer):
@@ -25,8 +25,8 @@ class ValidateJWTSerializer(serializers.Serializer):
     def validate_auth(self, jwt: str):
         try:
             access_token = AccessToken(jwt)
-            print(access_token['user_id'])
-            self.user = User.objects.get(pk=access_token['user_id'])
+            print(access_token["user_id"])
+            self.user = User.objects.get(pk=access_token["user_id"])
         except (TokenError, User.DoesNotExist) as e:
             raise serializers.ValidationError(e)
         return jwt

@@ -21,8 +21,8 @@ logger = logging.getLogger(__name__)
 
 
 class ViewSet(ModelViewSet):
-    http_method_names = ('get', 'post', 'put', 'delete')
-    lookup_field = 'slug'
+    http_method_names = ("get", "post", "put", "delete")
+    lookup_field = "slug"
     permission_classes = (AllowAny,)
     pagination_class = BasePageNumberPagination
 
@@ -31,10 +31,10 @@ class CategoryViewSet(ViewSet):
     serializer_class = serializers.CategorySerializer
 
     def get_queryset(self):
-        categories = cache.get('categories')
+        categories = cache.get("categories")
         if categories is None:
             categories = BlogService.category_queryset()
-            cache.set('categories', categories)
+            cache.set("categories", categories)
         return categories
 
 
@@ -44,21 +44,21 @@ class ArticleViewSet(ViewSet):
     pagination_class = StandardResultsSetPagination
 
     def get_template_name(self):
-        if self.action == 'list':
-            return 'blog/post_list.html'
-        elif self.action == 'retrieve':
-            return 'blog/post_detail.html'
+        if self.action == "list":
+            return "blog/post_list.html"
+        elif self.action == "retrieve":
+            return "blog/post_detail.html"
 
     def get_serializer_class(self):
-        if self.action == 'list':
+        if self.action == "list":
             return serializers.ArticleSerializer
         return serializers.FullArticleSerializer
 
     def get_queryset(self):
-        posts = cache.get('posts')
+        posts = cache.get("posts")
         if posts is None:
             posts = BlogService.get_active_articles()
-            cache.set('posts', posts)
+            cache.set("posts", posts)
         return posts
 
     def list(self, request, **kwargs):
@@ -82,7 +82,7 @@ class CommentViewSet(ListModelMixin, GenericViewSet):
     # article_id = serializers.ArticleSerializer.id
 
     def get_template_name(self):
-        return 'blog/includes/comments.html'
+        return "blog/includes/comments.html"
 
     def get_serializer_class(self):
         return CommentSerializer

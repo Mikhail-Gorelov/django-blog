@@ -18,13 +18,22 @@ class CommentInline(admin.TabularInline):
 
 @admin.register(Article)
 class ArticleAdmin(SummernoteModelAdmin):
-    search_fields = ('title',)
-    list_display = ('title', 'category', 'status', 'author')
-    summernote_fields = ('content',)
-    fields = ('category', 'title', 'status', 'author', 'image', 'content', 'created', 'updated')
-    readonly_fields = ('created', 'updated')
-    list_select_related = ('category', 'author')
-    list_filter = ('status',)
+    search_fields = ("title",)
+    list_display = ("title", "category", "status", "author")
+    summernote_fields = ("content",)
+    fields = (
+        "category",
+        "title",
+        "status",
+        "author",
+        "image",
+        "content",
+        "created",
+        "updated",
+    )
+    readonly_fields = ("created", "updated")
+    list_select_related = ("category", "author")
+    list_filter = ("status",)
     inlines = [
         CommentInline,
         LikeContentTypeInline,
@@ -33,18 +42,18 @@ class ArticleAdmin(SummernoteModelAdmin):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    search_fields = ('name',)
-    list_display = ('name',)
+    search_fields = ("name",)
+    list_display = ("name",)
 
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('user', 'created')
-    list_filter = ('created',)
-    search_fields = ('user',)
-    summernote_fields = ('content',)
-    readonly_fields = ('created', 'updated')
-    list_select_related = ('user', 'article')
+    list_display = ("user", "created")
+    list_filter = ("created",)
+    search_fields = ("user",)
+    summernote_fields = ("content",)
+    readonly_fields = ("created", "updated")
+    list_select_related = ("user", "article")
     inlines = [
         LikeContentTypeInline,
     ]

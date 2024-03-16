@@ -20,9 +20,11 @@ class AccountAdapter(DefaultAccountAdapter):
     def send_confirmation_email(self, email_confirmation, ctx: dict):
         path = "auth_app:account_verification"
         activate_url = self.get_confirmation_url(email_confirmation, path)
-        ctx.update({'activate_url': activate_url})
-        email_template = 'account/email/email_confirmation'
-        return self.send_mail(email_template, email_confirmation.email_address.email, ctx)
+        ctx.update({"activate_url": activate_url})
+        email_template = "account/email/email_confirmation"
+        return self.send_mail(
+            email_template, email_confirmation.email_address.email, ctx
+        )
 
     @staticmethod
     def get_confirmation_url(email_confirmation, path):
@@ -48,13 +50,13 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
         # some social logins don't have an email address, e.g. facebook accounts
         # with mobile numbers only, but allauth takes care of this case so just
         # ignore it
-        if 'email' not in sociallogin.account.extra_data:
+        if "email" not in sociallogin.account.extra_data:
             return
 
         # check if given email address already exists.
         # Note: __iexact is used to ignore cases
         try:
-            email = sociallogin.account.extra_data['email'].lower()
+            email = sociallogin.account.extra_data["email"].lower()
             # email_address = EmailAddress.objects.get(email__iexact=email, verified=True)
             email_address = EmailAddress.objects.get(email__iexact=email)
 
@@ -76,9 +78,9 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
         return u
 
     def get_app(self, request, provider):
-        if config := app_settings.PROVIDERS.get(provider, {}).get('APP'):
+        if config := app_settings.PROVIDERS.get(provider, {}).get("APP"):
             app = SocialApp.objects.get_or_create(provider=provider)[0]
-            for field in ['client_id', 'secret', 'key']:
+            for field in ["client_id", "secret", "key"]:
                 setattr(app, field, config.get(field))
             app.key = app.key or "unset"
             app.name = app.name or provider

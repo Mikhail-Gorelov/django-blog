@@ -40,7 +40,7 @@ class VerifyEmailView(_VerifyEmailView):
 
 
 class LogoutView(auth_views.LogoutView):
-    allowed_methods = ('POST', 'OPTIONS')
+    allowed_methods = ("POST", "OPTIONS")
 
     def session_logout(self):
         django_logout(self.request)

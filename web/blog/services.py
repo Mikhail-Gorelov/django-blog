@@ -16,7 +16,7 @@ class BlogService:
     @staticmethod
     def get_active_articles():
         return (
-            Article.objects.select_related('category')
+            Article.objects.select_related("category")
             .filter(status=ArticleStatus.ACTIVE)
-            .annotate(comments_count=Count('comment_set'))
+            .annotate(comments_count=Count("comment_set"))
         )

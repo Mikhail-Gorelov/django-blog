@@ -25,9 +25,13 @@ class ActionsService:
         return ContentType.objects.get_for_model(model_object)
 
     @staticmethod
-    def get_like(user: UserType, obj: Union[Article, Comment], object_id: int) -> Optional[Like]:
+    def get_like(
+        user: UserType, obj: Union[Article, Comment], object_id: int
+    ) -> Optional[Like]:
         content_type = ActionsService.get_content_object(obj)
         try:
-            return Like.objects.get(user=user, content_type=content_type, object_id=object_id)
+            return Like.objects.get(
+                user=user, content_type=content_type, object_id=object_id
+            )
         except Like.DoesNotExist:
             return None

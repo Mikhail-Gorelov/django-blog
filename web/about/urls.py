@@ -6,12 +6,16 @@ from rest_framework.routers import DefaultRouter
 
 from . import views
 
-app_name = 'about'
+app_name = "about"
 
 router = DefaultRouter()
 
 urlpatterns = [
-    url('', views.TemplateAPIView.as_view(template_name='about/about_list.html'), name='my_about'),
+    url(
+        "",
+        views.TemplateAPIView.as_view(template_name="about/about_list.html"),
+        name="my_about",
+    ),
 ]
 
 urlpatterns += router.urls

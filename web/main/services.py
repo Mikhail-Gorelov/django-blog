@@ -27,12 +27,12 @@ class CeleryService:
         key = get_activate_key(user)
         print(key)
         kwargs = {
-            'html_email_template_name': "auth_app/success_registration.html",
-            'subject': "Congrats!Here is your confirmation url!",
-            'to_email': user.email,
-            'context': {
-                'user': user.get_full_name(),
-                'activate_url': key,
+            "html_email_template_name": "auth_app/success_registration.html",
+            "subject": "Congrats!Here is your confirmation url!",
+            "to_email": user.email,
+            "context": {
+                "user": user.get_full_name(),
+                "activate_url": key,
             },
         }
         print(kwargs)

@@ -5,14 +5,18 @@ from rest_framework.routers import DefaultRouter
 
 from . import views
 
-app_name = 'blog'
+app_name = "blog"
 
 router = DefaultRouter()
-router.register('categories', views.CategoryViewSet, basename='categories')
-router.register('posts', views.ArticleViewSet, basename='post')
+router.register("categories", views.CategoryViewSet, basename="categories")
+router.register("posts", views.ArticleViewSet, basename="post")
 
 urlpatterns = [
-    path('comments/<article_id>/', views.CommentViewSet.as_view({"get": "list"}), name='article_comments'),
+    path(
+        "comments/<article_id>/",
+        views.CommentViewSet.as_view({"get": "list"}),
+        name="article_comments",
+    ),
 ]
 
 urlpatterns += router.urls

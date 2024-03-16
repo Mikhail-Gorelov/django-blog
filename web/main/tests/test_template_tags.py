@@ -9,4 +9,4 @@ class TestTemplateTags(TestCase):
         self.assertEqual(main.microservice_title(), settings.MICROSERVICE_TITLE)
 
     def test_timezone_cookie_name(self):
-        self.assertEqual(main.timezone_cookie_name(), 'timezone')
+        self.assertEqual(main.timezone_cookie_name(), "timezone")
