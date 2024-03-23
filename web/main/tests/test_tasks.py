@@ -1,7 +1,7 @@
 from django.core import mail
 from django.test import TestCase, override_settings
-
-from main import tasks
+# from main import tasks
+from auth_app.tasks import send_information_email
 
 locmem_email_backend = override_settings(
     EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
@@ -17,8 +17,8 @@ class CeleryTaskTestCase(TestCase):
             "context": {
                 "test123": "456",
             },
-            "template_name": "user_timezone.html",
+            "html_email_template_name": "user_timezone.html",
             "to_email": "test@test.com",
         }
-        tasks.send_information_email.delay(**data)
+        send_information_email.delay(**data)
         self.assertEqual(len(mail.outbox), 1)

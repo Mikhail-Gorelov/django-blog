@@ -1,10 +1,9 @@
 import logging
 
+from blog.models import Article
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
-
-from blog.models import Article
 
 from . import serializers
 

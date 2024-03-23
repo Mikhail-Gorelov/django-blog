@@ -1,13 +1,12 @@
 from typing import TypeVar
 from urllib.parse import urljoin
 
+from actions.choices import LikeChoice
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
-
-from actions.choices import LikeChoice
 
 from .managers import UserManager
 

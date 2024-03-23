@@ -1,9 +1,8 @@
-from django.db import models
-from rest_framework import serializers
-
 from actions.choices import LikeChoice
 from actions.models import Like
+from django.db import models
 from main.serializers import UserSerializer
+from rest_framework import serializers
 
 from .models import Article, Category, Comment
 

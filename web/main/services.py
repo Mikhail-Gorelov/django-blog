@@ -1,10 +1,10 @@
-from django.conf import settings
-from django.contrib.auth import get_user_model
-from microservice_request.services import ConnectionService, MicroServiceConnect
-
 from auth_app.tasks import send_information_email
 from auth_app.utils import get_activate_key
+from django.conf import settings
+from django.contrib.auth import get_user_model
 from main.decorators import except_shell
+from microservice_request.services import (ConnectionService,
+                                           MicroServiceConnect)
 from src.celery import app
 
 from . import models
@@ -25,7 +25,6 @@ class CeleryService:
     @staticmethod
     def send_email_confirm(user):
         key = get_activate_key(user)
-        print(key)
         kwargs = {
             "html_email_template_name": "auth_app/success_registration.html",
             "subject": "Congrats!Here is your confirmation url!",
@@ -35,7 +34,6 @@ class CeleryService:
                 "activate_url": key,
             },
         }
-        print(kwargs)
         send_information_email.delay(**kwargs)
 
 

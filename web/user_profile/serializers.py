@@ -1,15 +1,14 @@
 import datetime
 from urllib.parse import urljoin
 
+from actions.models import Follower, Like
 from allauth.account.models import EmailAddress
+from blog.models import Article, Comment
 from dj_rest_auth.serializers import PasswordChangeSerializer
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from rest_framework import serializers
-
-from actions.models import Follower, Like
-from blog.models import Article, Comment
 from main.services import CeleryService
+from rest_framework import serializers
 from user_profile import choices
 
 from . import models

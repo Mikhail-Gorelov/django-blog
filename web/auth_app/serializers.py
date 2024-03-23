@@ -6,9 +6,8 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from django.utils.translation import gettext_lazy as _
-from rest_framework import serializers
-
 from main.services import CeleryService
+from rest_framework import serializers
 from user_profile import choices
 
 from .forms import PassResetForm
@@ -30,7 +29,7 @@ class CaptchaSerializerMixin(serializers.Serializer):
             raise serializers.ValidationError("Invalid captcha, try again")
 
 
-class UserSignUpSerializer(CaptchaSerializerMixin, serializers.Serializer):
+class UserSignUpSerializer(serializers.Serializer):
     first_name = serializers.CharField(min_length=2, max_length=100, required=True)
     last_name = serializers.CharField(min_length=2, max_length=100, required=True)
     email = serializers.EmailField(required=True)

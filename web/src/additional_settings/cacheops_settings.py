@@ -5,7 +5,7 @@ REDIS_UNIX_SOCKET_PATH = environ.get("REDIS_UNIX_SOCKET_PATH")
 
 CACHEOPS_REDIS = {
     "host": "redis",
-    "port": 6379,
+    "port": 6380,
     "db": 1,
     "socket_timeout": 3,
     "unix_socket_path": REDIS_UNIX_SOCKET_PATH,

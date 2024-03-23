@@ -3,7 +3,6 @@ from urllib.parse import urljoin
 # from django_prometheus.models import ExportModelOperationsMixin
 from django.contrib.auth import get_user_model
 from django.db import models
-
 from src import settings
 
 from . import choices, managers

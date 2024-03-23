@@ -3,12 +3,12 @@ import re
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
+from main.decorators import except_shell
 from rest_framework.response import Response
-from rest_framework.status import HTTP_200_OK, HTTP_401_UNAUTHORIZED, HTTP_500_INTERNAL_SERVER_ERROR
+from rest_framework.status import (HTTP_200_OK, HTTP_401_UNAUTHORIZED,
+                                   HTTP_500_INTERNAL_SERVER_ERROR)
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
-
-from main.decorators import except_shell
 
 from .utils import captcha_request, get_client_ip
 

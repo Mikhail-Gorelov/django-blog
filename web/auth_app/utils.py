@@ -1,8 +1,7 @@
 from allauth.account.models import EmailAddress, EmailConfirmationHMAC
-from requests import get
-
 from auth_app.adapter import AccountAdapter
 from main.decorators import request_shell
+from requests import get
 
 
 def get_activate_key(user) -> str:

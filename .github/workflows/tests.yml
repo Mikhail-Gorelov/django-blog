@@ -1,11 +1,11 @@
 name: Tests
 
 env:
-  COVERAGE_THRESHOLD: 70
+  COVERAGE_THRESHOLD: 75
 
 on:
   push:
-
+# also need redis, also need mailhog
 jobs:
   test:
     runs-on: ubuntu-latest
