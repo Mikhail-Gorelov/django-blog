@@ -1,7 +1,8 @@
-from actions.models import Like
 from django.contrib import admin
 from django.contrib.contenttypes.admin import GenericStackedInline
 from django_summernote.admin import SummernoteModelAdmin
+
+from actions.models import Like
 
 from .models import Article, Category, Comment
 

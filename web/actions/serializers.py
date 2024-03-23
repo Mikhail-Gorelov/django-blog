@@ -1,6 +1,7 @@
-from blog.models import Article
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
+
+from blog.models import Article
 
 from . import choices
 from .models import Follower, Like

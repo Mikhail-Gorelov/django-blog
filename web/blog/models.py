@@ -1,5 +1,3 @@
-from actions.choices import LikeChoice
-from actions.models import Like
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.contenttypes.models import ContentType
@@ -7,6 +5,9 @@ from django.db import models
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from rest_framework.reverse import reverse_lazy
+
+from actions.choices import LikeChoice
+from actions.models import Like
 
 from . import managers
 from .choices import ArticleStatus

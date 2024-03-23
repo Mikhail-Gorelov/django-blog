@@ -4,6 +4,7 @@ from typing import List, Union
 from django.core.mail import EmailMultiAlternatives
 from django.template import loader
 from django.utils.translation import activate
+
 from main.decorators import smtp_shell
 from src.celery import app
 

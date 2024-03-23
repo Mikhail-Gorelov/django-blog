@@ -1,10 +1,10 @@
-from auth_app.tasks import send_information_email
-from auth_app.utils import get_activate_key
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from microservice_request.services import ConnectionService, MicroServiceConnect
+
+from auth_app.tasks import send_information_email
+from auth_app.utils import get_activate_key
 from main.decorators import except_shell
-from microservice_request.services import (ConnectionService,
-                                           MicroServiceConnect)
 from src.celery import app
 
 from . import models

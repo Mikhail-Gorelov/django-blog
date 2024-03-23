@@ -1,7 +1,8 @@
 # from main import tasks
-from auth_app.tasks import send_information_email
 from django.core import mail
 from django.test import TestCase, override_settings
+
+from auth_app.tasks import send_information_email
 
 locmem_email_backend = override_settings(
     EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",

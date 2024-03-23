@@ -1,9 +1,10 @@
 from django.conf import settings
 from django.urls import path
 from django.views.generic import TemplateView
-from main.views import TemplateAPIView
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
+
+from main.views import TemplateAPIView
 
 from . import views
 

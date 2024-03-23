@@ -1,5 +1,6 @@
-from celery.contrib.testing.worker import start_worker
 from django.test import TestCase, TransactionTestCase
+
+from celery.contrib.testing.worker import start_worker
 from main import tasks
 from main.models import User
 from src.celery import app

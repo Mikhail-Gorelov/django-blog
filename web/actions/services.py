@@ -1,7 +1,8 @@
 from typing import Optional, Union
 
-from blog.models import Article, Comment
 from django.contrib.contenttypes.models import ContentType
+
+from blog.models import Article, Comment
 from main.models import UserType
 
 from . import choices

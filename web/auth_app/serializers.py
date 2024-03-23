@@ -6,8 +6,9 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from django.utils.translation import gettext_lazy as _
-from main.services import CeleryService
 from rest_framework import serializers
+
+from main.services import CeleryService
 from user_profile import choices
 
 from .forms import PassResetForm

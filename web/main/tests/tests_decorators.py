@@ -2,6 +2,7 @@ from time import sleep
 
 from django.contrib.auth import get_user_model
 from django.test import TestCase, override_settings
+
 from main import decorators
 
 User = get_user_model()
