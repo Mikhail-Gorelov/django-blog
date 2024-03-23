@@ -20,7 +20,7 @@ daemonize yes
 # default. You can specify a custom pid file location here.
 pidfile /usr/local/var/run/redis6380.pid
 
-# Accept connections on the specified port, default is 6379.
+# Accept connections on the specified port, default is 6380.
 # If port 0 is specified Redis will not listen on a TCP socket.
 port 6380
 

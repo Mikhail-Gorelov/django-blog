@@ -7,8 +7,8 @@ from django.utils.deprecation import MiddlewareMixin
 
 class HealthCheckMiddleware(MiddlewareMixin):
     def process_request(self, request):
-        if request.META['PATH_INFO'] == settings.HEALTH_CHECK_URL:
-            return HttpResponse('pong')
+        if request.META["PATH_INFO"] == settings.HEALTH_CHECK_URL:
+            return HttpResponse("pong")
 
 
 class TimezoneMiddleware:
@@ -16,7 +16,7 @@ class TimezoneMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        if tzname := request.COOKIES.get(getattr(settings, 'TIMEZONE_COOKIE_NAME', 'timezone')):
+        if tzname := request.COOKIES.get(getattr(settings, "TIMEZONE_COOKIE_NAME", "timezone")):
             timezone.activate(pytz.timezone(tzname))
         else:
             timezone.deactivate()

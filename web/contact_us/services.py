@@ -1,5 +1,3 @@
-from django.conf import settings
-
 from auth_app.tasks import send_information_email
 from src.settings import ADMIN_EMAIL
 

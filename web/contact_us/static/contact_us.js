@@ -7,9 +7,6 @@ function contactUs(e) {
   console.log(form.serialize())
   e.preventDefault();
   let formData = new FormData(form[0]);
-  // console.log(form.serialize());
-  // console.log(formData);
-  // console.log(form);
   $.ajax({
     url: form.attr("action"),
     type: "POST",

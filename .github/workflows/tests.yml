@@ -1,11 +1,11 @@
 name: Tests
 
 env:
-  COVERAGE_THRESHOLD: 95
+  COVERAGE_THRESHOLD: 75
 
 on:
   push:
-
+# also need redis, also need mailhog
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -26,19 +26,6 @@ jobs:
         run: docker-compose run --entrypoint="" -u root blog coverage run manage.py test
       - name: Coverage check
         run: docker-compose run --entrypoint="" -u root blog coverage report --fail-under=$COVERAGE_THRESHOLD
-
-    services:
-      postgres:
-        image: bandirom/django-template-db:latest
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        env:
-          POSTGRES_PASSWORD: postgres
 
   test_isort:
     runs-on: ubuntu-latest

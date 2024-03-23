@@ -1,9 +1,10 @@
 import logging
 
-from blog.models import Article
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
+
+from blog.models import Article
 
 from . import serializers
 
@@ -39,5 +40,6 @@ class ArticleRating(GenericAPIView):
         queryset = self.get_queryset()
         serializer = self.get_serializer(
             reversed(sorted(queryset, key=lambda a: a.likes()["count"] - a.dislikes()["count"])),
-            many=True)
+            many=True,
+        )
         return Response(serializer.data)
