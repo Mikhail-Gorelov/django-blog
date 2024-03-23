@@ -1,19 +1,15 @@
 import logging
 
 from django.core.cache import cache
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.shortcuts import render
 from rest_framework.mixins import ListModelMixin
-from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny
-from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
 from blog.pagination import StandardResultsSetPagination
 from blog.serializers import CommentSerializer
 from main.pagination import BasePageNumberPagination
 
-from . import pagination, serializers
+from . import serializers
 from .filters import ArticleFilter
 from .services import BlogService
 
@@ -62,11 +58,9 @@ class ArticleViewSet(ViewSet):
         return posts
 
     def list(self, request, **kwargs):
-        queryset = self.get_queryset()
         response = super().list(request, **kwargs)
         response.template_name = self.get_template_name()
 
-        print(queryset)
         return response
 
     def retrieve(self, request, **kwargs):
@@ -88,7 +82,6 @@ class CommentViewSet(ListModelMixin, GenericViewSet):
         return CommentSerializer
 
     def get_queryset(self):
-        print(self.kwargs)
         return BlogService.comment_queryset(article_id=self.kwargs.get("article_id"))
 
     def list(self, request, article_id, *args, **kwargs):

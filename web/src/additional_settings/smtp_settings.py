@@ -11,4 +11,3 @@ EMAIL_USE_TLS = int(environ.get("EMAIL_USE_TLS", 0))
 
 # Available choice: console, smtp, locmem, etc..
 EMAIL_BACKEND = "django.core.mail.backends.{0}.EmailBackend".format(environ.get("EMAIL_BACKEND", "smtp"))
-print(EMAIL_HOST, EMAIL_PORT, EMAIL_BACKEND)

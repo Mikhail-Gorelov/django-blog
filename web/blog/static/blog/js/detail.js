@@ -16,7 +16,6 @@ function getCommentsButton(e) {
       result(data);
     },
 })
-  //button.html(href);
   e.preventDefault();
 }
 
@@ -37,12 +36,10 @@ function buttons(data) {
    let a = $("#previousHref");
    let li = $("#prev");
   if (data.previous == null) {
-    //a.prop("disabled", true);
     a.attr("href", "#");
     li.attr("class", "previous disabled");
   } else {
     li.removeClass("previous disabled");
-    // li.attr("class", "previous disabled");
     a.attr("data-href", data.previous);
   }
 
@@ -64,12 +61,9 @@ function result(data) {
   console.log(data);
 
   for (let i = 0; i < data.results.length; ++i) {
-    // здесь отображаются все комментарии
     concat += " <h3><i class=\"fa fa-comment\"></i> "
       + data.results[i].author   +  "<small>" + data.results[i].updated +
       "</small>" + "</h3>" + "<p>" + data.results[i].content + "</p>";
-    // $('#articleId').html();
-    // $('#articleId').html();
   }
   $('#articleId').html(concat);
 

@@ -8,9 +8,6 @@ from main.models import UserType
 from . import choices
 from .models import Like
 
-# if TYPE_CHECKING:
-#     from main.models import UserType
-
 
 class ActionsService:
     @staticmethod

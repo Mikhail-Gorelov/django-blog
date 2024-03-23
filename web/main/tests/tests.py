@@ -1,9 +1,6 @@
-from django.test import TestCase, TransactionTestCase
+from django.test import TestCase
 
-from celery.contrib.testing.worker import start_worker
-from main import tasks
 from main.models import User
-from src.celery import app
 
 
 class UserModelTests(TestCase):

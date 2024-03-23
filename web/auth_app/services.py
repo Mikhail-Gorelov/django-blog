@@ -51,7 +51,6 @@ def full_logout(request):
     if refresh_cookie_name:
         response.delete_cookie(refresh_cookie_name)
     if "rest_framework_simplejwt.token_blacklist" in settings.INSTALLED_APPS:
-        # add refresh token to blacklist
         try:
             token = RefreshToken(refresh_token)
             token.blacklist()

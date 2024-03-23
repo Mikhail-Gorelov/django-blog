@@ -1,5 +1,3 @@
-from os import environ
-
 OLD_PASSWORD_FIELD_ENABLED = True
 
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None

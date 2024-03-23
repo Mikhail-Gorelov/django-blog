@@ -43,9 +43,6 @@ class User(AbstractUser):
         url = "user_profile:user_profile_id"
         return urljoin(settings.BACKEND_SITE, str(reverse_lazy(url, kwargs={"id": self.id})))
 
-    # def get_short_name(self):
-    #     return super().get_short_name()
-
     def email_verified(self):
         return self.emailaddress_set.get(primary=True).verified
 

@@ -1,33 +1,20 @@
 import logging
 import os
 
-from dj_rest_auth import views as auth_views
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
-from django.db.models import Q
-from django.utils.translation import gettext_lazy as _
-from django.views.generic import TemplateView
-from drf_yasg.utils import swagger_auto_schema
-from rest_framework import status, viewsets
-from rest_framework.decorators import action
+from rest_framework import viewsets
 from rest_framework.generics import GenericAPIView, ListAPIView
-from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
-from rest_framework.parsers import MultiPartParser
-from rest_framework.permissions import AllowAny, BasePermission, IsAdminUser, IsAuthenticatedOrReadOnly
-from rest_framework.renderers import TemplateHTMLRenderer
+from rest_framework.mixins import RetrieveModelMixin
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from actions.models import Follower, Like
 from blog.models import Article, Comment
-from main.pagination import (
-    BasePageNumberNewsFeedArticlePagination,
-    BasePageNumberNewsFeedPagination,
-    BasePageNumberPagination,
-)
+from main.pagination import BasePageNumberNewsFeedArticlePagination, BasePageNumberNewsFeedPagination
 
-from . import serializers, services
-from .models import Profile
+from . import serializers
 from .services import UserProfileService
 
 User = get_user_model()

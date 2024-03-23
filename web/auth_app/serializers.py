@@ -2,9 +2,7 @@ from allauth.account.adapter import get_adapter
 from allauth.account.utils import setup_user_email
 from allauth.utils import email_address_exists
 from dj_rest_auth import serializers as auth_serializers
-from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.contrib.auth.hashers import make_password
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
@@ -63,10 +61,7 @@ class UserSignUpSerializer(serializers.Serializer):
         return data
 
     def save(self, **kwargs):
-        print(self.validated_data)
         profile = self.validated_data.pop("profile")
-        # print(self.validated_data.pop('birthday'))
-        # print(self.validated_data.pop('gender')
         request = self.context.get("request")
         self.validated_data["password"] = self.validated_data.pop("password1")
         del self.validated_data["password2"]

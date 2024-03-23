@@ -25,7 +25,6 @@ class ValidateJWTSerializer(serializers.Serializer):
     def validate_auth(self, jwt: str):
         try:
             access_token = AccessToken(jwt)
-            print(access_token["user_id"])
             self.user = User.objects.get(pk=access_token["user_id"])
         except (TokenError, User.DoesNotExist) as e:
             raise serializers.ValidationError(e)

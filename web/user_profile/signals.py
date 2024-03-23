@@ -6,7 +6,6 @@ from django.db.models.signals import post_delete, post_save, pre_save
 from django.dispatch import receiver
 
 from .models import Profile
-from .services import UserProfileService
 
 User = get_user_model()
 
@@ -29,7 +28,6 @@ def auto_delete_file_on_change(sender, instance, **kwargs):
         return False
 
     new_image = instance.image
-    # print(os.path.dirname(old_image.path))
     if not old_image == new_image:
         if os.path.isfile(old_image.path) and os.path.dirname(old_image.path) != "/usr/src/web/media":
             os.remove(old_image.path)

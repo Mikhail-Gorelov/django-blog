@@ -4,7 +4,7 @@ from rest_framework import serializers
 from blog.models import Article
 
 from . import choices
-from .models import Follower, Like
+from .models import Follower
 from .services import ActionsService
 
 User = get_user_model()
@@ -57,7 +57,6 @@ class AssessmentSerializer(serializers.Serializer):
                 like.vote = vote
                 like.save(update_fields=["vote"])
         else:
-            # Like.objects.create(user=user, content_type=, object_id=, vote=)
             obj.votes.create(user=user, vote=vote)
 
         return_data = {

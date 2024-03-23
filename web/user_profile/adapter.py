@@ -1,5 +1,3 @@
-import logging
-
 from allauth.account.adapter import DefaultAccountAdapter
 from allauth.account.models import EmailAddress
 from allauth.socialaccount import app_settings

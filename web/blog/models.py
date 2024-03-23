@@ -9,7 +9,6 @@ from rest_framework.reverse import reverse_lazy
 from actions.choices import LikeChoice
 from actions.models import Like
 
-from . import managers
 from .choices import ArticleStatus
 
 User = get_user_model()

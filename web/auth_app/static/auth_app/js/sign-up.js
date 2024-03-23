@@ -1,6 +1,6 @@
 $(function () {
   $('#signUpForm').submit(singUp);
-  $('#buttonForm').submit(button_process); // проблема имеется именно в обращении к форме
+  $('#buttonForm').submit(button_process);
 });
 const error_class_name = "has-error"
 

@@ -1,6 +1,5 @@
 from urllib.parse import urljoin
 
-# from django_prometheus.models import ExportModelOperationsMixin
 from django.contrib.auth import get_user_model
 from django.db import models
 
@@ -12,7 +11,6 @@ User = get_user_model()
 
 
 # Create your models here.
-# class Profile(ExportModelOperationsMixin('profile'), models.Model):
 class Profile(models.Model):
     objects = models.Manager()
     gender = models.IntegerField(choices=choices.GenderChoice.choices, null=True)
