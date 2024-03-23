@@ -1,21 +1,17 @@
-from allauth.account.models import EmailAddress
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.decorators import method_decorator
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.generics import GenericAPIView, get_object_or_404
-from rest_framework.parsers import FormParser
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from src.celery import app
-from user_profile import models as user_profile_models
 from user_profile import serializers as user_profile_serializer
 
-from . import models
-from .serializers import ReturnUsersSerializer, SetTimeZoneSerializer, UserSerializer, ValidateJWTSerializer
+from .serializers import SetTimeZoneSerializer, UserSerializer, ValidateJWTSerializer
 
 User = get_user_model()
 
@@ -26,9 +22,9 @@ class TemplateAPIView(APIView):
     """
 
     permission_classes = (AllowAny,)
-    template_name = ''
+    template_name = ""
 
-    @method_decorator(name='create', decorator=swagger_auto_schema(auto_schema=None))
+    @method_decorator(name="create", decorator=swagger_auto_schema(auto_schema=None))
     def get(self, request, *args, **kwargs):
         return Response()
 
@@ -57,21 +53,19 @@ class UserView(GenericAPIView):
 class SetUserTimeZone(GenericAPIView):
     authentication_classes = (SessionAuthentication,)
     serializer_class = SetTimeZoneSerializer
-    parser_classes = (FormParser,)
 
     def post(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        result = app.send_task(
-            name='main.tasks.add',
-            kwargs={'x': 2, 'y': 2},
+        app.send_task(
+            name="main.tasks.add",
+            kwargs={"x": 2, "y": 2},
         )
-        print(result)
-        response = Response()
+        response = Response(serializer.data)
         response.set_cookie(
-            key=getattr(settings, 'TIMEZONE_COOKIE_NAME', 'timezone'),
-            value=serializer.data.get('timezone'),
-            max_age=getattr(settings, 'TIMEZONE_COOKIE_AGE', 86400),
+            key=getattr(settings, "TIMEZONE_COOKIE_NAME", "timezone"),
+            value=serializer.data.get("timezone"),
+            max_age=getattr(settings, "TIMEZONE_COOKIE_AGE", 86400),
         )
         return response
 
@@ -83,7 +77,6 @@ class ValidateJWTView(GenericAPIView):
     def post(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        # return Response({"detail": "hello from blog"})
         return Response(serializer.response_data)
 
 
@@ -94,6 +87,6 @@ class ReturnUserInfoView(GenericAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user_list = User.objects.filter(pk__in=serializer.data['user_id'])
+        user_list = User.objects.filter(pk__in=serializer.data["user_id"])
         users_info = user_profile_serializer.UserShortInfoSerializer(user_list, many=True)
         return Response(users_info.data)

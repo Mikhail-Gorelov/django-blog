@@ -1,29 +1,21 @@
 import logging
 import os
 
-from dj_rest_auth import views as auth_views
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
-from django.utils.translation import gettext_lazy as _
-from django.views.generic import TemplateView
-from drf_yasg.utils import swagger_auto_schema
-from rest_framework import status, viewsets
-from rest_framework.decorators import action
+from rest_framework import viewsets
 from rest_framework.generics import GenericAPIView, ListAPIView
-from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
-from rest_framework.parsers import MultiPartParser
-from rest_framework.permissions import AllowAny, BasePermission, IsAdminUser, IsAuthenticatedOrReadOnly
-from rest_framework.renderers import TemplateHTMLRenderer
+from rest_framework.mixins import RetrieveModelMixin
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
-from blog.models import Article, Comment
-from actions.models import Follower, Like
-from django.db.models import Q
 from rest_framework.viewsets import ModelViewSet
-from . import serializers, services
-from .models import Profile
+
+from actions.models import Follower, Like
+from blog.models import Article, Comment
+from main.pagination import BasePageNumberNewsFeedArticlePagination, BasePageNumberNewsFeedPagination
+
+from . import serializers
 from .services import UserProfileService
-from main.pagination import BasePageNumberPagination, BasePageNumberNewsFeedArticlePagination, \
-    BasePageNumberNewsFeedPagination
 
 User = get_user_model()
 logger = logging.getLogger(__name__)
@@ -34,7 +26,7 @@ class ViewSet(ModelViewSet):
     # permission_classes = (AllowAny,)
 
     def get_permissions(self):
-        if self.action == 'retrieve':
+        if self.action == "retrieve":
             permission_classes = (IsAuthenticatedOrReadOnly,)
         else:
             permission_classes = (AllowAny,)
@@ -48,17 +40,17 @@ class UserViewSet(viewsets.GenericViewSet):
     # parser_classes = [MultiPartParser]
 
     def get_template_name(self):
-        if self.action == 'user':
-            return 'user-profile.html'
-        elif self.action == 'password_change':
-            return 'user_profile/reset_password_email_link.html'
+        if self.action == "user":
+            return "user-profile.html"
+        elif self.action == "password_change":
+            return "user_profile/reset_password_email_link.html"
         else:
-            return 'user-profile.html'
+            return "user-profile.html"
 
     def get_serializer_class(self):
-        if self.action == 'user':
+        if self.action == "user":
             return serializers.UserProfileSerializer
-        if self.action == 'password_change':
+        if self.action == "password_change":
             return serializers.ChangePasswordSerializer
         if self.action == "update_image":
             return serializers.ChangeImageSerializer
@@ -94,7 +86,7 @@ class ProfileViewSet(ViewSet, RetrieveModelMixin, UserViewSet):
             {
                 "user": serializer.data,
                 "CHAT_SITE_INIT": os.environ.get("CHAT_SITE_INIT"),
-                "articles": articles_serializer.data
+                "articles": articles_serializer.data,
             },
             template_name=self.template_name,
         )
@@ -119,16 +111,19 @@ class TrueUserViewSet(viewsets.GenericViewSet):
     serializer_class = serializers.TrueUserSerializer
 
     def get_queryset(self):
-        true_users = cache.get('true_users')
+        true_users = cache.get("true_users")
         if true_users is None:
             true_users = UserProfileService.get_user_queryset()
-            cache.set('true_users', true_users, timeout=120)
+            cache.set("true_users", true_users, timeout=120)
         return true_users
 
     def user_list(self, request):
         serializer = self.get_serializer(self.get_queryset(), many=True)
         return Response(
-            {"users": serializer.data, "CHAT_SITE_INIT": os.environ.get("CHAT_SITE_INIT")},
+            {
+                "users": serializer.data,
+                "CHAT_SITE_INIT": os.environ.get("CHAT_SITE_INIT"),
+            },
             template_name=self.template_name,
         )
 
@@ -142,7 +137,7 @@ class ProfileSettingsView(GenericAPIView):
 
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())
-        obj = queryset.get(pk=self.kwargs['user_id'])
+        obj = queryset.get(pk=self.kwargs["user_id"])
         return obj
 
     def put(self, request, *args, **kwargs):
@@ -152,14 +147,14 @@ class ProfileSettingsView(GenericAPIView):
         return Response(serializer.data)
 
     def perform_create(self, serializer):
-        serializer.save(id=self.kwargs['user_id'])
+        serializer.save(id=self.kwargs["user_id"])
 
 
 class ProfileSettingsRetrieveViewSet(viewsets.GenericViewSet):
-    template_name = 'profile-settings.html'
+    template_name = "profile-settings.html"
     serializer_class = serializers.ProfileUpdateSerializer
     queryset = User.objects.all()
-    lookup_url_kwarg = 'user_id'
+    lookup_url_kwarg = "user_id"
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -168,8 +163,8 @@ class ProfileSettingsRetrieveViewSet(viewsets.GenericViewSet):
 
 
 class NewsFeedArticleListView(ListAPIView):
-    template_name = 'news_feed/news-feed-articles.html'
-    lookup_url_kwarg = 'user_id'
+    template_name = "news_feed/news-feed-articles.html"
+    lookup_url_kwarg = "user_id"
     pagination_class = BasePageNumberNewsFeedArticlePagination
     serializer_class = serializers.NewsFeedArticleSerializer
 
@@ -184,9 +179,9 @@ class NewsFeedArticleListView(ListAPIView):
 
 
 class NewsFeedCommentListView(ListAPIView):
-    template_name = 'news_feed/news-feed-comments.html'
+    template_name = "news_feed/news-feed-comments.html"
     pagination_class = BasePageNumberNewsFeedPagination
-    lookup_url_kwarg = 'user_id'
+    lookup_url_kwarg = "user_id"
     serializer_class = serializers.NewsFeedCommentSerializer
 
     def get_queryset(self):
@@ -200,15 +195,13 @@ class NewsFeedCommentListView(ListAPIView):
 
 
 class NewsFeedFollowerListView(ListAPIView):
-    template_name = 'news_feed/news-feed-followers.html'
+    template_name = "news_feed/news-feed-followers.html"
     pagination_class = BasePageNumberNewsFeedPagination
-    lookup_url_kwarg = 'user_id'
+    lookup_url_kwarg = "user_id"
     serializer_class = serializers.NewsFeedFollowerSerializer
 
     def get_queryset(self):
-        return Follower.objects.filter(
-            to_user=self.user
-        ).order_by("-date")
+        return Follower.objects.filter(to_user=self.user).order_by("-date")
 
     def list(self, request, *args, **kwargs):
         self.user = request.user
@@ -216,15 +209,15 @@ class NewsFeedFollowerListView(ListAPIView):
 
 
 class NewsFeedLikeListView(ListAPIView):
-    template_name = 'news_feed/news-feed-likes.html'
+    template_name = "news_feed/news-feed-likes.html"
     pagination_class = BasePageNumberNewsFeedPagination
-    lookup_url_kwarg = 'user_id'
+    lookup_url_kwarg = "user_id"
     serializer_class = serializers.NewsFeedLikeSerializer
 
     def get_queryset(self):
-        return Like.objects.filter(
-            user__id__in=UserProfileService.get_subscriptions_to(self.user)
-        ).order_by("-date")
+        return Like.objects.filter(user__id__in=UserProfileService.get_subscriptions_to(self.user)).order_by(
+            "-date"
+        )
 
     def list(self, request, *args, **kwargs):
         self.user = request.user

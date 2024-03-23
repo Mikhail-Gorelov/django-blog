@@ -1,11 +1,9 @@
 from typing import List
-from actions.models import Follower
 
-from django.conf import settings
-from django.contrib.auth import get_user_model
 from allauth.account.models import EmailAddress
+from django.contrib.auth import get_user_model
 
-from main.services import MainService
+from actions.models import Follower
 
 User = get_user_model()
 

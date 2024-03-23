@@ -22,8 +22,5 @@ Example:
         )
     }
 """
-from drf_yasg import openapi
-
-from . import serializers
 
 # Create yor schemas here

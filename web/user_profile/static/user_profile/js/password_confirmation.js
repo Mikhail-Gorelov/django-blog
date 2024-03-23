@@ -79,18 +79,7 @@ function successFunc(e) {
     },
   })
 }
-// нужно выяснить, какой тип данных нужен, не очевидно, как узнать, также пробовал через formdata,
-// но никаких успехов это не принесло, formData пустая
 function error_process(data) {
   console.log(data.responseText)
-// console.log($("#password1").val());
-// console.log($("#password2").val());
 }
 
-
-// $('#submitPasswdInput').click(urlFunc);
-//       function urlFunc(e) {
-//           e.preventDefault();
-//           let href = $(this);
-//           return href.data("href");
-//         }

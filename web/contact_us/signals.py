@@ -7,6 +7,6 @@ from .services import ContactUsService
 
 @receiver(post_save, sender=Feedback)
 def send_feedback_email(sender, created: bool, instance, **kwargs):
-    print(sender, created, instance, kwargs, 'SIGNAL')
+    print(sender, created, instance, kwargs, "SIGNAL")
     if created:
         ContactUsService.send_contact_us_email(instance)
