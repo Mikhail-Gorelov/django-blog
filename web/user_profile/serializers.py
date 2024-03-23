@@ -2,24 +2,17 @@ import datetime
 from urllib.parse import urljoin
 
 from allauth.account.models import EmailAddress
-from allauth.account.utils import setup_user_email
-from allauth.utils import email_address_exists
 from dj_rest_auth.serializers import PasswordChangeSerializer
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.db.models import Q
 from rest_framework import serializers
-from rest_framework.exceptions import ValidationError
-from rest_framework.request import Request
-from rest_framework.status import HTTP_400_BAD_REQUEST
 
 from actions.models import Follower, Like
 from blog.models import Article, Comment
-from main.services import CeleryService, MainService
+from main.services import CeleryService
 from user_profile import choices
 
 from . import models
-from .choices import GenderChoice
 from .models import Profile
 from .services import UserProfileService
 

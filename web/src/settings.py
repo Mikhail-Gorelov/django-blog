@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from sentry_sdk.integrations.django import DjangoIntegration
 
 from .additional_settings.celery_settings import *
+from .additional_settings.allauth_settings import *
 
 sentry_sdk.init(
     dsn="https://examplePublicKey@o0.ingest.sentry.io/0",
@@ -309,4 +310,3 @@ if (SENTRY_DSN := os.environ.get("SENTRY_DSN")) and ENABLE_SENTRY:
         # django.contrib.auth) you may enable sending PII data.
         send_default_pii=True,
     )
-print(CELERY_BROKER_URL, CELERY_RESULT_BACKEND)

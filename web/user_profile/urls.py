@@ -1,8 +1,6 @@
-from django.urls import include, path
-from django.views.generic import TemplateView
+from django.urls import path
 from rest_framework.routers import DefaultRouter
 
-from main.views import TemplateAPIView
 
 from . import views
 
@@ -10,8 +8,8 @@ app_name = "user_profile"
 
 router = DefaultRouter()
 
-router.register("profile", views.ProfileViewSet)
-router.register("user", views.UserViewSet)
+router.register("profile", views.ProfileViewSet, basename='profile_view')
+router.register("user", views.UserViewSet, basename="user_view")
 
 urlpatterns = [
     path("", views.ProfileViewSet.as_view({"get": "profile"}), name="user_profile"),
