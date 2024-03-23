@@ -5,7 +5,6 @@ env:
 
 on:
   push:
-# also need redis, also need mailhog
 jobs:
   test:
     runs-on: ubuntu-latest

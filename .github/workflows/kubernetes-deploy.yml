@@ -1,8 +1,6 @@
 name: Kubernetes Deploy
 
 on:
-  push:
-    branches: [ working_with_cluster ]
   workflow_dispatch:
 
 jobs:

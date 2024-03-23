@@ -1,8 +1,6 @@
 name: Docker Image CI
 
 on:
-  push:
-    branches: [ main ]
   workflow_dispatch:
 
 env:
@@ -32,8 +30,8 @@ jobs:
         run: docker-compose run --entrypoint="" blog black . --check
       - name: Migration check
         run: docker-compose run --entrypoint="" blog python manage.py makemigrations --check
-#      - name: Tests
-#        run: docker-compose run --entrypoint="" blog python manage.py test
+      - name: Tests
+        run: docker-compose run --entrypoint="" blog python manage.py test
     services:
       postgres:
         image: mushroom3/django-blog-db:latest
