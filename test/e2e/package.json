@@ -1,5 +1,29 @@
 {
+  "name": "django-blog-e2e-tests",
+  "version": "1.0.0",
+  "description": "End to end tests for django-blog projects",
+  "main": "index.js",
+  "author": "Mikhail",
+  "private": true,
+  "scripts": {
+    "start": "yarn cy:open",
+    "cy:install": "cypress install",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "lint": "yarn lint:style && yarn lint:code && yarn lint:types",
+    "lint:style": "prettier --check .",
+    "lint:code": "eslint \"cypress/**/*.{js,ts}\"",
+    "lint:code:fix": "eslint \"cypress/**/*.{js,ts}\" --fix && yarn format",
+    "format": "prettier --write ."
+  },
   "dependencies": {
     "cypress": "^13.7.1"
+  },
+  "devDependencies": {
+    "@cypress/code-coverage": "^3.12.13",
+    "eslint": "^8.40.0",
+    "eslint-plugin-cypress": "^2.13.3",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "prettier": "^2.8.8"
   }
 }
