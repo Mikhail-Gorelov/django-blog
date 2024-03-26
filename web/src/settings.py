@@ -6,8 +6,14 @@ from django.utils.translation import gettext_lazy as _
 from sentry_sdk.integrations.django import DjangoIntegration
 
 from .additional_settings.allauth_settings import *
+from .additional_settings.cacheops_settings import *
 from .additional_settings.celery_settings import *
 from .additional_settings.defender_settings import *
+from .additional_settings.jwt_settings import *
+from .additional_settings.logging_settings import *
+from .additional_settings.smtp_settings import *
+from .additional_settings.summernote_settings import *
+from .additional_settings.swagger_settings import *
 
 sentry_sdk.init(
     dsn="https://examplePublicKey@o0.ingest.sentry.io/0",
@@ -26,7 +32,7 @@ sentry_sdk.init(
     # release="myapp@1.0.0",
 )
 
-FRONTEND_SITE = "https://blog.mikhail.jollymanager.com"
+FRONTEND_SITE = "http://localhost:8008/"
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
@@ -109,6 +115,7 @@ THIRD_PARTY_APPS = [
     "defender",
     "rest_framework",
     "rest_framework_simplejwt",
+    "rest_framework.authtoken",
     "drf_yasg",
     "corsheaders",
     "rosetta",

@@ -95,7 +95,6 @@ class ProfileViewSet(ViewSet, RetrieveModelMixin, UserViewSet):
         serializer.save()
 
     # def get_queryset(self):
-    #     print(self.kwargs)
     #     return UserProfileService.get_user_profile_queryset(user_id=self.kwargs.get("id"))
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()

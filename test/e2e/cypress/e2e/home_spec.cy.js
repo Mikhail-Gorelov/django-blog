@@ -3,6 +3,13 @@ describe("The Home Page", () => {
     cy.visit("/");
   });
 });
+
+describe('template spec', () => {
+  it('passes', () => {
+    cy.visit('http://localhost:8008/'),
+      cy.get('[data-testid="signUpButton"]').click()
+  })
+})
 // click headers -> sign up -> login -> profile -> logout
 // maybe test clicks on main navigation's points + videos
 
@@ -71,4 +78,9 @@ describe("The Home Page", () => {
 //   cy.login(username, password)
 //
 //   // ...rest of test
+// })
+
+// do logout
+// after(() => {
+//   // runs once after all tests in the block
 // })

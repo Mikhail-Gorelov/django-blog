@@ -80,7 +80,7 @@ class UserSignUpSerializer(serializers.Serializer):
         return self.validated_data
 
 
-class LoginSerializer(CaptchaSerializerMixin, auth_serializers.LoginSerializer):
+class LoginSerializer(auth_serializers.LoginSerializer):
     username = None
     email = serializers.EmailField()
 
