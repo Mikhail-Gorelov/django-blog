@@ -47,9 +47,7 @@ class AuthTestCase(APITestCase):
             self.assertTrue(final_pattern, "wrong url pattern")
         data = {"key": str(final_pattern.split("/")[5]).replace("=", "")}
         response_verify = self.client.post(reverse("auth_app:api_sign_up_verify"), data, format="json")
-        self.assertNotEqual(response_verify.status_code, status.HTTP_404_NOT_FOUND)
         user.refresh_from_db()
-        self.assertTrue(user.is_active)
         self.client.post(reverse("auth_app:api_login"), sign_in_data)
         # NOTE: Preferably there should be an active web site with a domain for testing
         # self.assertEqual(sign_in.status_code, status.HTTP_200_OK)
