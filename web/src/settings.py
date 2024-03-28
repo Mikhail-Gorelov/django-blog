@@ -43,7 +43,7 @@ GOOGLE_CAPTCHA_SITE_SECRET_KEY = os.environ.get("GOOGLE_CAPTCHA_SITE_SECRET_KEY"
 
 GITHUB_URL = os.environ.get("GITHUB_URL", "https://github.com")
 
-REDIS_URL = os.environ.get("REDIS_URL", "redis://redis:6380")
+REDIS_URL = os.environ.get("REDIS_URL", "redis://redis:6379")
 
 USE_HTTPS = int(os.environ.get("USE_HTTPS", 0))
 ENABLE_SENTRY = int(os.environ.get("ENABLE_SENTRY", 0))

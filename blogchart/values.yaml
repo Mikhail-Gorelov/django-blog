@@ -106,9 +106,9 @@ django:
     postgresHost: ""
     postgresPort: "5432"
   redis:
-    redisUrl: "redis://redis:6380"
+    redisUrl: "redis://redis:6379"
     redisHost: ""
-    redisPort: "6380"
+    redisPort: "6379"
     redisDB: "0"
 
 persistentVolumeClaim:
