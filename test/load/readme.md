@@ -7,7 +7,11 @@ Using k6, you can test the reliability and performance of your systems and catch
 k6 will help you to build resilient and performant applications that scale.
 
 Run k6 with the following command:
+
 ```shell
 k6 run blog-load-test-k6.js
 ```
 
+#### Sample output
+
+![Example Image](screenshots/result_example.png)

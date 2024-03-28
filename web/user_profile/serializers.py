@@ -34,7 +34,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
-        rep.update(rep.pop("profile", {}))
         return rep
 
     def get_subscribers_count(self, obj):

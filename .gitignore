@@ -24,3 +24,4 @@ backup
 .key
 build
 docker/prod/.email.env
+yarn.lock
