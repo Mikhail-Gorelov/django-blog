@@ -40,17 +40,18 @@ class AuthTestCase(APITestCase):
         self.assertFalse(user.is_active)
         self.assertEqual(len(mail.outbox), 1)
         message = mail.outbox[0]
-        pattern = r"(?P<url>https?://[^\s]+/auth/verify-email/[^\s]+[\r\n])" + r"([^\r\n]+/)"
+        pattern = r"(?P<url>http?://[^\s]+/auth/verify-email/[^\s]+[\r\n])" + r"([^\r\n]+/)"
         result = re.findall(pattern, str(message.message()))
         final_pattern = result[0][0].rstrip() + result[0][1]
         if not final_pattern:
             self.assertTrue(final_pattern, "wrong url pattern")
         data = {"key": str(final_pattern.split("/")[5]).replace("=", "")}
-        self.client.post(reverse("auth_app:api_sign_up_verify"), data, format="json")
+        response_verify = self.client.post(reverse("auth_app:api_sign_up_verify"), data, format="json")
+        self.assertNotEqual(response_verify.status_code, status.HTTP_404_NOT_FOUND)
         user.refresh_from_db()
-        self.client.post(reverse("auth_app:api_login"), sign_in_data)
-        # NOTE: Preferably there should be an active web site with a domain for testing
-        # self.assertEqual(sign_in.status_code, status.HTTP_200_OK)
+        self.assertTrue(user.is_active)
+        sign_in = self.client.post(reverse("auth_app:api_login"), sign_in_data)
+        self.assertEqual(sign_in.status_code, status.HTTP_200_OK)
 
     @locmem_email_backend
     def test_forgot_password_flow(self):
