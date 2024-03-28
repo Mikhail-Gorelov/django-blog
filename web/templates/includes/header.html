@@ -14,16 +14,16 @@
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class="nav navbar-nav">
-      <li {% if selected == 'index' %}class="active"{% endif %}><a href="{% url 'index' %}">
+      <li id="home" {% if selected == 'index' %}class="active"{% endif %}><a href="{% url 'index' %}">
       <i class="fa fa-home"></i> Home</a>
       </li>
-      <li {% if selected == 'blog' %}class="active"{% endif %}><a href="{% url 'blog:post-list' %}">
+      <li id="posts" {% if selected == 'blog' %}class="active"{% endif %}><a href="{% url 'blog:post-list' %}">
       <i class="fa fa-book"></i> Posts</a>
       </li>
-      <li {% if selected == 'contact_us' %}class="active"{% endif %}><a href="{% url 'contact_us:index' %}">
+      <li id="contact" {% if selected == 'contact_us' %}class="active"{% endif %}><a href="{% url 'contact_us:index' %}">
       <i class="fa fa-envelope"></i> Contact</a>
       </li>
-      <li {% if selected == 'about' %}class="active"{% endif %}><a href="{% url 'about:my_about' %}">
+      <li id="about" {% if selected == 'about' %}class="active"{% endif %}><a href="{% url 'about:my_about' %}">
         </i> About</a>
       </li>
 

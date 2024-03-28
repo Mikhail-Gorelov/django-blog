@@ -12,7 +12,6 @@ User = get_user_model()
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, created: bool, instance, **kwargs):
-    print(sender, created, instance, kwargs, "SIGNAL")
     if created:
         Profile.objects.create(user=instance)
 

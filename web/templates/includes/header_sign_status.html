@@ -9,9 +9,9 @@
             {% else %}
                 Hello {{ user.full_name }}!
             {% endif %}
-            <a href="{% url 'user_profile:user_profile' %}"><i class="fas fa-user-circle"></i>{% trans 'Profile' %} </a>
+            <a id="profile" href="{% url 'user_profile:user_profile' %}"><i class="fas fa-user-circle"></i>{% trans 'Profile' %} </a>
         </span></li>
-        <li><a href="#" id="logoutSubmit">{% trans 'Log off' %}</a></li>
+        <li id="logOff"><a href="#" id="logoutSubmit">{% trans 'Log off' %}</a></li>
     <li>
       <div class="icon-badge-container">
         <i class="far fa-envelope icon-badge-icon"></i>
@@ -22,7 +22,7 @@
 </form>
 {% else %}
 <ul class="nav navbar-nav navbar-right">
-    <li><a href="{% url 'auth_app:login' %}">{% trans 'Sign in' %}</a></li>
-    <li data-testid="signUpButton"><a href="{% url 'auth_app:sign_up' %}">{% trans 'Sign up' %}</a></li>
+    <li id="signInButton"><a href="{% url 'auth_app:login' %}">{% trans 'Sign in' %}</a></li>
+    <li id="signUpButton"><a href="{% url 'auth_app:sign_up' %}">{% trans 'Sign up' %}</a></li>
 </ul>
 {% endif %}

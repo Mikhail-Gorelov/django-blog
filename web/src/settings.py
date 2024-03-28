@@ -1,32 +1,19 @@
 import os
 
 import redis
-import sentry_sdk
 from django.utils.translation import gettext_lazy as _
-from sentry_sdk.integrations.django import DjangoIntegration
 
 from .additional_settings.allauth_settings import *
+from .additional_settings.cacheops_settings import *
 from .additional_settings.celery_settings import *
 from .additional_settings.defender_settings import *
+from .additional_settings.jwt_settings import *
+from .additional_settings.logging_settings import *
+from .additional_settings.smtp_settings import *
+from .additional_settings.summernote_settings import *
+from .additional_settings.swagger_settings import *
 
-sentry_sdk.init(
-    dsn="https://examplePublicKey@o0.ingest.sentry.io/0",
-    integrations=[DjangoIntegration()],
-    # Set traces_sample_rate to 1.0 to capture 100%
-    # of transactions for performance monitoring.
-    # We recommend adjusting this value in production,
-    traces_sample_rate=1.0,
-    # If you wish to associate users to errors (assuming you are using
-    # django.contrib.auth) you may enable sending PII data.
-    send_default_pii=True,
-    # By default the SDK will try to use the SENTRY_RELEASE
-    # environment variable, or infer a git commit
-    # SHA as release, however you may want to set
-    # something more human-readable.
-    # release="myapp@1.0.0",
-)
-
-FRONTEND_SITE = "https://blog.mikhail.jollymanager.com"
+FRONTEND_SITE = "http://localhost:8008/"
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
@@ -56,7 +43,7 @@ GOOGLE_CAPTCHA_SITE_SECRET_KEY = os.environ.get("GOOGLE_CAPTCHA_SITE_SECRET_KEY"
 
 GITHUB_URL = os.environ.get("GITHUB_URL", "https://github.com")
 
-REDIS_URL = os.environ.get("REDIS_URL", "redis://redis:6380")
+REDIS_URL = os.environ.get("REDIS_URL", "redis://redis:6379")
 
 USE_HTTPS = int(os.environ.get("USE_HTTPS", 0))
 ENABLE_SENTRY = int(os.environ.get("ENABLE_SENTRY", 0))
@@ -109,6 +96,7 @@ THIRD_PARTY_APPS = [
     "defender",
     "rest_framework",
     "rest_framework_simplejwt",
+    "rest_framework.authtoken",
     "drf_yasg",
     "corsheaders",
     "rosetta",
