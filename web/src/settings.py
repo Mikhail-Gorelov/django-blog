@@ -101,6 +101,7 @@ THIRD_PARTY_APPS = [
     "corsheaders",
     "rosetta",
     "django_summernote",
+    "drf_api_logger",
     # 'django_prometheus',
 ]
 
@@ -129,6 +130,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "defender.middleware.FailedLoginMiddleware",
     "django.middleware.locale.LocaleMiddleware",
+    "drf_api_logger.middleware.api_logger_middleware.APILoggerMiddleware",
     # 'django_prometheus.middleware.PrometheusAfterMiddleware',
 ]
 
@@ -250,6 +252,14 @@ ROSETTA_MESSAGES_SOURCE_LANGUAGE_CODE = LANGUAGE_CODE
 ROSETTA_MESSAGES_SOURCE_LANGUAGE_NAME = "English"
 ROSETTA_SHOW_AT_ADMIN_PANEL = True
 ROSETTA_ENABLE_TRANSLATION_SUGGESTIONS = False
+
+DRF_API_LOGGER_DATABASE = True
+DRF_LOGGER_QUEUE_MAX_SIZE = 100
+DRF_LOGGER_INTERVAL = 10
+# hide sensitive information from being exposed in the logs
+DRF_API_LOGGER_EXCLUDE_KEYS = ['password', 'token', 'access', 'refresh', 'username', 'phone_number', 'email']
+DRF_API_LOGGER_PATH_TYPE = 'FULL_PATH'
+DRF_API_LOGGER_METHODS = ['GET', 'POST', 'DELETE', 'PUT']
 
 if JAEGER_AGENT_HOST := os.environ.get("JAEGER_AGENT_HOST"):
     from django_opentracing import DjangoTracing
