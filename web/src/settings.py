@@ -13,7 +13,7 @@ from .additional_settings.smtp_settings import *
 from .additional_settings.summernote_settings import *
 from .additional_settings.swagger_settings import *
 
-FRONTEND_SITE = "http://localhost:8008/"
+FRONTEND_SITE = "http://localhost:8008"
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
@@ -137,7 +137,7 @@ MIDDLEWARE = [
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": REDIS_URL + "/2",
+        "LOCATION": 'localhost:6379/2',
         "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
     }
 }

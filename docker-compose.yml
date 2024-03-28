@@ -81,7 +81,7 @@ services:
       - docker/dev/env/.env
       - docker/dev/env/.db.env
       - docker/prod/env/.data.env
-      - docker/prod/env/.email.env
+      - docker/dev/env/.email.env
     depends_on:
       - redis
     restart: always
