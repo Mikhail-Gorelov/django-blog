@@ -42,9 +42,9 @@
 
 Run django commands through exec:
 ```shell
-docker-compose exec web python manage.py makemigrations
+docker-compose exec blog python manage.py makemigrations
 
-docker-compose exec web python manage.py shell
+docker-compose exec blog python manage.py shell
 ```
 
 ##### For testing mail backend you can use MailHog service

@@ -64,3 +64,6 @@ django-summernote==0.8.11.6
 
 # Tags
 django-taggit==1.4.0
+
+# API profiling
+drf-api-logger==1.1.15
