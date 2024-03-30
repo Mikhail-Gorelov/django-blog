@@ -20,11 +20,11 @@ export const options = {
 };
 
 export function getPosts() {
-  http.get('http://localhost:8008/posts/');
+  http.get('http://blog:8008/posts/');
 }
 
 export function getCategories() {
-  http.get('http://localhost:8008/categories/');
+  http.get('http://blog:8008/categories/');
 }
 
 export default function () {

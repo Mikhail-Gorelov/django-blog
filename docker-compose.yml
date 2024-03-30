@@ -5,6 +5,7 @@ services:
     build:
       context: .
       dockerfile: docker/dev/web/Dockerfile
+    image: mushroom3/django-blog-dev:${DOCKER_TAG:-latest}
     volumes:
       - ./web/:/usr/src/web/
       - redis_socket:/redis_socket
@@ -36,6 +37,7 @@ services:
     build:
       context: .
       dockerfile: docker/dev/db/Dockerfile
+    image: mushroom3/django-blog-db-dev:${DOCKER_TAG:-latest}
     hostname: postgres
     restart: always
     volumes:
@@ -56,6 +58,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/dev/redis/Dockerfile
+    image: mushroom3/django-blog-redis:${DOCKER_TAG:-latest}
     restart: always
     volumes:
       - redis_data:/data
@@ -71,6 +74,7 @@ services:
     build:
       context: .
       dockerfile: docker/dev/web/Dockerfile
+    image: mushroom3/django-blog:${DOCKER_TAG:-latest}
     entrypoint: ""
     command: celery -A src worker -l info
     volumes:
