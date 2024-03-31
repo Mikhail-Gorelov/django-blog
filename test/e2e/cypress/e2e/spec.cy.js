@@ -1,9 +1,9 @@
 describe("Default behaviour spec", () => {
   it("check default behaviour", () => {
     cy.visit("/")
-    cy.get('#home').click()
-    cy.get('#posts').click()
-    cy.get('#contact').click()
-    cy.get('#about').click()
+    cy.get('#home').should('be.visible').click()
+    cy.get('#posts').should('be.visible').click()
+    cy.get('#contact').should('be.visible').click()
+    cy.get('#about').should('be.visible').click()
   });
 });

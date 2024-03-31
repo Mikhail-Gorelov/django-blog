@@ -8,12 +8,13 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     env:
       SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
-      POSTGRES_HOST: postgres
+      POSTGRES_HOST: db
       POSTGRES_PORT: 5432
     steps:
       - uses: actions/checkout@v4
@@ -49,18 +50,40 @@ jobs:
   advanced_tests:
     runs-on: ubuntu-latest
     needs: [ push ]
-    services:
-      blog:
-        image: mushroom3/django-blog-dev:latest
-        ports:
-          - 8008:8008
-
     steps:
       - uses: actions/checkout@v4
-      - name: Run k6 local test
+      - name: Run k6 tests
         uses: grafana/k6-action@v0.3.1
         with:
           filename: test/load/blog-load-test-k6.js
+    services:
+      db:
+        image: mushroom3/django-blog-db-dev:latest
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 50s
+          --health-timeout 5s
+          --health-retries 5
+        env:
+          POSTGRES_PASSWORD: postgres
+      redis:
+        image: mushroom3/django-blog-redis-dev:latest
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 1m20s
+          --health-timeout 5s
+          --health-retries 3
+      blog:
+        image: mushroom3/django-blog-dev:latest
+        ports:
+          - 8000:8000
+        options: >-
+          --health-cmd "curl --fail -s http://localhost:8000/application/health/ || exit 1"
+          --health-interval 1m30s
+          --health-timeout 3s
+          --health-retries 3
 
   test_isort:
     runs-on: ubuntu-latest

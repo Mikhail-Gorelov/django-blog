@@ -19,6 +19,7 @@
 * MailHog, Jaeger, RabbitMQ integrations
 * Multi-stage build for prod versions
 * PostgreSql Backup
+* Sentry
 
 ### How to use:
 
@@ -77,3 +78,8 @@ To set https for 2 and more nginx servers:
 Run command:
 
     docker-compose -f prod.yml -f prod.certbot.yml up -d --build
+
+### Sentry
+
+Sentry's Python SDK enables automatic reporting of errors and performance data in your application.
+Setup in the project and register in senty.io to watch services performance and errors.
