@@ -5,10 +5,10 @@ services:
     build:
       context: .
       dockerfile: docker/dev/web/Dockerfile
+    image: mushroom3/django-blog-dev:${DOCKER_TAG:-latest}
     volumes:
       - ./web/:/usr/src/web/
       - redis_socket:/redis_socket
-      - postgres_socket:/postgres_socket
     ports:
       - 8008:8000
     env_file:
@@ -36,11 +36,11 @@ services:
     build:
       context: .
       dockerfile: docker/dev/db/Dockerfile
+    image: mushroom3/django-blog-db-dev:${DOCKER_TAG:-latest}
     hostname: postgres
     restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-      - postgres_socket:/postgres_socket
     ports:
       - "5432:5432"
     env_file:
@@ -56,6 +56,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/dev/redis/Dockerfile
+    image: mushroom3/django-blog-redis-dev:${DOCKER_TAG:-latest}
     restart: always
     volumes:
       - redis_data:/data
@@ -71,12 +72,12 @@ services:
     build:
       context: .
       dockerfile: docker/dev/web/Dockerfile
+    image: mushroom3/django-blog:${DOCKER_TAG:-latest}
     entrypoint: ""
     command: celery -A src worker -l info
     volumes:
       - ./web/:/usr/src/web/
       - redis_socket:/redis_socket
-      - postgres_socket:/postgres_socket
     env_file:
       - docker/dev/env/.env
       - docker/dev/env/.db.env
@@ -95,7 +96,6 @@ volumes:
   postgres_data:
   redis_data:
   redis_socket:
-  postgres_socket:
 
 networks:
   microservice_network:
