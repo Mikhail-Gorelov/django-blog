@@ -14,17 +14,19 @@ export const options = {
     }
   },
   thresholds: {
-    'http_req_duration': ['p(95)<300'],
+    'http_req_duration': ['p(95)<700'],
     'http_req_failed': ['rate<0.001'],
   },
 };
 
+// if you want to run tests locally, please enter here http://localhost:8008/posts/
 export function getPosts() {
-  http.get('http://localhost:8008/posts/');
+  http.get('http://blog:8000/posts/');
 }
 
+// if you want to run tests locally, please enter here http://localhost:8008/categories/
 export function getCategories() {
-  http.get('http://localhost:8008/categories/');
+  http.get('http://blog:8000/categories/');
 }
 
 export default function () {

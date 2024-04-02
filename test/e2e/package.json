@@ -9,7 +9,7 @@
     "start": "yarn cy:open",
     "cy:install": "cypress install",
     "cy:open": "cypress open",
-    "cy:run": "cypress run",
+    "cy:run": "cypress run --browser firefox",
     "lint": "yarn lint:style && yarn lint:code && yarn lint:types",
     "lint:style": "prettier --check .",
     "lint:code": "eslint \"cypress/**/*.{js,ts}\"",
