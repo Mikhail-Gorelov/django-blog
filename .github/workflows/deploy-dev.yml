@@ -1,0 +1,27 @@
+name: 'Terraform Deployment Dev'
+
+on:
+  workflow_dispatch:
+
+
+jobs:
+  deploy-service:
+    name: 'Deploy Service'
+    permissions:
+      id-token: 'write'
+      contents: 'read'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
+
+      - name: 'Google authentication'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          workload_identity_provider: '${{ secrets.WIF_PROVIDER }}'
+          service_account: '${{ secrets.WIF_SERVICE_ACCOUNT }}'
