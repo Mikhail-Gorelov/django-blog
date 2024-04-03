@@ -21,12 +21,12 @@ export const options = {
 
 // if you want to run tests locally, please enter here http://localhost:8008/posts/
 export function getPosts() {
-  http.get('http://blog:8000/posts/');
+  http.get('http://blog:8008/posts/');
 }
 
 // if you want to run tests locally, please enter here http://localhost:8008/categories/
 export function getCategories() {
-  http.get('http://blog:8000/categories/');
+  http.get('http://blog:8008/categories/');
 }
 
 export default function () {
