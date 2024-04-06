@@ -1,4 +1,4 @@
-name: Kubernetes Deploy
+name: 'Kubernetes Deploy'
 
 on:
   workflow_dispatch:
