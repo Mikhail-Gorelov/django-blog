@@ -14,7 +14,7 @@ SIMPLE_JWT = {
     "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": False,
     "ALGORITHM": "HS256",
-    "SIGNING_KEY": environ.get("SECRET_KEY"),
+    "SIGNING_KEY": environ.get("SECRET_KEY", "g)g$9zy$=!2#^*%o^=s21ev@o-q-iszijbw%-54n%+n=z8*p+n"),
     "VERIFYING_KEY": None,
     "AUDIENCE": None,
     "ISSUER": None,

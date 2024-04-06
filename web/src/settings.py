@@ -24,6 +24,7 @@ REDIS_DATABASE = redis.StrictRedis(
 )
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "g)g$9zy$=!2#^*%o^=s21ev@o-q-iszijbw%-54n%+n=z8*p+n")
+JWT_SECRET_KEY = 'random'
 
 DEBUG = int(os.environ.get("DEBUG", 1))
 
@@ -31,8 +32,8 @@ ALLOWED_HOSTS: list = os.environ.get("DJANGO_ALLOWED_HOSTS", "*").split(",")
 
 AUTH_USER_MODEL = "main.User"
 
-SUPERUSER_EMAIL = os.environ.get("SUPERUSER_EMAIL", "test@test.com")
-SUPERUSER_PASSWORD = os.environ.get("SUPERUSER_PASSWORD", "tester26")
+SUPERUSER_EMAIL = os.environ.get("SUPERUSER_EMAIL", "root@root.ru")
+SUPERUSER_PASSWORD = os.environ.get("SUPERUSER_PASSWORD", "root")
 ADMIN_EMAIL = ["misha_gorelov@mail.ru", "gorielov.misha@gmail.com"]
 
 MICROSERVICE_TITLE = os.environ.get("MICROSERVICE_TITLE", "Template")
@@ -49,7 +50,7 @@ USE_HTTPS = int(os.environ.get("USE_HTTPS", 0))
 ENABLE_SENTRY = int(os.environ.get("ENABLE_SENTRY", 0))
 ENABLE_SILK = int(os.environ.get("ENABLE_SILK", 0))
 ENABLE_DEBUG_TOOLBAR = int(os.environ.get("ENABLE_DEBUG_TOOLBAR", 0))
-ENABLE_RENDERING = int(os.environ.get("ENABLE_RENDERING", 0))
+ENABLE_RENDERING = int(os.environ.get("ENABLE_RENDERING", 1))
 
 SESSION_COOKIE_NAME = "sessionid_blog"
 CSRF_COOKIE_NAME = "csrftoken_blog"
