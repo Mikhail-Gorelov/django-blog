@@ -30,6 +30,6 @@ jobs:
         id: tf-dpl
         working-directory: terraform
         run: |
-          terraform init -backend-config=environments/dev.gcs.tfbackend
+          terraform init
           terraform plan -out=tfplan -input=false -var-file=environments/dev.tfvars
           terraform apply -input=false tfplan

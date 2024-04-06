@@ -5,7 +5,7 @@ provider "google" {
 }
 
 terraform {
-  backend "gcs" {}
+  backend "local" {}
 
   required_providers {
     google = {
