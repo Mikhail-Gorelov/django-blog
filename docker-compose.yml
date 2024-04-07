@@ -74,7 +74,7 @@ services:
       dockerfile: docker/dev/web/Dockerfile
     image: mushroom3/django-blog:${DOCKER_TAG:-latest}
     entrypoint: ""
-    command: celery -A src worker -l info
+    command: celery -A src worker -l info --beat --scheduler django_celery_beat.schedulers:DatabaseScheduler
     volumes:
       - ./web/:/usr/src/web/
       - redis_socket:/redis_socket
