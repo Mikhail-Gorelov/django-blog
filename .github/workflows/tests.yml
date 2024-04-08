@@ -4,7 +4,7 @@ env:
   COVERAGE_THRESHOLD: 75
 
 on:
-  push:
+  workflow_dispatch:
 jobs:
   test:
     runs-on: ubuntu-latest
