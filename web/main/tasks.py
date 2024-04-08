@@ -1,7 +1,8 @@
 from datetime import datetime, timedelta
 
-from src.celery import app
 from drf_api_logger.models import APILogsModel
+
+from src.celery import app
 
 
 @app.task(name="main.tasks.add", queue="blog")
@@ -32,5 +33,7 @@ def cleanup():
 
     # Calculate the first day of the previous month
     first_day_of_previous_month = last_day_of_previous_month.replace(day=1)
-    APILogsModel.objects.filter(added_on__gte=first_day_of_previous_month, added_on__lte=last_day_of_previous_month).delete()
+    APILogsModel.objects.filter(
+        added_on__gte=first_day_of_previous_month, added_on__lte=last_day_of_previous_month
+    ).delete()
     return
