@@ -31,5 +31,5 @@ jobs:
         working-directory: terraform
         run: |
           terraform init
-          terraform plan -out=tfplan -input=false
+          terraform plan -out=tfplan -input=false -var-file=environments/dev.tfvars
           terraform apply -input=false tfplan

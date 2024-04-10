@@ -21,7 +21,7 @@ djangorestframework-simplejwt==5.0.0
 PyJWT==2.4.0
 
 # For backend working
-celery==5.2.2
+celery==5.2.3
 pyamqp==0.1.0.7
 
 # for react
@@ -67,3 +67,6 @@ django-taggit==1.4.0
 
 # API profiling
 drf-api-logger==1.1.15
+
+# Celery beat
+django-celery-beat==2.6.0

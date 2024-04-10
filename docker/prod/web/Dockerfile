@@ -1,6 +1,6 @@
 # pull official base image
 FROM python:3.10.0-alpine as builder
-MAINTAINER bandirom@ukr.net
+MAINTAINER gorelovmihail0@gmail.com
 
 RUN apk update \
 	  # install psycopg2 dependencies

@@ -103,6 +103,7 @@ THIRD_PARTY_APPS = [
     "rosetta",
     "django_summernote",
     "drf_api_logger",
+    'django_celery_beat',
     # 'django_prometheus',
 ]
 
