@@ -26,4 +26,7 @@ if ENABLE_DEBUG_TOOLBAR:
         "debug_toolbar.panels.sql.SQLPanel",
         "debug_toolbar.panels.profiling.ProfilingPanel",
     ]
-    DEBUG_TOOLBAR_CONFIG = {"RESULTS_CACHE_SIZE": 100}
+    DEBUG_TOOLBAR_CONFIG = {
+        "RESULTS_CACHE_SIZE": 100,
+        'SHOW_TOOLBAR_CALLBACK': lambda request: False if request.is_ajax() else True,
+    }
