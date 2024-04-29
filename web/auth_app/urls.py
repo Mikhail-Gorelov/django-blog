@@ -3,7 +3,7 @@ from django.urls import path
 from django.views.generic import TemplateView
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
-
+from django.views.decorators.cache import cache_page
 from main.views import TemplateAPIView
 
 from . import views
@@ -49,12 +49,12 @@ if settings.ENABLE_RENDERING:
     urlpatterns += [
         path(
             "login/",
-            TemplateAPIView.as_view(template_name="auth_app/login.html"),
+            cache_page(60 * 10)(TemplateAPIView.as_view(template_name="auth_app/login.html")),
             name="login",
         ),
         path(
             "register/",
-            TemplateAPIView.as_view(template_name="auth_app/sign_up.html"),
+            cache_page(60 * 10)(TemplateAPIView.as_view(template_name="auth_app/sign_up.html")),
             name="sign_up",
         ),
         path(

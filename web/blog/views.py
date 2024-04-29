@@ -4,11 +4,10 @@ from django.core.cache import cache
 from rest_framework.mixins import ListModelMixin
 from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
-
 from blog.pagination import StandardResultsSetPagination
 from blog.serializers import CommentSerializer
 from main.pagination import BasePageNumberPagination
-
+from django.views.decorators.cache import patch_cache_control
 from . import serializers
 from .filters import ArticleFilter
 from .services import BlogService
@@ -32,6 +31,11 @@ class CategoryViewSet(ViewSet):
             categories = BlogService.category_queryset()
             cache.set("categories", categories)
         return categories
+
+    def list(self, request, **kwargs):
+        response = super().list(request, **kwargs)
+        patch_cache_control(response, max_age=60*10, public=True)
+        return response
 
 
 class ArticleViewSet(ViewSet):
@@ -60,6 +64,7 @@ class ArticleViewSet(ViewSet):
     def list(self, request, **kwargs):
         response = super().list(request, **kwargs)
         response.template_name = self.get_template_name()
+        patch_cache_control(response, max_age=60*10, public=True)
 
         return response
 
