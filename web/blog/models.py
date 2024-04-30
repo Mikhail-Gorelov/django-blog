@@ -15,7 +15,7 @@ User = get_user_model()
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
     objects = models.Manager()
 
@@ -71,6 +71,7 @@ class Article(models.Model):
         verbose_name = _("Article")
         verbose_name_plural = _("Articles")
         ordering = ("-updated", "-created", "id")
+        indexes = [models.Index(name="article_index", fields=['title', 'content'])]
 
 
 DEFAULT_PARENT_COMMENT_ID = 1
