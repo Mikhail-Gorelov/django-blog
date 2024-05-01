@@ -34,7 +34,7 @@ class CategoryViewSet(ViewSet):
 
     def list(self, request, **kwargs):
         response = super().list(request, **kwargs)
-        patch_cache_control(response, max_age=60*10, public=True)
+        patch_cache_control(response, max_age=60 * 10, public=True)
         return response
 
 
@@ -64,7 +64,7 @@ class ArticleViewSet(ViewSet):
     def list(self, request, **kwargs):
         response = super().list(request, **kwargs)
         response.template_name = self.get_template_name()
-        patch_cache_control(response, max_age=60*10, public=True)
+        patch_cache_control(response, max_age=60 * 10, public=True)
 
         return response
 
